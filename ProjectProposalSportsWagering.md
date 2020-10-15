@@ -17,7 +17,7 @@ market takes them.
 
 ### GitHub URL
 
-- TBD
+https://github.com/madelinerys/CS546-Final-Project
 
 ### Core features
 
