@@ -1,1 +1,1 @@
-# CS546-Final-Project
+<a href="doc/TechnicalReferenceSportsWagering.md">Tech Reference</a>

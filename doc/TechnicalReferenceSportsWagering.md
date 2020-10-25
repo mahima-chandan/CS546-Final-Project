@@ -30,7 +30,7 @@ https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/ProjectProposal
 https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/DatabaseProposalSportsWagering.pdf
 </a>
 
-#### Sports wagering technical feference (this document) 
+#### Sports wagering technical reference (this document) 
 
 <a href="https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalReferenceSportsWagering.md">
 https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalReferenceSportsWagering.md
