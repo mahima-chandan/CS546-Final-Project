@@ -38,16 +38,6 @@ https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalRefere
 
 <div class="page"/>
 
-<h2>Work breakdown philosophy</h2>
-
-Thoughts I have is that it's best to have each team member take on a particular feature
-in a "full stack" manner meaning they are responsible for user interface,
-the Express routes, and getting whatever data is needed in and out of Mongo. I think working
-at a distance with a short calendar this has the best chance of success. Team members can
-work mostly independently on their piece initially. Comments? 
-
-We would then identify the main pieces of functionality and team members would volunteer
-what they want to take on.
 
 <h2>Technologies</h2>
 
@@ -61,6 +51,9 @@ needed assistance for the "responsive" requirement. So I was going to propose we
 - HTML (no choice)
 - Javascript (no choice)
 - CSS (no choice)
+
+NOTE: Do we need "responsive"? I can't seem to find that requirement anymore. If we don't need
+it then we don't need Bootstrap.
 
 I'm proposing we stay away from front-end frameworks such as React/Angular. Not enough time
 for me/us to learn these technologies. If we go down in flames we should do it with technologies
@@ -77,23 +70,30 @@ Users would be directed straight here after login. This is where they make their
 
 <h3>Betting panel operation</h3>
 
-1. Submit button enables only when one or more of the 12 text boxes contains
+1. Submit button enables only when one or more of the 18 text boxes contains
 a non-zero amount, and is disabled otherwise.
 
-1. For each of the six Bet/Win rows, a non-zero amount may be entered in only
-_one_ of the two text boxes in that row. The empty text box must be disabled.
-Both text boxes should be enabled when they are both empty.
+1. BET and WIN text boxes work together. They start out empty. User chooses, by typing
+in _one_ of these two boxes, how much they either want to BET, or WIN.
+
+    a. If the user enters a BET amount, the WIN box will update with the BET amount, minus 10%. The BET box will
+remain enabled and the WIN box will be disabled in this case.
+
+    b. If the user enters a WIN amount, the BET box will update with the WIN amount, plus 10%. The WIN box will
+remain enabled and the BET box will be disabled in this case.
+
+1. The COLLECT box always shows BET amount plus WIN amount.
 
 1. All text to left of Bet/Win columns is either static to the template page
 or static as rendered from the database. User cannot change this static text.
 
 1. User will be prompted after pressing Sumbit, e.g., "You are about to wager
-$420 on this game. Are you sure?" Y/N buttons.
+$212 on this game. Are you sure?" Y/N buttons.
 
 1. User will receive confirmation once Submit has sucessfully processed on the
 backend by insert bet into Bets collection. User's balance will deduct by
 amount of wager. Confirmation can be
-as simple as "Your wager totalling $420 is in!" Perhaps it is some type of
+as simple as "Your wager totalling $212 is in!" Perhaps it is some type of
 popup with buttons *Continue* and *Logout* on it.
 
     a. Pressing *Continue* will dismiss confirmation box and return user to
@@ -114,7 +114,8 @@ result in the current panel refreshing.
 stationed horizontally per row. On larger screens the panels should to
 some extent "unstack" and start to appear horizontally, perhaps two or
 three of them will fit horizontally. This is to demonstate that our application
-is *responsive* which is another requirement.
+is *responsive* which is another requirement. (NOTE: Check this, I can't
+find this requirement anywhere.)
 
 1. This page has 14 panels, one for each game for that week. Panels are
 arranged responsively but on a small screen they would stack vertically one
@@ -123,6 +124,47 @@ would first select one of 14 games then only that panel appears does not
 feel right to me which is why I want all 14 panels to display at once. Bettors
 need to be able to see in one fell swoop what the lines are, what looks appealing
 to bet on, and what they have already bet on.
+
+<h2>Work Breakdown</h2>
+
+Thoughts I have is that it's best to have each team member take on a particular feature
+in a "full stack" manner meaning they are responsible for user interface,
+the Express routes, and getting whatever data is needed in and out of Mongo. I think working
+at a distance with a short calendar this has the best chance of success. Team members can
+work mostly independently on their piece initially. Comments? 
+
+We would then identify the main pieces of functionality and team members would volunteer
+what they want to take on.
+
+<table>
+<tr>
+  <th>Item</th><th>Developer</th>
+</tr>
+
+<tr>
+  <td>Project Proposal</td><td>Dale</td>
+</tr>
+
+<tr>
+  <td>Project Database Proposal</td><td>Dale</td>
+</tr>
+
+<tr>
+  <td>Project Pitch Proposal</td><td>Madeline</td>
+</tr>
+
+<tr>
+  <td>Betting Panel, full stack</td><td>*Need developer*</td>
+</tr>
+
+<tr>
+  <td>Fund account via credit card, full stack</td><td>*Need developer*</td>
+</tr>
+
+<tr>
+  <td>Sign in or Sign up, full stack</td><td>*Need developer*</td>
+</tr>
+</table>
 
 <h2>Summary</h2>
 
