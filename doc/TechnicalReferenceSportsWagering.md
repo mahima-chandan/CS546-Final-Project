@@ -38,19 +38,45 @@ https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalRefere
 
 <div class="page"/>
 
+## Terminology
 
-<h2>Technologies</h2>
+**Admin.** A user with additional privileges over those of a normal user. The data model
+as submitted does not have a flag for this, but needs one.
+
+**Bettor.** Used interchangeably with user, player.
+
+**House.** This is the sponsor or owner of the game. A player bets against the house. If a player
+wins a bet they get the house's money for that bet. If a player loses a bet they are losing it
+to the house. For example, if our system was adopted by the State of New York, U.S., then New York
+state government would be the house.
+
+**Juice.** See vigorish.
+
+**Player.** See bettor.
+
+**Surcharge.** See vigorish.
+
+**User.** See bettor.
+
+**Vig.** See vigorish.
+
+**Vigorish.** This is a surcharge tacked onto bets. In a perfect world this is how the house
+makes money. Vigorish is only returned to the player on bets won, not bets lost.
+
+## Technologies
 
 I believe he covers Bootstrap in the weeks ahead. Never used personally. However it may offer
 needed assistance for the "responsive" requirement. So I was going to propose we stick to:
 
 - Bootstrap (which brings with it jQuery and Popper whether you want them or not)
-- Node.js and Express (no choice)
+  (Note: I'm waivering on this, if we don't need responsive I would suggest leaving
+  Bootstrap out.)
+- Node.js and Express (required)
 - Axios (needed for API to sports information)
-- Mongo (no choice)
-- HTML (no choice)
-- Javascript (no choice)
-- CSS (no choice)
+- Mongo (required)
+- HTML (required)
+- Javascript (required)
+- CSS (required)
 
 NOTE: Do we need "responsive"? I can't seem to find that requirement anymore. If we don't need
 it then we don't need Bootstrap.
@@ -60,15 +86,60 @@ for me/us to learn these technologies. If we go down in flames we should do it w
 that are covered in the class, if for no other reason hopefully the professor shows
 some empathy.
 
-<h2>Betting panel</h2>
+## System rules
 
-Users would be directed straight here after login. This is where they make their bets.
+A list of rules that don't necessarily pertain to any one page or database collection but
+rather are more global in nature.
 
-<h3>Initial sketch</h3>
+1. Whole dollars only. Do not display or deal with cents anywhere (at least that is
+my thought).
+
+1. U.S. dollars only, we will not deal with international currencies or cryptocurrencies.
+
+1. All rounding should be done in a direction to favor the house and slight the user.
+
+1. Over/under and straight bets are made with a 10% surcharge.
+This charge is not returned on bets lost, but is returned on bets won.
+
+<div class="page">
+
+## Betting page
+
+Normal users would be directed straight here after login. This is where they make their bets.
+
+The main and most important page of the application. It is composed of an account balance
+text box at the top and a series of betting panels below that.
+
+The rest of the page has 14 betting panels with clear separation between each one.
+They are arranged veritically one after another. All must be visible at the same time
+i.e. the page could be reduced greatly by having a drop down to select which single panel
+to view but that will not satisfy. The user must be able to see all panels and the
+state of each panel on the page by simply scrolling their device.
+
+### Account balance operation
+
+1. Displays account balance for the user from `Bettors.balance`.
+
+1. Input is some type of large text box with large font.
+
+1. Label clearly states this is the user's balance.
+
+1. I see it having larger font that what is available on the betting panel.
+
+1. User cannot type in the text box, it is disabled from any changes. Only the
+application can make changes to it.
+
+1. Balance is whole dollars only.
+
+### Betting panel sketch
+
+Only one betting panel shown. The page itself has 14 of these, one per game that week,
+arranged vertically one after another with clear delineation between them (e.g., space,
+or color change or something visual to break them up).
 
 <img src="./images/BettingPanel.png"/>
 
-<h3>Betting panel operation</h3>
+### Betting panel operation
 
 1. Submit button enables only when one or more of the 18 text boxes contains
 a non-zero amount, and is disabled otherwise.
@@ -125,7 +196,69 @@ feel right to me which is why I want all 14 panels to display at once. Bettors
 need to be able to see in one fell swoop what the lines are, what looks appealing
 to bet on, and what they have already bet on.
 
-<h2>Work Breakdown</h2>
+<div class="page">
+
+## Sign up or sign in
+
+This is the landing page for the application. Unlike some applications, you are
+not allowed to do anything until you sign in. If you don't have an account
+you can sign up here.
+
+1. Information to be entered for new users (sign up flow) must be enough to
+populate a new document entry in the `Bettors` collection.
+
+1. New users will need to enter a password.
+
+1. CAPTCHA (i.e., "I'm not a robot") would be a nice touch but we did not
+commit to this. Look into it if you would like to do so or time permitting.
+
+1. Successful sign in or sign up takes user to the betting page.
+
+<div class="page">
+
+## Fund account operation
+
+These rules not in chronological order.
+
+1. Page should display user's current balance in text box same as or similar
+to what is done on betting page.
+
+1. Only available to users who are already authenticated with the system.
+
+1. Users chooses between several offered credit card types e.g.,  Mastercard,
+VISA, AmEx, Discover, ??
+
+1. User enters amount to add to their current balance. Whole dollars only.
+
+1. User enters credit card number, expiry month/year, CVV, name, address.
+
+1. Some validation provided for card number e.g. VISA and Mastercard are each
+16 digits long.
+
+1. User submits transaction to the system.
+
+1. System delays for a bit then returns a simple confirmation and simultaneously
+update the current balance text box with the amount just funded.
+
+1. This page backend is updating `Bettors.balance` for the current user.
+
+1. In real life this page is making an actual credit card transaction. We are
+simulating that experience only.
+
+1. Except for displaying user's balance at the top of the page, you can get
+ideas for this page from anywhere on the web that you buy things with
+your credit card. This is just a generic payment screen nothing special
+towards sports betting except for displaying the user's balance.
+
+1. In real life we would be taking mostly cash not credit card payments. Perhaps
+one could show that somehow on the page e.g., "Put in your $5, $10, or $20 below."
+with an image of a cash collector or something. First cut not worried about this but
+I think it would be a nice touch since sports wagering "on premises" would frequently
+be a cash business just like buying lottery tickets is a cash business.
+
+<div class="page">
+
+## Work Breakdown
 
 Thoughts I have is that it's best to have each team member take on a particular feature
 in a "full stack" manner meaning they are responsible for user interface,
@@ -164,8 +297,12 @@ what they want to take on.
 <tr>
   <td>Sign in or Sign up, full stack</td><td>*Need developer*</td>
 </tr>
+
+<tr>
+  <td>API to betting lines including database storage</td><td>Dale</td>
+</tr>
+
+<tr>
+  <td>API to game results including database storage</td><td>Dale</td>
+</tr>
 </table>
-
-<h2>Summary</h2>
-
-More to come eventually but wanted to get something down on paper and out to the group. 
