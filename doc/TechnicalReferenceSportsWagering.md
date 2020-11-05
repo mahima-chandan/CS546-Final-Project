@@ -52,6 +52,9 @@ state government would be the house.
 
 **Juice.** See vigorish.
 
+**Line.** A catch-all term to describe types of bets. To see an example of lines,
+see https://www.espn.com/nfl/lines.
+
 **Player.** See bettor.
 
 **Surcharge.** See vigorish.
@@ -258,6 +261,12 @@ be a cash business just like buying lottery tickets is a cash business.
 
 <div class="page">
 
+## Player history
+
+This page shows history of bets for a player, including win/loss and financials.
+
+<div class="page">
+
 ## Work Breakdown
 
 Thoughts I have is that it's best to have each team member take on a particular feature
@@ -287,7 +296,7 @@ what they want to take on.
 </tr>
 
 <tr>
-  <td>Betting Panel, full stack</td><td>*Need developer*</td>
+  <td>Betting Panel, full stack</td><td>Christian</td>
 </tr>
 
 <tr>
@@ -299,6 +308,10 @@ what they want to take on.
 </tr>
 
 <tr>
+  <td>Player history</td><td>Madeline</td>
+</tr>
+
+<tr>
   <td>API to betting lines including database storage</td><td>Dale</td>
 </tr>
 
@@ -306,3 +319,25 @@ what they want to take on.
   <td>API to game results including database storage</td><td>Dale</td>
 </tr>
 </table>
+
+## Business
+
+### Target market
+
+Our end target market is state governments who are looking to expand into sports betting
+as a means to increase revenue into the state. We are looking to possibly partner
+with established organizations (including potential competitors) to license our software
+into their betting terminals and kiosks.
+
+Deployment for betting terminals and kiosks would be gas stations, convenience stores,
+newstands, and the like.
+
+<img alt="Example betting kiosks" src="./images/Kiosks.png"/>
+
+### Potential competitors
+
+1. William Hill
+1. Scientific Games
+1. Fan Duel
+1. Draft Kings
+1. International Gaming Technologies
