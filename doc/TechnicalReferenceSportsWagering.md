@@ -199,6 +199,11 @@ feel right to me which is why I want all 14 panels to display at once. Bettors
 need to be able to see in one fell swoop what the lines are, what looks appealing
 to bet on, and what they have already bet on.
 
+1. Lines displayed for the betting panel are read from routes in the system
+that are in turn connected to a real-time API, NOT from the Lines collection.
+It may be that the Lines collection should be moved into its own private database
+separate from the main database.
+
 <div class="page">
 
 ## Sign up or sign in
