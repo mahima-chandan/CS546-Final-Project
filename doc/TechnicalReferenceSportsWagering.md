@@ -201,8 +201,7 @@ to bet on, and what they have already bet on.
 
 1. Lines displayed for the betting panel are read from routes in the system
 that are in turn connected to a real-time API, NOT from the Lines collection.
-It may be that the Lines collection should be moved into its own private database
-separate from the main database.
+**NOTE: Lines collection may be changing significantly.**
 
 <div class="page">
 
@@ -305,11 +304,11 @@ what they want to take on.
 </tr>
 
 <tr>
-  <td>Fund account via credit card, full stack</td><td>*Need developer*</td>
+  <td>Fund account via credit card, full stack</td><td>Mahima</td>
 </tr>
 
 <tr>
-  <td>Sign in or Sign up, full stack</td><td>*Need developer*</td>
+  <td>Sign in or Sign up, full stack</td><td>Amrutha</td>
 </tr>
 
 <tr>
