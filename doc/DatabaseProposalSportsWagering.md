@@ -195,6 +195,8 @@ day-by-day basis. It is updated with new lines every day or two via a background
 
 #### Lines schema
 
+**Not sure about this table, it may be going away or at a minimum, changing significantly.**
+
 <table>
   <thead>
     <tr>

@@ -344,4 +344,5 @@ newstands, and the like.
 1. Scientific Games
 1. Fan Duel
 1. Draft Kings
-1. International Gaming Technologies
+1. International Game Technology
+    - https://www.igt.com/products-and-services/sportsbetting
