@@ -43,7 +43,12 @@ https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalRefere
 **Admin.** A user with additional privileges over those of a normal user. The data model
 as submitted does not have a flag for this, but needs one.
 
+**Bet**. A monetary value in dollars you are investing, in the hopes of winning some percentage
+return on your investment.
+
 **Bettor.** Used interchangeably with user, player.
+
+**BYE**. A week where a given team does not play.
 
 **House.** This is the sponsor or owner of the game. A player bets against the house. If a player
 wins a bet they get the house's money for that bet. If a player loses a bet they are losing it
@@ -52,8 +57,11 @@ state government would be the house.
 
 **Juice.** See vigorish.
 
-**Line.** A catch-all term to describe types of bets. To see an example of lines,
+**Line.** A catch-all term to describe types of bets. For an example of lines,
 see https://www.espn.com/nfl/lines.
+
+**OFF**. Some games do not have posted betting lines for various reasons. These are
+considered "off" games and cannot be bet.
 
 **Player.** See bettor.
 
@@ -64,7 +72,10 @@ see https://www.espn.com/nfl/lines.
 **Vig.** See vigorish.
 
 **Vigorish.** This is a surcharge tacked onto bets. In a perfect world this is how the house
-makes money. Vigorish is only returned to the player on bets won, not bets lost.
+makes money. Vigorish is only returned to the player on bets won, not bets lost. On bets lost,
+the house keeps the vigorish which is their primary means for realizing revenue from the activity.
+
+**Wager**. See bet.
 
 ## Technologies
 
@@ -113,7 +124,7 @@ Normal users would be directed straight here after login. This is where they mak
 The main and most important page of the application. It is composed of an account balance
 text box at the top and a series of betting panels below that.
 
-The rest of the page has 14 betting panels with clear separation between each one.
+The rest of the page has 12-16 betting panels with clear separation between each one.
 They are arranged veritically one after another. All must be visible at the same time
 i.e. the page could be reduced greatly by having a drop down to select which single panel
 to view but that will not satisfy. The user must be able to see all panels and the
@@ -202,6 +213,15 @@ to bet on, and what they have already bet on.
 1. Lines displayed for the betting panel are read from routes in the system
 that are in turn connected to a real-time API, NOT from the Lines collection.
 **NOTE: Lines collection may be changing significantly.**
+
+1. The exact number of betting panels on the page can vary due to several
+factors. You may for example wager on a Friday, in which case if there
+was a Thursday night game that week, it will not be available for betting.
+Other reasons for the varying panels can include BYE week considerations,
+or OFF games due to player injuries or what have you.
+Generally it should run from 12-16 panels for
+any given week of the season. The logic should not rely on having a fixed
+number of panels per week as it can and will vary.
 
 <div class="page">
 
