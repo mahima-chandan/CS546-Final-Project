@@ -155,6 +155,8 @@ or color change or something visual to break them up).
 
 ### Betting panel operation
 
+1. Input for this panel is from http://localhost:3000/api/lines/nfl.
+
 1. Submit button enables only when one or more of the 18 text boxes contains
 a non-zero amount, and is disabled otherwise.
 
@@ -212,7 +214,10 @@ to bet on, and what they have already bet on.
 
 1. Lines displayed for the betting panel are read from routes in the system
 that are in turn connected to a real-time API, NOT from the Lines collection.
-**NOTE: Lines collection may be changing significantly.**
+Repeating, do not use Lines collection to populate fields in betting panel, use API
+which is available from: http://localhost:3000/api/lines/nfl. Lines collection
+will eventually be populated but this collection is strictly for use by
+the API and not for use by the application proper.
 
 1. The exact number of betting panels on the page can vary due to several
 factors. You may for example wager on a Friday, in which case if there
