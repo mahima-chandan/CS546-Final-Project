@@ -22,4 +22,8 @@ scraping a couple different web sites to harvest betting lines and scores. Can
 be brittle due to web site changes out of our control but hoping things remain 
 stable enough to get us by.
 
+> Start the app with `npm start` or `node app.js`.
+
+> Feel free to start checking your stuff in and banging away on this thing!
+
 <a href="doc/TechnicalReferenceSportsWagering.md">Tech Reference</a>
