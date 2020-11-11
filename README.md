@@ -2,7 +2,10 @@
 
 Dale:
 
-> Betting lines available from http://localhost:3000/api/lines/nfl.
+> Betting lines available from http://localhost:3000/api/lines/nfl. Betting
+panel must use this API *not* Lines collection. Lines collection is for
+use by the API only for future caching functionality which will be needed
+for debugging and any simulation we do.
 
 > Taking the lead from our homework, I did not check in node_modules (it's
 so big). You will have to do `npm install` to get started. Although we could
