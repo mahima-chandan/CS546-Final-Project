@@ -97,9 +97,7 @@ function doGameBatch(batch, week) {
       rsf = doScore(Ls.slice(i, i + 7), rsf);
   }
 
-  rsf.gameid = rsf.awayTeam + "-" +
-               rsf.homeTeam + `-w${week}-` +
-               rsf.gameDate;
+  rsf.gameid = rsf.awayTeam + "-" + rsf.homeTeam + "-" + rsf.gameDate;
   return rsf;
 }
 
@@ -114,17 +112,62 @@ function doScore(lines, rsf) {
                  .replace(/<\/td>.*$/, '')
       let score = line ? Number(line) : null;
       if (!rsf.awayTeam) {
-        rsf.awayTeam = team;
+        rsf.awayTeam = convert(team);
         rsf.awayScore = score;
       }
       else {
-        rsf.homeTeam = team;
+        rsf.homeTeam = convert(team);
         rsf.homeScore = score;
       }
       break;
     }
   }
   return rsf;
+}
+
+// ----------------------------------------------------------------------------
+// Converts team abbreviation into standard for the system.
+// ----------------------------------------------------------------------------
+
+function convert(team) {
+  const lookup = {
+    htx: 'hou',
+    kan: 'kc',
+    nyj: 'nyj',
+    buf: 'buf',
+    sea: 'sea',
+    atl: 'atl',
+    phi: 'phi',
+    was: 'wsh',
+    cle: 'cle',
+    rav: 'bal',
+    mia: 'mia',
+    nwe: 'ne',
+    gnb: 'gb',
+    min: 'min',
+    clt: 'ind',
+    jax: 'jax',
+    chi: 'chi',
+    det: 'det',
+    rai: 'lv',
+    car: 'car',
+    sdg: 'lac',
+    cin: 'cin',
+    crd: 'ari',
+    sfo: 'sf',
+    tam: 'tb',
+    nor: 'no',
+    dal: 'dal',
+    ram: 'lar',
+    pit: 'pit',
+    nyg: 'nyg',
+    oti: 'ten',
+    den: 'den'
+  };
+  const result = lookup[team];
+  if (!result)
+    throw `convert ${team} not found`;
+  return result;
 }
 
 module.exports = {

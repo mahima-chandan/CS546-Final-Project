@@ -17,7 +17,8 @@ async function main() {
   app.listen(3000, () => {
     console.log("We've now got a server!");
     console.log('Your routes will be running on http://localhost:3000');
+    console.log('Current lines available on http://localhost:3000/api/lines/nfl');
   });
 }
 
-main().then(x => console.log(x)).catch(x => console.log(x));
+main().catch(console.log);

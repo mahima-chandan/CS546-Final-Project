@@ -1,4 +1,4 @@
-## Sports Wagering Technical Reference 
+# Sports Wagering Technical Reference 
 
 An informal and frequently changing container for policy, requirements, design notes, sketches, etc.
 in order to help out with building this thing.
@@ -26,14 +26,22 @@ https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/ProjectProposal
 
 #### Sports wagering database proposal
 
+Original is available here: 
 <a href="https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/DatabaseProposalSportsWagering.pdf">
 https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/DatabaseProposalSportsWagering.pdf
 </a>
+
+However this is no longer being maintained. Instead the database schema has been incorporated into
+this document.
 
 #### Sports wagering technical reference (this document) 
 
 <a href="https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalReferenceSportsWagering.md">
 https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalReferenceSportsWagering.md
+</a>
+
+<a href="https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalReferenceSportsWagering.pdf">
+https://github.com/madelinerys/CS546-Final-Project/blob/main/doc/TechnicalReferenceSportsWagering.pdf
 </a>
 
 <div class="page"/>
@@ -65,6 +73,12 @@ considered "off" games and cannot be bet.
 
 **Player.** See bettor.
 
+**Push.** A tie with the house. The player is refunded their original bet amount in full.
+
+**Resolve.** A bet is considered resolved when either the player has won and been credited
+with the winning amount, *or* has lost the bet, *or* has pushed in which case there money is
+refunded.
+
 **Surcharge.** See vigorish.
 
 **User.** See bettor.
@@ -77,16 +91,20 @@ the house keeps the vigorish which is their primary means for realizing revenue 
 
 **Wager**. See bet.
 
+<div class="page"/>
+
 ## Technologies
 
-I believe he covers Bootstrap in the weeks ahead. Never used personally. However it may offer
+I believe the professor introduces us to Bootstrap in the weeks ahead. Never used personally. However it may offer
 needed assistance for the "responsive" requirement. So I was going to propose we stick to:
 
 - Bootstrap (which brings with it jQuery and Popper whether you want them or not)
   (Note: I'm waivering on this, if we don't need responsive I would suggest leaving
   Bootstrap out.)
 - Node.js and Express (required)
+- Handlebars
 - Axios (needed for API to sports information)
+- Bcrypt (encrypt password)
 - Mongo (required)
 - HTML (required)
 - Javascript (required)
@@ -100,22 +118,381 @@ for me/us to learn these technologies. If we go down in flames we should do it w
 that are covered in the class, if for no other reason hopefully the professor shows
 some empathy.
 
+<div class="page"/>
+
 ## System rules
 
 A list of rules that don't necessarily pertain to any one page or database collection but
 rather are more global in nature.
 
-1. Whole dollars only. Do not display or deal with cents anywhere (at least that is
-my thought).
+1. Whole dollars only. Do not display or deal with cents anywhere. Any rounding/truncation that needs
+to occur should be done in a direction that favors the house.
 
 1. U.S. dollars only, we will not deal with international currencies or cryptocurrencies.
 
-1. All rounding should be done in a direction to favor the house and slight the user.
-
-1. Over/under and straight bets are made with a 10% surcharge.
+1. Over/under and straight bets are made with a 10% surcharge (vigorish).
 This charge is not returned on bets lost, but is returned on bets won.
 
-<div class="page">
+The next several sections cover database collections. Refer to this document for
+information on database from now on, the database proposal document has been subsumed here.
+This keeps everything in one place without having to spend time on cross-referencing or
+trying to guess what is covered in which document.
+
+<div class="page"/>
+
+## Bets collection
+
+Stores bets. Each document is a bet from a bettor aka user. Bettors use the system's 
+user interface to enter bets. As the bets are entered, the system stores them to this
+collection.
+
+Bets are made against lines. This collection originally was designed to store
+a *reference* to a line for each bet made. This has been changed to
+now store the actual value of the line.
+
+## Bets schema 
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>_id</code></td>
+      <td>ObjectId</td>
+      <td>Mongo-generated key for the document</td>
+    </tr>
+    <tr>
+      <td><code>bettorid</code></td>
+      <td>ObjectId</td>
+      <td><code>_id</code> of the bettor from <a href="#bettors">Bettors</a> collection</td>
+    </tr>
+    <tr>
+      <td><code>gameid</code></td>
+      <td>String</td>
+      <td><code>_id</code> of the game as returned from <a href="#lines">Lines</a> API</td>
+    </tr>
+    <tr>
+      <td><code>bettype</code></td>
+      <td>String</td>
+      <td>type of bet, one of: AML, ASP, HML, HSP, OV, UN</td>
+    </tr>
+    <tr>
+      <td><code>num</code></td>
+      <td>Number</td>
+      <td>the player's <em>number</em>, the meaning of which depends on the <em>bettype</em>.</td>
+    </tr>
+    <tr>
+      <td><code>amount</code></td>
+      <td>Number</td>
+      <td>dollar amount of the bet</td>
+    </tr>
+    <tr>
+      <td><code>pays</code></td>
+      <td>Number</td>
+      <td>dollars this bet pays, or null if bet is still live</td>
+    </tr>
+    <tr>
+      <td><code>collects</code></td>
+      <td>Number</td>
+      <td>total dollars this bet collects should bettor win; this
+          is equal to amount + pays</td>
+    </tr>
+    <tr>
+      <td><code>paid</code></td>
+      <td>Number</td>
+      <td>dollar amount this bet collected, or null if bet is still live; may
+      be zero indicating this bet has resolved and was a loss for the bettor [1]</td>
+    </tr>
+    <tr>
+      <td><code>entered</code></td>
+      <td>Date</td>
+      <td>time and date of the bet</td>
+    </tr>
+    <tr>
+      <td><code>closed</code></td>
+      <td>Date</td>
+      <td>time and date the bet resolved, or null if bet is still live [1]</td>
+    </tr>
+    <tr>
+      <td colspan="3">Notes</td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <ol style="margin-left:-20px">
+          <li>These fields are necessary in order for the system to know whether it
+          has resolved the bet or not.</li>
+        </ol>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Bets example document
+
+```
+{
+  _id: "5eeb5b6186fbfca1f18ed313",
+  bettorid: "5ee77f8c75ee6029745ca8ac",
+  gameid: "ari-sea-2020-11-19",
+  bettype: 'ASP',
+  num: 3,
+  amount: 77,
+  pays: 70,
+  collects: 147,
+  paid: null,
+  entered: "2020-11-17T15:30:22",
+  closed: null
+}
+```
+
+<div class="page"/>
+
+## Scores collection
+
+Fka Games collection.
+
+Each document captures a single NFL game final score.
+An NFL season is 17 consecutive weeks, with 14 games per week, so
+at the conclusion of a full regular season (not counting postseason),
+this collection would have 17 * 14 = 238 documents in it.
+The system inserts final scores into the collection in an automated
+fashion, as they become avaialable.
+
+Game documents may be inserted with a null ```ascore``` and null
+```hscore```. After the game is played, a system background job is
+responsible for updating ```ascore``` and ```hscore``` with the game's
+final score.
+
+## Scores schema
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>_id</code></td>
+      <td>String</td>
+      <td>format of awayTeam-homeTeam-date-of-game (see example document)</td>
+    </tr>
+    <tr>
+      <td><code>awayTeam</code></td>
+      <td>String</td>
+      <td>designator for away (visiting) team</td>
+    </tr>
+    <tr>
+      <td><code>homeTeam</code></td>
+      <td>String</td>
+      <td>designator for home team</td>
+    </tr>
+    <tr>
+      <td><code>week</code></td>
+      <td>Integer</td>
+      <td>Week of the season, 1-17. NFL weeks start on Tuesday and end on
+      Monday. As a frame of reference, 10/21/2020 is in Week 7. If you want
+      to know, for example, what is the <em>current week right now</em> as a frame
+      of reference, you can go <a href="https://www.espn.com/nfl/schedule">here</a> and it
+      should default to bring up the current week pre-selected.</td>
+    </tr>
+    <tr>
+      <td><code>awayScore</code></td>
+      <td>Integer</td>
+      <td>Away team final score. Null up until when the game has finished and the
+      system has processed the final score feed.</td>
+    </tr>
+    <tr>
+      <td><code>homeScore</code></td>
+      <td>Integer</td>
+      <td>Home team final score. Null up until when the game has finished and the
+      system has processed the final score feed.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page"/>
+
+## Scores example document
+
+```
+{
+  _id: "htx-kan-2020-09-10",
+  gameDate: "2020-09-10",
+  week: 1,
+  awayTeam: "hou",
+  awayScore: 20,
+  homeTeam: "kc",
+  homeScore: 34
+}
+```
+
+## Scores notes
+
+1. NFL is the <a href="http://www.nfl.com">National Football League</a>.
+
+1. GMT is four hours ahead of EDT, and five hours ahead of EST. For example,
+1:00 PM EST is 6:00 PM GMT.
+
+1. Designators for teams defined in <a href=#teams>Teams</a> collection as
+```Teams.abbrv```.
+
+<div class="page"/>
+
+<h2 id="bettors">Bettors collection</h2>
+
+These are users aka bettors that have signed up. Possibly (time permitting) seeded with
+1000 bettors for demo purposes.
+
+## Bettors schema
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>_id</code></td>
+      <td>ObjectId</td>
+      <td>Mongo-generated key for the document</td>
+    </tr>
+    <tr>
+      <td><code>username</code></td>
+      <td>String</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>pwd</code></td>
+      <td>String</td>
+      <td>bcrypt hash of password</td>
+    </tr>
+    <tr>
+      <td><code>balance</code></td>
+      <td>Number</td>
+      <td>dollar balance in account</td>
+    </tr>
+</tbody>
+</table>
+
+## Bettors example document
+
+```
+{
+  _id: "3e85908c9dad05d2589ae104",
+  username: "foghorn5",
+  pwd: "$2a$16$7JKSiEmoP3GNDSalogqgPu0sUbwder7CAN/5wnvCWe6xCKAKwlTDq",
+  balance: 250.00
+}
+```
+
+1. Surprisingly, this collection will be seeded with exactly the same 1000 people
+from an earlier people.json lab. Apparently they all like to gamble!
+
+<div class="page"/>
+
+<h2 id="teams">Teams collection</h2>
+
+A seeded reference collection to store static identities for all 32 NFL teams. This
+collection has exactly 32 documents in it, one per team.
+
+## Teams schema
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>_id</code></td>
+      <td>ObjectId</td>
+      <td>Mongo-generated key for the document</td>
+    </tr>
+    <tr>
+      <td><code>abbrv</code></td>
+      <td>String</td>
+      <td>three-letter unique business key to enhance readability</td>
+    </tr>
+    <tr>
+      <td><code>fran</code></td>
+      <td>String</td>
+      <td>franchise name, typically locale/city/state of team</td>
+    </tr>
+    <tr>
+      <td><code>nn</code></td>
+      <td>String</td>
+      <td>team nickname</td>
+    </tr>
+  </tbody>
+</table>
+
+## Teams example document
+
+```
+{
+  _id: "5f85808c9dad05d358aae011",
+  abbrv: "ten",
+  fran: "Tennessee",
+  nn: "Titans"
+}
+```
+
+## Lines API
+
+Lines API  is available from application as:
+http://localhost:3000/api/lines/nfl
+
+This API is what the rendering logic for display of betting page must use, via handlebars.
+
+### Example return from Lines API
+
+Only shows two games coming back, there will usually be up to 14 except on Mondays
+when there may only be one (for Monday night game).
+
+```
+  [
+  {
+    "gameTime": "8:20 PM",
+    "gameDate": "Thursday, November 19",
+    "gameDateJulian": 1605835200000,
+    "lineDate": "20201117221505",
+    "awayShort": "ari",
+    "awayML": 150,
+    "awayPts": 3,
+    "awayOE": 57.5,
+    "awayLong": "Arizona Cardinals",
+    "homeShort": "sea",
+    "homeML": -170,
+    "homePts": -3,
+    "homeOE": 57.5,
+    "homeLong": "Seattle Seahawks"
+  },
+  {
+    "gameTime": "1:00 PM",
+    "gameDate": "Sunday, November 22",
+    "gameDateJulian": 1606068000000,
+    "lineDate": "20201117221505",
+    "awayShort": "phi",
+    "awayML": 160,
+    "awayPts": 3.5,
+    "awayOE": 45.5,
+    "awayLong": "Philadelphia Eagles",
+    "homeShort": "cle",
+    "homeML": -180,
+    "homePts": -3.5,
+    "homeOE": 45.5,
+    "homeLong": "Cleveland Browns"
+  },
+  ]
+```
+
+<div class="page"/>
 
 ## Betting page
 
@@ -134,13 +511,13 @@ state of each panel on the page by simply scrolling their device.
 
 1. Displays account balance for the user from `Bettors.balance`.
 
-1. Input is some type of large text box with large font.
+1. Input control is some type of read only large text box with large font.
 
 1. Label clearly states this is the user's balance.
 
 1. I see it having larger font that what is available on the betting panel.
 
-1. User cannot type in the text box, it is disabled from any changes. Only the
+1. User cannot type in this account balance text box, it is disabled from any changes. Only the
 application can make changes to it.
 
 1. Balance is whole dollars only.
@@ -155,7 +532,8 @@ or color change or something visual to break them up).
 
 ### Betting panel operation
 
-1. Input for this panel is from http://localhost:3000/api/lines/nfl.
+1. Input for this panel is sourced from http://localhost:3000/api/lines/nfl which then
+must be rendered through a handlebars view and out to the user.
 
 1. Submit button enables only when one or more of the 18 text boxes contains
 a non-zero amount, and is disabled otherwise.
@@ -183,10 +561,10 @@ amount of wager. Confirmation can be
 as simple as "Your wager totalling $212 is in!" Perhaps it is some type of
 popup with buttons *Continue* and *Logout* on it.
 
-    a. Pressing *Continue* will dismiss confirmation box and return user to
+    a. Pressing *Continue* dismisses confirmation box and returns user to
 the betting screen.
 
-    b. Pressing *Logout* will log the user out and return application to
+    b. Pressing *Logout* logs user out and returns application to
 the login screen ready for the next customer.
 
     c. Perhaps we change Submit button to *Start Again* so that user does
@@ -308,6 +686,7 @@ We would then identify the main pieces of functionality and team members would v
 what they want to take on.
 
 <table>
+<tbody>
 <tr>
   <th>Item</th><th>Developer</th>
 </tr>
@@ -347,6 +726,7 @@ what they want to take on.
 <tr>
   <td>API to game results including database storage</td><td>Dale</td>
 </tr>
+</tbody>
 </table>
 
 ## Business
