@@ -68,10 +68,14 @@ state government would be the house.
 **Line.** A catch-all term to describe types of bets. For an example of lines,
 see https://www.espn.com/nfl/lines.
 
+**NFL.** National Football League, http://nfl.com.
+
 **OFF**. Some games do not have posted betting lines for various reasons. These are
 considered "off" games and cannot be bet.
 
 **Player.** See bettor.
+
+**PPP.** Project Pitch Proposal.
 
 **Push.** A tie with the house. The player is refunded their original bet amount in full.
 
@@ -146,7 +150,8 @@ Stores bets. Each document is a bet from a bettor aka user. Bettors use the syst
 user interface to enter bets. As the bets are entered, the system stores them to this
 collection.
 
-Bets are made against lines. This collection originally was designed to store
+Bets are made against lines. This collection as originally submitted in the database
+proposal was designed to store
 a *reference* to a line for each bet made. This has been changed to
 now store the actual value of the line.
 
@@ -177,7 +182,7 @@ now store the actual value of the line.
     <tr>
       <td><code>bettype</code></td>
       <td>String</td>
-      <td>type of bet, one of: AML, ASP, HML, HSP, OV, UN</td>
+      <td>type of bet, one of: AML, ASP, HML, HSP, OV, UN [1]</td>
     </tr>
     <tr>
       <td><code>num</code></td>
@@ -192,19 +197,19 @@ now store the actual value of the line.
     <tr>
       <td><code>pays</code></td>
       <td>Number</td>
-      <td>dollars this bet pays, or null if bet is still live</td>
+      <td>dollars this bet pays on a bettor win</td>
     </tr>
     <tr>
       <td><code>collects</code></td>
       <td>Number</td>
-      <td>total dollars this bet collects should bettor win; this
+      <td>total dollars this bet collects on a bettor win; this
           is equal to amount + pays</td>
     </tr>
     <tr>
       <td><code>paid</code></td>
       <td>Number</td>
       <td>dollar amount this bet collected, or null if bet is still live; may
-      be zero indicating this bet has resolved and was a loss for the bettor [1]</td>
+      be zero indicating this bet has resolved and was a loss for the bettor [2]</td>
     </tr>
     <tr>
       <td><code>entered</code></td>
@@ -212,9 +217,9 @@ now store the actual value of the line.
       <td>time and date of the bet</td>
     </tr>
     <tr>
-      <td><code>closed</code></td>
+      <td><code>resolved</code></td>
       <td>Date</td>
-      <td>time and date the bet resolved, or null if bet is still live [1]</td>
+      <td>time and date the bet resolved, or null if bet is still live [2]</td>
     </tr>
     <tr>
       <td colspan="3">Notes</td>
@@ -222,6 +227,15 @@ now store the actual value of the line.
     <tr>
       <td colspan="3">
         <ol style="margin-left:-20px">
+          <li>
+            <ul>
+              <li>AML Away Money Line.</li>
+              <li>ASP Away Spread.</li>
+              <li>HML Home Money Line.</li>
+              <li>HSP Home Spread</li>
+              <li>OV  Over.</li>
+              <li>UN  Under.</li>
+            </ul>
           <li>These fields are necessary in order for the system to know whether it
           has resolved the bet or not.</li>
         </ol>
@@ -244,7 +258,7 @@ now store the actual value of the line.
   collects: 147,
   paid: null,
   entered: "2020-11-17T15:30:22",
-  closed: null
+  resolved: null
 }
 ```
 
@@ -261,9 +275,9 @@ this collection would have 17 * 14 = 238 documents in it.
 The system inserts final scores into the collection in an automated
 fashion, as they become avaialable.
 
-Game documents may be inserted with a null ```ascore``` and null
-```hscore```. After the game is played, a system background job is
-responsible for updating ```ascore``` and ```hscore``` with the game's
+Score documents may be inserted with a null ```awayScore``` and null
+```homeScore```. After the game is played, a system background job is
+responsible for updating ```awayScore``` and ```homeScore``` with the game's
 final score.
 
 ## Scores schema
@@ -279,6 +293,11 @@ final score.
       <td><code>_id</code></td>
       <td>String</td>
       <td>format of awayTeam-homeTeam-date-of-game (see example document)</td>
+    </tr>
+    <tr>
+      <td><code>gameDate</code></td>
+      <td>String</td>
+      <td>YYYY-MM-DD</td>
     </tr>
     <tr>
       <td><code>awayTeam</code></td>
@@ -302,14 +321,12 @@ final score.
     <tr>
       <td><code>awayScore</code></td>
       <td>Integer</td>
-      <td>Away team final score. Null up until when the game has finished and the
-      system has processed the final score feed.</td>
+      <td>Away team final score or null if game not complete or not yet updated.</td>
     </tr>
     <tr>
       <td><code>homeScore</code></td>
       <td>Integer</td>
-      <td>Home team final score. Null up until when the game has finished and the
-      system has processed the final score feed.</td>
+      <td>Home team final score or null if game not complete or not yet updated.</td>
     </tr>
   </tbody>
 </table>
@@ -442,6 +459,7 @@ collection has exactly 32 documents in it, one per team.
   nn: "Titans"
 }
 ```
+<div class="page"/>
 
 ## Lines API
 
@@ -503,8 +521,9 @@ text box at the top and a series of betting panels below that.
 
 The rest of the page has 12-16 betting panels with clear separation between each one.
 They are arranged veritically one after another. All must be visible at the same time
-i.e. the page could be reduced greatly by having a drop down to select which single panel
-to view but that will not satisfy. The user must be able to see all panels and the
+i.e. the page could be reduced greatly by having a drop down to select which
+single betting panel
+to view at a time, but that will not satisfy. The user must be able to see all panels and the
 state of each panel on the page by simply scrolling their device.
 
 ### Account balance operation
@@ -524,7 +543,7 @@ application can make changes to it.
 
 ### Betting panel sketch
 
-Only one betting panel shown. The page itself has 14 of these, one per game that week,
+Only one betting panel shown. The page itself has up to 16 of these, one per game that week,
 arranged vertically one after another with clear delineation between them (e.g., space,
 or color change or something visual to break them up).
 
@@ -552,7 +571,7 @@ remain enabled and the BET box will be disabled in this case.
 1. All text to left of Bet/Win columns is either static to the template page
 or static as rendered from the database. User cannot change this static text.
 
-1. User will be prompted after pressing Sumbit, e.g., "You are about to wager
+1. User will be prompted after pressing Submit, e.g., "You are about to wager
 $212 on this game. Are you sure?" Y/N buttons.
 
 1. User will receive confirmation once Submit has sucessfully processed on the
@@ -617,16 +636,18 @@ you can sign up here.
 1. Information to be entered for new users (sign up flow) must be enough to
 populate a new document entry in the `Bettors` collection.
 
-1. New users will need to enter a password.
+1. New users will need to enter a password (twice to make sure no typos). The PPP spoke
+of having state-of-the-art security, so this password should have some restrictions on
+it e.g. 1 special, 1 number, 1 upper case, 1 lower case and so forth.
 
 1. CAPTCHA (i.e., "I'm not a robot") would be a nice touch but we did not
 commit to this. Look into it if you would like to do so or time permitting.
 
-1. Successful sign in or sign up takes user to the betting page.
+1. Successful sign in or sign up takes user to the fund account page. 
 
 <div class="page">
 
-## Fund account operation
+## Fund account operation aka payment portal
 
 These rules not in chronological order.
 
@@ -665,6 +686,9 @@ one could show that somehow on the page e.g., "Put in your $5, $10, or $20 below
 with an image of a cash collector or something. First cut not worried about this but
 I think it would be a nice touch since sports wagering "on premises" would frequently
 be a cash business just like buying lottery tickets is a cash business.
+
+1. Once account is funded with some minimum amount there should be a live link they
+an click to head to the betting page.
 
 <div class="page">
 
@@ -751,3 +775,4 @@ newstands, and the like.
 1. Draft Kings
 1. International Game Technology
     - https://www.igt.com/products-and-services/sportsbetting
+1. And others (see PPP).
