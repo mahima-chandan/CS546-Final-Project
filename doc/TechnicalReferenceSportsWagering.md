@@ -574,6 +574,10 @@ or static as rendered from the database. User cannot change this static text.
 1. User will be prompted after pressing Submit, e.g., "You are about to wager
 $212 on this game. Are you sure?" Y/N buttons.
 
+1. Bets against panels that have a ```gateDateJulian``` value less than
+the current Julian date must be disallowed. This check should be done on the front end
+and back end both.
+
 1. User will receive confirmation once Submit has sucessfully processed on the
 backend by insert bet into Bets collection. User's balance will deduct by
 amount of wager. Confirmation can be
@@ -591,7 +595,7 @@ not get confused and try to Submit bets a second time.
 
 1. Submit must occur by AJAX callback so as to a) meet requirement of
 the project per professor and 2) so that screen does not have to flash as
-it reloads all 14 panels (one panel per game). The AJAX call should only
+it reloads all other live panels (one panel per game). The AJAX call should only
 result in the current panel refreshing.
 
 1. Panel is shown in its already smallest dimension with only one panel
@@ -601,11 +605,13 @@ three of them will fit horizontally. This is to demonstate that our application
 is *responsive* which is another requirement. (NOTE: Check this, I can't
 find this requirement anywhere.)
 
-1. This page has 14 panels, one for each game for that week. Panels are
+1. This page generally has 1-16, one for each game for that week but depending
+on when the page is pulled up some of the games may have already played and
+are therefore not available for betting. Panels are
 arranged responsively but on a small screen they would stack vertically one
 after the other with comfortable space between each. A drop down where you
-would first select one of 14 games then only that panel appears does not
-feel right to me which is why I want all 14 panels to display at once. Bettors
+would first select one of the up to 16 games then only that panel appears does not
+feel right to me which is why I want all live panels to display at once. Bettors
 need to be able to see in one fell swoop what the lines are, what looks appealing
 to bet on, and what they have already bet on.
 
