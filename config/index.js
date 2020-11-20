@@ -42,6 +42,7 @@ module.exports = {
   db: {
     dbConnection,
     bets: getCollectionFn('bets'),
+    bettors: getCollectionFn('bettors'),
     scores: getCollectionFn('scores'),
     users: getCollectionFn('users'),
   }
