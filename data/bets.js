@@ -23,7 +23,6 @@ const scores = require('./scores.js');
 // ----------------------------------------------------------------------------
 
 async function resolve() {
-  console.log("inside resolve at " + Date());
   const bets = await db.bets();
   const bettors = await db.bettors();
   await scores.seed();
@@ -80,7 +79,7 @@ async function resolve() {
     await bets.updateOne({_id: x._id}, { $set: { "paid": x.paid } });
     await bettors.updateOne({_id: x.bettorid}, { $set: { "balance": x.balance + x.paid }});
   };
-  return await cur.forEach(f);
+  cur.forEach(f);
 }
 
 timer.setInterval(resolve, 3600 * 1000);
