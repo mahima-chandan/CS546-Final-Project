@@ -663,9 +663,13 @@ number of panels per week as it can and will vary.
 
 <div class="page">
 
-## Sign up or sign in Login page
+## Authentication
 
-This is the landing page for the application. Unlike some applications, you are
+This includes a page for *Sign up or sign in*, *logout operation*,
+a *Logout confirmation* indication of some sort, handling of AuthCookie,
+and middleware in app.js to check for authenticated user.
+
+Sign up/Sign in is the landing page for the application. Unlike some applications, you are
 not allowed to do anything until you sign in. If you don't have an account
 you can sign up here.
 
@@ -679,7 +683,8 @@ it e.g. 1 special, 1 number, 1 upper case, 1 lower case and so forth.
 1. CAPTCHA (i.e., "I'm not a robot") would be a nice touch but we did not
 commit to this. Look into it if you would like to do so or time permitting.
 
-1. Password must have at least 1 upper, 1 lower, 1 non-letter (number or special character).
+1. Password must have at least 1 upper, 1 lower, 1 non-letter (number or special character),
+and be at least 8 characters long.
 
 1. Successful sign in or sign up takes user to the fund account page. 
 
@@ -695,6 +700,9 @@ commit to this. Look into it if you would like to do so or time permitting.
 
 1. Nav bar must be hidden or disabled as navigation to other pages and functionality
 on the site cannot be allowed to occur until user has been authenticated.
+
+1. Middleware in app.js will kick out any user that is not currently authenticated
+and send them back to the login page.
 
 <div class="page">
 
