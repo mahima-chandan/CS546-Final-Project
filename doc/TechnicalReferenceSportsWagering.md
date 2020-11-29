@@ -124,6 +124,36 @@ some empathy.
 
 <div class="page"/>
 
+## Clone GitHub projet and get started
+
+Some steps to get up and running from a cold start.
+
+1. Clone the GitHub project to an empty directory which will be your project directory.
+Project is located https://github.com/madelinerys/CS546-Final-Project.
+
+1. Start your local mongodb server running. I run on default 27017 port.
+
+3. Run ```npm install``` from your directory you picked in 1. above.
+
+1. From project directory run ```node app.js```. It should start up and say something
+like this: We've now got a server!  Your routes will be running on http://localhost:3000.
+Current lines available on http://localhost:3000/api/lines/nfl
+
+1. Go to browser (I use Chrome) http://localhost:3000. It should bring up a stub login page.
+
+1. Christian will work on ```Make bets``` (see views/bet.handlebars, routes/bet.js, data/bet.js).
+
+1. Madelaine will work on ```History``` (I think only history.handlebars available so far, create the rest as you go).
+
+1. Mahima is doing ```Fund account``` (see views/fund.handlebars, routes/fund.js, create whatever else).
+
+1. Amrutha is doing everything login/logout/authentication.
+
+1. app.js has set up a session you will have to add to it if you need session storage to remember things.
+
+1. See Tech Reference the .md file (I do not update the .pdf regularly) for more details about what else to do
+or chat on Slack with questions.
+
 ## System rules
 
 A list of rules that don't necessarily pertain to any one page or database collection but
