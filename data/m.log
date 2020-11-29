@@ -1,0 +1,13 @@
+{
+	"_id" : "6eeb5b6186fbfca1f18ed313",
+	"bettorid" : "5ee77f8c75ee6029745ca8ac",
+	"gameid" : "hou-kc-2020-09-10",
+	"bettype" : "OV",
+	"num" : 3,
+	"amount" : 66,
+	"pays" : 60,
+	"collects" : 126,
+	"paid" : 126,
+	"entered" : "2020-09-08",
+	"resolved" : null
+}

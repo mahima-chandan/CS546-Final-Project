@@ -43,6 +43,7 @@ module.exports = {
     dbConnection,
     bets: getCollectionFn('bets'),
     bettors: getCollectionFn('bettors'),
+    lines: getCollectionFn('lines'),
     scores: getCollectionFn('scores'),
     users: getCollectionFn('users'),
   }

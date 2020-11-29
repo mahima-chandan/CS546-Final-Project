@@ -3,27 +3,35 @@ const c = require('../config');
 const express = require('express');
 const fs = require('fs-extra');
 const router = express.Router();
+const {lines} = require('../data');
 
 let gameDate = null,
     gameTime = null,
-    lines = [];
+    currentLines = [];
 
 router.get('/nfl', async (req, res) => {
   try {
+    currentLines = [];
     const obj = await axios.get('https://www.espn.com/nfl/lines');
-    let s = obj.data;
-    i = s.indexOf("HeaderScoreboardWrapper")
-    s = s.substring(i, i + 90000);
-
-    let batches = s.split('margin-subtitle"');
-    for (let i = 1; i < batches.length; ++i)
-      await doMSBatch(batches[i]);
-    res.json(lines.filter(x => { return x }));
+    await parse(obj.data);
+    res.json(currentLines.filter(x => { return x }));
   }
   catch (e) {
     res.status(400).send(`route: /nfl/week/:week ${e}`);
   }
 });
+
+async function doFile(pathname) {
+}
+
+async function parse(s) {
+  i = s.indexOf("HeaderScoreboardWrapper")
+  s = s.substring(i, i + 90000);
+
+  let batches = s.split('margin-subtitle"');
+  for (let i = 1; i < batches.length; ++i)
+    await doMSBatch(batches[i]);
+}
 
 async function doMSBatch(batch) {
   let x = batch.substring(0, 32);3
@@ -41,7 +49,7 @@ async function doTHBatch(batch) {
     return;
   }
   if (batch.search(/^>FPI/) == 0)
-    lines.push(await doGameBatch(batch));
+    currentLines.push(await doGameBatch(batch));
 }
 
 // first item of the batch is where I extract the date from, to use on all

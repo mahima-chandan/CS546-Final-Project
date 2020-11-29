@@ -3,6 +3,7 @@ const {db} = require('./config');
 
 async function main() {
   await data.scores.seed();
+  await data.lines.seed();
 }
 
 main().then(() => {

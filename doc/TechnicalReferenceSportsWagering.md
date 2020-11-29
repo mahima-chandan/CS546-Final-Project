@@ -633,7 +633,7 @@ number of panels per week as it can and will vary.
 
 <div class="page">
 
-## Sign up or sign in
+## Sign up or sign in Login page
 
 This is the landing page for the application. Unlike some applications, you are
 not allowed to do anything until you sign in. If you don't have an account
@@ -649,9 +649,36 @@ it e.g. 1 special, 1 number, 1 upper case, 1 lower case and so forth.
 1. CAPTCHA (i.e., "I'm not a robot") would be a nice touch but we did not
 commit to this. Look into it if you would like to do so or time permitting.
 
+1. Password must have at least 1 upper, 1 lower, 1 non-letter (number or special character).
+
 1. Successful sign in or sign up takes user to the fund account page. 
 
+1. No support for exceptional cases, such as:
+
+    a. forgot password,
+
+    b. password expired,
+
+    c. can't remember if I have already signed up or not,
+
+    d. change password.
+
+1. Nav bar must be hidden or disabled as navigation to other pages and functionality
+on the site cannot be allowed to occur until user has been authenticated.
+
 <div class="page">
+
+## Logout page 
+
+1. Would be good to have a final page that confirms (not alert box but an actual
+static page) unequivocably that you have been officially logged off the system.
+After all you have provided your credit card, you don't want the next person to
+use it do you?
+
+1. Before rendering this page you must erase the AuthCookie on server side.
+
+1. Page should not have any navigation menu enabled or visible except Login
+as (probably easiest) a standalone button.
 
 ## Fund account operation aka payment portal
 
@@ -701,6 +728,11 @@ an click to head to the betting page.
 ## Player history
 
 This page shows history of bets for a player, including win/loss and financials.
+Backend will query bets collection for current authenticated user, and bring back
+a formatted page of tabular results, one row for each bet made.
+
+Can default to chronological ordering of bets. Nice to have ability to sort by column
+but I don't believe we signed up for that so only do time-permitting.
 
 <div class="page">
 
@@ -743,6 +775,10 @@ what they want to take on.
 
 <tr>
   <td>Sign in or Sign up, full stack</td><td>Amrutha</td>
+</tr>
+
+<tr>
+  <td>Logout operation</td><td>Amrutha</td>
 </tr>
 
 <tr>

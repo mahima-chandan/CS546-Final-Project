@@ -1,0 +1,71 @@
+<style type="text/css">
+
+h5 { 
+  margin-top: -20px;
+  font-style: italic;
+}
+
+article {
+  background-color: tan;
+  color: navy;
+  padding: 10px;
+}
+
+div.vspacer {
+  height: 40px;
+}
+
+</style>
+
+<h2>Admin</h2>
+<p><code><em>None of this is wired up or coded, just some ideas I have for things that might
+be needed. I still think back dating the system with Set SimDate will be something
+useful to save time as well as allow us to conduct a demo.</em></code></p>
+
+<article>
+<h3>Set SimDate</h3>
+<h5>Set the system date to sometime in the past, which will allow you to bet on games that have already occurred,
+which in turn is needed for debugging and testing</h5>
+
+<form name="setSimDate" action="/admin/setSimDate">
+<label for="simDate">SimDate</label>
+<input name="simDate" id="simDate" type="date"/>
+<button name="btnSimDate">Set SimDate</button>
+</form>
+</article>
+
+<div class="vspacer"></div>
+
+<article>
+<h3>Clear SimDate</h3>
+<h5>Clear (disable) use of SimDate, which sets system date to actual date</h5>
+
+<form name="clearSimDate" action="/admin/clearSimDate">
+<label for="idclearSimDate">Clear SimDate</label>
+<button name="btnClearSimDate">Clear SimDate</button>
+</form>
+</article>
+
+<div class="vspacer"></div>
+
+<article>
+<h3>Delete all bets</h3>
+<h5>Deletes all bets from bets collection, leaving it empty</h5>
+
+<form name="deleteAllBets" action="/admin/deleteAllBets">
+<label for="idDeleteBets">Delete All Bets</label>
+<button name="btnDeleteBets">Delete All Bets</button>
+</form>
+</article>
+
+<div class="vspacer"></div>
+
+<article>
+<h3>Resolve all bets</h3>
+<h5>Decides all bets (win/lose/push) based on current system date</h5>
+
+<form name="resolveAllBets" action="/admin/resolveAllBets">
+<label for="idResolveBets">Resolve All Bets</label>
+<button name="btnResolveBets">Resolve All Bets</button>
+</form>
+</article>

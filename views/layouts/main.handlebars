@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="/site.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+a:link {
+  text-decoration: none;
+  color: navy;
+  font-weight: bold;
+}
+
+nav {
+  background-color: tan;
+}
+
+nav span {
+  padding-left: 40px;
+}
+
+body {
+  font-family: Arial;
+  background-color: navy;
+  color: white;
+}
+
+</style>
+<title>{{title}}</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/bet">Make bets</a><span></span>
+      <a href="/fund">Fund account</a><span></span>
+      <a href="/history">History</a><span></span>
+      <a href="/admin">Admin</a><span></span>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  <main>
+    {{{body}}}
+  </main>
+</body>
+</html>

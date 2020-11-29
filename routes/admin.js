@@ -5,8 +5,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    res.render('login', {});
-//    res.sendFile(path.resolve('public/login.html'));
+    res.render('admin', {});
   }
   catch (e) {
     res.status(400).send(`route: / ${e}`);
@@ -15,8 +14,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body);
-    res.sendFile(path.resolve('public/bet.html'));
+// do something
   }
   catch (e) {
     res.status(400).send(`route: / ${e}`);

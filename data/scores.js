@@ -10,6 +10,16 @@ const {ObjectID} = require('mongodb');
 
 const scoresURL = `https://www.pro-football-reference.com/years/${c.year}`;
 
+// ----------------------------------------------------------------------------
+// Game scores need to be seeded to the database before anything will work
+// as far as determining winning and losing bets. To seed scores, first make
+// sure mongo database 'jerry' is running. Then run "npm run seed" which
+// should call this seed() function. You can seed anytime, including seeding
+// over top of what was already seeded. Seeding goes online to above URL to
+// get the scores, so if any games have been played since the last time you
+// seeded they will get picked up on the next seed.
+// ----------------------------------------------------------------------------
+
 async function seed() {
   const scores = await db.scores();
   await scores.deleteMany({});

@@ -5,14 +5,14 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    res.render('login', {});
-//    res.sendFile(path.resolve('public/login.html'));
+    res.render('fund', {});
   }
   catch (e) {
     res.status(400).send(`route: / ${e}`);
   }
 });
 
+/* Mahima to develop this
 router.post('/', async (req, res) => {
   try {
     console.log(req.body);
@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
     res.status(400).send(`route: / ${e}`);
   }
 });
+*/
 
 module.exports = router;
 
