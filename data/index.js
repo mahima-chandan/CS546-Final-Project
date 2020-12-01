@@ -1,4 +1,5 @@
 module.exports = {
   lines: require('./lines'),
-  scores: require('./scores') 
+  scores: require('./scores'),
+  users: require('./users') 
 };

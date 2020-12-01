@@ -33,7 +33,7 @@ async function importFiles() {
     if (ctx.currentLines.length)
       dbLines.insertMany(ctx.currentLines);
     else
-      console.error("Warning: " + d.name + " has no lines");
+      console.error("Warning: " + d.name + " has no lines and will be ignored");
   }
 }
 
@@ -185,10 +185,8 @@ async function doGameBatch(ctx, batch) {
 
 function parseLineDate(s) {
   const pieces = s.match("[0-9]{8}");
-  if (!pieces) {
-    console.log("Skipping for no date found, file " + s);
+  if (!pieces)
     return;
-  }
   let datestr = pieces[0]; 
   const month = datestr.substring(0, 2);
   const day = datestr.substring(2, 4);

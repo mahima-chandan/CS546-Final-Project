@@ -4,6 +4,7 @@ const {db} = require('./config');
 async function main() {
   await data.scores.seed();
   await data.lines.seed();
+  await data.users.seed();
 }
 
 main().then(() => {
