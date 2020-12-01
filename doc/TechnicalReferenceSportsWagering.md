@@ -202,7 +202,7 @@ now store the actual value of the line.
     <tr>
       <td><code>bettorid</code></td>
       <td>ObjectId</td>
-      <td><code>_id</code> of the bettor from <a href="#bettors">Bettors</a> collection</td>
+      <td><code>_id</code> of the bettor from <a href="#users">Users</a> collection</td>
     </tr>
     <tr>
       <td><code>gameid</code></td>
@@ -389,12 +389,14 @@ final score.
 
 <div class="page"/>
 
-<h2 id="bettors">Bettors collection</h2>
+<h2 id="users">Users collection</h2>
 
-These are users aka bettors that have signed up. Possibly (time permitting) seeded with
-1000 bettors for demo purposes.
+These are users aka bettors that have signed up.
 
-## Bettors schema
+Fka bettors. Changed name to users to better fit the fact that adminstrators
+can also be in the collection. Anyone can bet however, even adminstrators.
+
+## Users schema
 
 <table>
   <thead>
@@ -419,6 +421,11 @@ These are users aka bettors that have signed up. Possibly (time permitting) seed
       <td>bcrypt hash of password</td>
     </tr>
     <tr>
+      <td><code>role</code></td>
+      <td>Number</td>
+      <td>0 for regular bettor; 1 for admininistrator</td>
+    </tr>
+    <tr>
       <td><code>balance</code></td>
       <td>Number</td>
       <td>dollar balance in account</td>
@@ -426,26 +433,25 @@ These are users aka bettors that have signed up. Possibly (time permitting) seed
 </tbody>
 </table>
 
-## Bettors example document
+## Users example document
 
 ```
 {
   _id: "3e85908c9dad05d2589ae104",
   username: "foghorn5",
+  role: 0,
   pwd: "$2a$16$7JKSiEmoP3GNDSalogqgPu0sUbwder7CAN/5wnvCWe6xCKAKwlTDq",
   balance: 250.00
 }
 ```
-
-1. Surprisingly, this collection will be seeded with exactly the same 1000 people
-from an earlier people.json lab. Apparently they all like to gamble!
 
 <div class="page"/>
 
 <h2 id="teams">Teams collection</h2>
 
 A seeded reference collection to store static identities for all 32 NFL teams. This
-collection has exactly 32 documents in it, one per team.
+collection has exactly 32 documents in it, one per team. Currently not implemented
+and will try to do without it.
 
 ## Teams schema
 

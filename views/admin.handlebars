@@ -8,7 +8,7 @@ h5 {
 article {
   background-color: tan;
   color: navy;
-  padding: 10px;
+  padding: 5px;
 }
 
 div.vspacer {
@@ -19,7 +19,7 @@ div.vspacer {
 
 <h2>Admin</h2>
 <p><code><em>None of this is wired up or coded, just some ideas I have for things that might
-be needed. I still think back dating the system with Set SimDate will be something
+be needed. I still think backdating the system with Set SimDate will be something
 useful to save time as well as allow us to conduct a demo.</em></code></p>
 
 <article>
@@ -69,3 +69,18 @@ which in turn is needed for debugging and testing</h5>
 <button name="btnResolveBets">Resolve All Bets</button>
 </form>
 </article>
+
+<div class="vspacer"></div>
+
+<article>
+<h3>Time out user</h3>
+<h5>Invalidates AuthCookie so next time the user does something they should kick out</h5>
+
+<form name="timeOutUser" action="/admin/timeOutUser">
+<label for="idTimeOut">Username</label>
+<input name="timeOut" id="idTimeOut" type="text"/>
+<button name="btnTimeOut">Time Out User</button>
+</form>
+</article>
+
+
