@@ -1,7 +1,7 @@
 # Sports Wagering Technical Reference 
 
 An informal and frequently changing container for policy, requirements, design notes, sketches, etc.
-in order to help out with building this thing.
+in order to help out with building this product.
 
 ### Team members
 
@@ -185,7 +185,7 @@ proposal was designed to store
 a *reference* to a line for each bet made. This has been changed to
 now store the actual value of the line.
 
-## Bets schema 
+### **Bets schema**
 
 <table>
   <thead>
@@ -274,7 +274,7 @@ now store the actual value of the line.
   </tbody>
 </table>
 
-## Bets example document
+### **Bets example document**
 
 ```
 {
@@ -310,7 +310,7 @@ Score documents may be inserted with a null ```awayScore``` and null
 responsible for updating ```awayScore``` and ```homeScore``` with the game's
 final score.
 
-## Scores schema
+### **Scores schema**
 
 <table>
   <thead>
@@ -363,7 +363,7 @@ final score.
 
 <div class="page"/>
 
-## Scores example document
+### **Scores example document**
 
 ```
 {
@@ -377,7 +377,7 @@ final score.
 }
 ```
 
-## Scores notes
+### **Scores notes**
 
 1. NFL is the <a href="http://www.nfl.com">National Football League</a>.
 
@@ -396,7 +396,7 @@ These are users aka bettors that have signed up.
 Fka bettors. Changed name to users to better fit the fact that adminstrators
 can also be in the collection. Anyone can bet however, even adminstrators.
 
-## Users schema
+### **Users schema**
 
 <table>
   <thead>
@@ -433,7 +433,7 @@ can also be in the collection. Anyone can bet however, even adminstrators.
 </tbody>
 </table>
 
-## Users example document
+### **Users example document**
 
 ```
 {
@@ -451,9 +451,9 @@ can also be in the collection. Anyone can bet however, even adminstrators.
 
 A seeded reference collection to store static identities for all 32 NFL teams. This
 collection has exactly 32 documents in it, one per team. Currently not implemented
-and will try to do without it.
+and right now does not seem to be a strong need for it.
 
-## Teams schema
+### **Teams schema**
 
 <table>
   <thead>
@@ -485,7 +485,7 @@ and will try to do without it.
   </tbody>
 </table>
 
-## Teams example document
+### **Teams example document**
 
 ```
 {
@@ -496,6 +496,46 @@ and will try to do without it.
 }
 ```
 <div class="page"/>
+
+## Settings collection
+
+A single-document collection used for runtime state, where said state needs to persist.
+Currently not used except for possible debugging and simulation needs which may require it.
+
+### **Settings schema**
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>_id</code></td>
+      <td>ObjectId</td>
+      <td>Mongo-generated key for the document</td>
+    </tr>
+    <tr>
+      <td><code>simdate</code></td>
+      <td>Date</td>
+      <td>A date in the past, or null. If not null, the Lines API uses this date
+      to bring back Lines that are valid for this date. This is needed so that
+      during debugging, testing, and doing demos, the user can bet on games
+      that have already occurred. Which in turn, is necessary in order for
+      the scoring engine to decision the bets as win, lose, or push.</td>
+    </tr>
+  </tbody>
+</table>
+
+### **Settings example document**
+
+```
+{
+  _id: "982580bc9d0306d358aael8f", 
+  simdate: "11-25-2020"
+}
+```
 
 ## Lines API
 
@@ -564,7 +604,7 @@ state of each panel on the page by simply scrolling their device.
 
 ### Account balance operation
 
-1. Displays account balance for the user from `Bettors.balance`.
+1. Displays account balance for the current user from `Users.balance`.
 
 1. Input control is some type of read only large text box with large font.
 
@@ -665,7 +705,8 @@ Other reasons for the varying panels can include BYE week considerations,
 or OFF games due to player injuries or what have you.
 Generally it should run from 12-16 panels for
 any given week of the season. The logic should not rely on having a fixed
-number of panels per week as it can and will vary.
+number of panels per week as it can and will vary. The number of panels
+appearing on the page is data-driven.
 
 <div class="page">
 
@@ -680,19 +721,22 @@ not allowed to do anything until you sign in. If you don't have an account
 you can sign up here.
 
 1. Information to be entered for new users (sign up flow) must be enough to
-populate a new document entry in the `Bettors` collection.
+populate a new document entry in the `Users` collection.
 
 1. New users will need to enter a password (twice to make sure no typos). The PPP spoke
 of having state-of-the-art security, so this password should have some restrictions on
-it e.g. 1 special, 1 number, 1 upper case, 1 lower case and so forth.
-
-1. CAPTCHA (i.e., "I'm not a robot") would be a nice touch but we did not
-commit to this. Look into it if you would like to do so or time permitting.
+it as per next rule.
 
 1. Password must have at least 1 upper, 1 lower, 1 non-letter (number or special character),
 and be at least 8 characters long.
 
-1. Successful sign in or sign up takes user to the fund account page. 
+1. CAPTCHA (i.e., "I'm not a robot") would be a nice touch but we did not
+commit to this. Look into it if you would like to do so or time permitting.
+
+1. Successful sign up takes user to the fund account page. 
+
+1. Successful sign in takes user to the betting page unless their balance is $0
+in which case it should go to the Fund account page.
 
 1. No support for exceptional cases, such as:
 
@@ -748,7 +792,7 @@ VISA, AmEx, Discover, ??
 1. System delays for a bit then returns a simple confirmation and simultaneously
 update the current balance text box with the amount just funded.
 
-1. This page backend is updating `Bettors.balance` for the current user.
+1. This page backend is updating `Users.balance` for the current user.
 
 1. In real life this page is making an actual credit card transaction. We are
 simulating that experience only.
@@ -818,15 +862,11 @@ what they want to take on.
 </tr>
 
 <tr>
-  <td>Sign in or Sign up, full stack</td><td>Amrutha</td>
+  <td>Authentication including Sign in or Sign up, AuthCookie, middleware validation, logout</td><td>Amrutha</td>
 </tr>
 
 <tr>
-  <td>Logout operation</td><td>Amrutha</td>
-</tr>
-
-<tr>
-  <td>Player history</td><td>Madeline</td>
+  <td>Player betting history</td><td>Madeline</td>
 </tr>
 
 <tr>
@@ -834,7 +874,7 @@ what they want to take on.
 </tr>
 
 <tr>
-  <td>API to game results including database storage</td><td>Dale</td>
+  <td>API to game results (scores) including database storage</td><td>Dale</td>
 </tr>
 </tbody>
 </table>

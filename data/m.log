@@ -1,6 +1,0 @@
-{ "_id" : ObjectId("5fc5b1bef76bb547341ed427"), "username" : "madelaine", "pwd" : null, "role" : 1, "balance" : 1000 }
-{ "_id" : ObjectId("5fc5b1bef76bb547341ed428"), "username" : "mahima", "pwd" : null, "role" : 1, "balance" : 1000 }
-{ "_id" : ObjectId("5fc5b1bef76bb547341ed429"), "username" : "amrutha", "pwd" : null, "role" : 1, "balance" : 1000 }
-{ "_id" : ObjectId("5fc5b1bef76bb547341ed42a"), "username" : "christian", "pwd" : null, "role" : 1, "balance" : 1000 }
-{ "_id" : ObjectId("5fc5b1bef76bb547341ed42b"), "username" : "dale", "pwd" : null, "role" : 1, "balance" : 1000 }
-{ "_id" : ObjectId("5fc5b1bef76bb547341ed42c"), "username" : "guest", "pwd" : null, "role" : 1, "balance" : 1000 }
