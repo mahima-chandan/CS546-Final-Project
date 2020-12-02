@@ -1,4 +1,3 @@
-const axios = require('axios');
 const c = require('../config');
 const express = require('express');
 const fs = require('fs-extra');
@@ -9,10 +8,7 @@ console.log(lines.parse);
 
 router.get('/nfl', async (req, res) => {
   try {
-    currentLines = new Array(); 
-    const obj = await axios.get('https://www.espn.com/nfl/lines');
-    let ctx = { currentLines };
-    await lines.parse(ctx, obj.data);
+    const currentLines = await lines.get();
     res.json(currentLines.filter(x => { return x }));
   }
   catch (e) {

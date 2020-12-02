@@ -1,3 +1,4 @@
+const axios = require('axios');
 const c = require('../config');
 const {db} = require('../config');
 const {ObjectID} = require('mongodb');
@@ -23,6 +24,7 @@ async function importFiles() {
     function spliceInLineDates(lineObj) {
       lineObj.lineDate = lineDateObj.lineDate;
       lineObj.lineDateJulian = lineDateObj.lineDateJulian;
+      lineObj.lineDateStr = lineDateObj.lineDateStr;
       return lineObj;
     }
     const fileContents = await fs.readFile(basedir + '/' + d.name, 'ascii');
@@ -179,9 +181,17 @@ async function doGameBatch(ctx, batch) {
   }
 }
 
-// Takes file name such as 11282020.html
-// where last piece MUST be in the format "MMddyyyy.html", and returns
-// an object holding this date in both Gregorian and Julian formats.
+// ----------------------------------------------------------------------------
+// Takes 'date' file name such as 11282020.html in the format "MMddyyyy.html",
+// and returns an object holding this date in 3 different formats:
+//
+//   lineDate        e.g. "2020-11-27T05:00:00.000Z"
+//   lineDateStr     e.g. "2020-11-27"
+//   lineDateJulian  e.g. 1606453200000
+//
+// This function does not look inside the file or parse file contents, it
+// only parses the file name. 
+// ----------------------------------------------------------------------------
 
 function parseLineDate(s) {
   const pieces = s.match("[0-9]{8}");
@@ -192,14 +202,39 @@ function parseLineDate(s) {
   const day = datestr.substring(2, 4);
   const year = datestr.substring(4, 8);
   const lineDate = new Date(month + "/" + day + "/" + year);
+  const lineDateStr = year + "-" + month + "-" + day;
   const lineDateJulian = lineDate.valueOf();
-  return {lineDate, lineDateJulian};
+  return {lineDate, lineDateJulian, lineDateStr};
+}
+
+async function readDatabaseLines(simdate) {
+  let currentLines = new Array(); 
+  const dbLines = await db.lines();
+  let lines = dbLines.find({lineDateStr: simdate});
+  return lines.count() ? lines.toArray() : [];
+}
+
+async function readOnlineLines() {
+  let currentLines = new Array(); 
+  const obj = await axios.get('https://www.espn.com/nfl/lines');
+  let ctx = { currentLines };
+  await parse(ctx, obj.data);
+  return ctx.currentLines;
+}
+
+async function get() {
+  const settings = await db.settings();
+  let {simdate} = await settings.find().next();
+  if (simdate)
+    return await readDatabaseLines(simdate);
+  else
+    return await readOnlineLines();
 }
 
 module.exports = {
+  get,
   importFiles,
   parse,
   seed
 }
 
-//seed().catch(console.log);

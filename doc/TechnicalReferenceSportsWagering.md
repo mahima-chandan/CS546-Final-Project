@@ -518,12 +518,13 @@ Currently not used except for possible debugging and simulation needs which may 
     </tr>
     <tr>
       <td><code>simdate</code></td>
-      <td>Date</td>
+      <td>String</td>
       <td>A date in the past, or null. If not null, the Lines API uses this date
       to bring back Lines that are valid for this date. This is needed so that
       during debugging, testing, and doing demos, the user can bet on games
       that have already occurred. Which in turn, is necessary in order for
-      the scoring engine to decision the bets as win, lose, or push.</td>
+      the scoring engine to decision the bets as win, lose, or push. Format
+      example: "2020-11-23"</td>
     </tr>
   </tbody>
 </table>
