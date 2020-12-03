@@ -25,24 +25,12 @@ useful to save time as well as allow us to conduct a demo.</em></code></p>
 <article>
 <h3>Set SimDate</h3>
 <h5>Set the system date to sometime in the past, which will allow you to bet on games that have already occurred,
-which in turn is needed for debugging and testing</h5>
+which in turn is needed for debugging and testing, along with conducting demos of the system</h5>
 
-<form name="setSimDate" action="/admin/setSimDate">
-<label for="simDate">SimDate</label>
-<input name="simDate" id="simDate" type="date"/>
-<button name="btnSimDate">Set SimDate</button>
-</form>
-</article>
-
-<div class="vspacer"></div>
-
-<article>
-<h3>Clear SimDate</h3>
-<h5>Clear (disable) use of SimDate, which sets system date to actual date</h5>
-
-<form name="clearSimDate" action="/admin/clearSimDate">
-<label for="idclearSimDate">Clear SimDate</label>
-<button name="btnClearSimDate">Clear SimDate</button>
+<form id="setSimDate" name="setSimDate" action="/admin/simdate">
+<label for="simdate">SimDate</label>
+<input name="simdate" id="simdate" type="date" value="{{simdate}}"/>
+<button id="btnClearSimDate" name="btnClearSimDate">Clear SimDate</button>
 </form>
 </article>
 
@@ -50,9 +38,9 @@ which in turn is needed for debugging and testing</h5>
 
 <article>
 <h3>Delete all bets</h3>
-<h5>Deletes all bets from bets collection, leaving it empty</h5>
+<h5>3 Deletes all bets from bets collection, leaving it empty</h5>
 
-<form name="deleteAllBets" action="/admin/deleteAllBets">
+<form id="deleteAllBets" name="deleteAllBets" action="/admin/bets">
 <label for="idDeleteBets">Delete All Bets</label>
 <button name="btnDeleteBets">Delete All Bets</button>
 </form>
@@ -74,7 +62,7 @@ which in turn is needed for debugging and testing</h5>
 
 <article>
 <h3>Time out user</h3>
-<h5>Invalidates AuthCookie so next time the user does something they should kick out</h5>
+<h5>Invalidates AuthCookie, so next time the user tries to do something, they should kick out</h5>
 
 <form name="timeOutUser" action="/admin/timeOutUser">
 <label for="idTimeOut">Username</label>
@@ -83,4 +71,72 @@ which in turn is needed for debugging and testing</h5>
 </form>
 </article>
 
+<script type="text/javascript">
+let orgSimdate = "{{simdate}}";
+
+$('#deleteAllBets').submit(deleteAllBets);
+$('#simdate').change(simDateChanged);
+$('#simdate').focus(simDateFocused);
+$('#simdate').focus(simDateFocused);
+$('#btnClearSimDate').click(clearSimDate);
+
+function clearSimDate(ev) {
+  console.log(1);
+  ev.preventDefault();
+  $("#simdate").val(null);
+  orgSimdate = null;
+}
+
+function simDateChanged(ev) {
+  console.log(2);
+  alert("sim date changed");
+  ev.preventDefault();
+  const simdateControl = $("#simdate");
+  const todayDate = new Date().toISOString().split("T")[0];
+  const todayDateJulian = new Date(todayDate).valueOf();
+ 
+  const simdate = simdateControl.val();
+  console.log(4);
+  console.log(simdate);
+  return;
+  const simDateJulian = new Date(simdate).valueOf();
+
+  if (orgSimdate && simDateJulian >= todayDateJulian) {
+    alert("SimDate must be set to either a date in the past, or empty to disable.")
+    simdateControl.val(orgSimdate);
+    console.log(3);
+    return;
+  }
+  var requestConfig = {
+    method: 'PUT',
+    data: {simdate: simdateControl.val()},
+    url: '/admin/simdate',
+  };
+  $.ajax(requestConfig).then(function (responseMessage) {
+    orgSimdate = simdateControl.val();
+    console.log("orgSimdate is now " + orgSimdate);
+    console.log(responseMessage);
+  }).catch(console.log);
+  console.log("org sim date is " + orgSimdate);
+}
+
+function simDateFocused(ev) {
+  console.log(3);
+  orgSimdate = $("#simdate").val();
+}
+
+function deleteAllBets(ev) {
+  alert(orgSimdate);
+  console.log(4);
+  ev.preventDefault();
+  var requestConfig = {
+    method: 'DELETE',
+    url: '/admin/bets',
+  };
+  $.ajax(requestConfig).then(function (responseMessage) {
+    console.log(responseMessage);
+  }).catch(console.log);
+}
+
+</script>
 

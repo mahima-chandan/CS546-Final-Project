@@ -10,7 +10,10 @@ async function seed() {
   await importFiles();
 }
 
-// Needed for simulation/demo only. Will code soon.
+// ----------------------------------------------------------------------------
+// Files in line_files directory are imported into the Lines collection.
+// This is done only as part of seeding the system.
+// ----------------------------------------------------------------------------
 
 async function importFiles() {
   const basedir = "data/line_files";
@@ -233,7 +236,6 @@ async function get() {
 
 module.exports = {
   get,
-  importFiles,
   parse,
   seed
 }

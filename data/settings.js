@@ -10,7 +10,13 @@ async function seed() {
   await settings.insertOne({simdate});
 }
 
+async function saveSimDate(simdate) {
+  const settings = await db.settings();
+  await settings.updateOne({}, {$set: {simdate}});
+}
+
 module.exports = {
-  seed
+  seed,
+  saveSimDate
 };
 

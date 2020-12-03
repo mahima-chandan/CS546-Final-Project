@@ -4,6 +4,11 @@ const {ObjectID} = require('mongodb');
 const timer = require('timers');
 const scores = require('./scores.js');
 
+async function deleteAll() {
+  const dbBets = await db.bets();
+  await dbBets.deleteMany({});
+}
+
 // ----------------------------------------------------------------------------
 // Resolves unpaid bets by first interrogating scores API, and writing
 // scores returned to the scores collection. Take note that scores API is
@@ -15,7 +20,7 @@ const scores = require('./scores.js');
 //
 // Once scores collection is updated, resolve() looks through all live bets in
 // the database and resolves whatever it can find to resolve. This amounts to
-// paying the winners and pushes and updating their balance in the bettors
+// paying the winners and pushes and updating their balance in the users 
 // collection.
 //
 // A timer at bottom of this file is set up to periodically call resolve()
@@ -24,7 +29,7 @@ const scores = require('./scores.js');
 
 async function resolve() {
   const bets = await db.bets();
-  const bettors = await db.bettors();
+  const users = await db.users();
   await scores.seed();
   let cur = bets.aggregate([
     { $match: { paid: null } },
@@ -38,7 +43,7 @@ async function resolve() {
     { $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$score", 0 ] }, "$$ROOT" ] } }
     },
     { $lookup: {
-         from: "bettors",
+         from: "users",
          localField: "bettorid",
          foreignField: "_id",
          as: "bettor"
@@ -77,7 +82,7 @@ async function resolve() {
   let f = async (x) => {
     console.log(x);
     await bets.updateOne({_id: x._id}, { $set: { "paid": x.paid } });
-    await bettors.updateOne({_id: x.bettorid}, { $set: { "balance": x.balance + x.paid }});
+    await users.updateOne({_id: x.bettorid}, { $set: { "balance": x.balance + x.paid }});
   };
   cur.forEach(f);
 }
@@ -85,6 +90,7 @@ async function resolve() {
 timer.setInterval(resolve, 3600 * 1000);
 
 module.exports = {
+  deleteAll,
   resolve
 };
 
