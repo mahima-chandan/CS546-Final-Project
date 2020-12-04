@@ -1,7 +1,8 @@
 <style type="text/css">
 
-h5 { 
+h3 { 
   margin-top: -20px;
+  font-size: small;
   font-style: italic;
 }
 
@@ -17,15 +18,15 @@ div.vspacer {
 
 </style>
 
-<h2>Admin</h2>
+<h1>Admin</h1>
 <p><code><em>None of this is wired up or coded, just some ideas I have for things that might
 be needed. I still think backdating the system with Set SimDate will be something
 useful to save time as well as allow us to conduct a demo.</em></code></p>
 
 <article>
-<h3>Set SimDate</h3>
-<h5>Set the system date to sometime in the past, which will allow you to bet on games that have already occurred,
-which in turn is needed for debugging and testing, along with conducting demos of the system</h5>
+<h2>Set SimDate</h2>
+<h3>Set the system date to sometime in the past, which will allow you to bet on games that have already occurred,
+which in turn is needed for debugging and testing, along with conducting demos of the system</h3>
 
 <form id="setSimDate" name="setSimDate" action="/admin/simdate">
 <label for="simdate">SimDate</label>
@@ -37,8 +38,8 @@ which in turn is needed for debugging and testing, along with conducting demos o
 <div class="vspacer"></div>
 
 <article>
-<h3>Delete all bets</h3>
-<h5>3 Deletes all bets from bets collection, leaving it empty</h5>
+<h2>Delete all bets</h2>
+<h3>3 Deletes all bets from bets collection, leaving it empty</h3>
 
 <form id="deleteAllBets" name="deleteAllBets" action="/admin/bets">
 <label for="idDeleteBets">Delete All Bets</label>
@@ -49,8 +50,8 @@ which in turn is needed for debugging and testing, along with conducting demos o
 <div class="vspacer"></div>
 
 <article>
-<h3>Resolve all bets</h3>
-<h5>Decides all bets (win/lose/push) based on current system date</h5>
+<h2>Resolve all bets</h2>
+<h3>Decides all bets (win/lose/push) based on current system date</h3>
 
 <form name="resolveAllBets" action="/admin/resolveAllBets">
 <label for="idResolveBets">Resolve All Bets</label>
@@ -61,8 +62,8 @@ which in turn is needed for debugging and testing, along with conducting demos o
 <div class="vspacer"></div>
 
 <article>
-<h3>Time out user</h3>
-<h5>Invalidates AuthCookie, so next time the user tries to do something, they should kick out</h5>
+<h2>Time out user</h2>
+<h3>Invalidates AuthCookie, so next time the user tries to do something, they should kick out</h3>
 
 <form name="timeOutUser" action="/admin/timeOutUser">
 <label for="idTimeOut">Username</label>
