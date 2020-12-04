@@ -1,7 +1,11 @@
 <style type="text/css">
 
+h2 {
+  font-size: 1.3em;
+}
+
 h3 { 
-  margin-top: -20px;
+  margin-top: -16px;
   font-size: small;
   font-style: italic;
 }
@@ -19,9 +23,6 @@ div.vspacer {
 </style>
 
 <h1>Admin</h1>
-<p><code><em>None of this is wired up or coded, just some ideas I have for things that might
-be needed. I still think backdating the system with Set SimDate will be something
-useful to save time as well as allow us to conduct a demo.</em></code></p>
 
 <article>
 <h2>Set SimDate</h2>
@@ -39,7 +40,7 @@ which in turn is needed for debugging and testing, along with conducting demos o
 
 <article>
 <h2>Delete all bets</h2>
-<h3>3 Deletes all bets from bets collection, leaving it empty</h3>
+<h3>Deletes all bets from bets collection, leaving it empty</h3>
 
 <form id="deleteAllBets" name="deleteAllBets" action="/admin/bets">
 <label for="idDeleteBets">Delete All Bets</label>
@@ -51,7 +52,7 @@ which in turn is needed for debugging and testing, along with conducting demos o
 
 <article>
 <h2>Resolve all bets</h2>
-<h3>Decides all bets (win/lose/push) based on current system date</h3>
+<h3>Decides all bets (win/lose/push) based on either current date (today), or SimDate if it's non-null</h3>
 
 <form name="resolveAllBets" action="/admin/resolveAllBets">
 <label for="idResolveBets">Resolve All Bets</label>

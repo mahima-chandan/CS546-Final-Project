@@ -15,8 +15,15 @@ async function saveSimDate(simdate) {
   await settings.updateOne({}, {$set: {simdate}});
 }
 
+async function getSimDate() {
+  const settings = await db.settings();
+  const obj = await settings.findOne({});
+  return obj.simdate;
+}
+
 module.exports = {
   seed,
-  saveSimDate
+  saveSimDate,
+  getSimDate
 };
 

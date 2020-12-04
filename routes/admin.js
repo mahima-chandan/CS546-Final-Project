@@ -11,8 +11,7 @@ router.delete('/bets', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    console.log("will render admin");
-    res.render('admin', {simdate: "2019-01-02",
+    res.render('admin', {simdate: await settings.getSimDate(), 
                          title: "Admin page"});
   }
   catch (e) {
@@ -25,7 +24,6 @@ router.put('/simdate', async (req, res) => {
     const {simdate} = req.body;
     console.log("saving simdate " + simdate + " to settings");
     await settings.saveSimDate(simdate);
-    console.log(1);
     res.status(204).send();
   }
   catch (e) {
