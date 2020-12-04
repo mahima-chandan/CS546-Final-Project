@@ -88,23 +88,17 @@ function clearSimDate(ev) {
 }
 
 function simDateChanged(ev) {
-  console.log(2);
-  alert("sim date changed");
   ev.preventDefault();
   const simdateControl = $("#simdate");
   const todayDate = new Date().toISOString().split("T")[0];
   const todayDateJulian = new Date(todayDate).valueOf();
  
   const simdate = simdateControl.val();
-  console.log(4);
-  console.log(simdate);
-  return;
   const simDateJulian = new Date(simdate).valueOf();
 
-  if (orgSimdate && simDateJulian >= todayDateJulian) {
+  if (simDateJulian >= todayDateJulian) {
     alert("SimDate must be set to either a date in the past, or empty to disable.")
     simdateControl.val(orgSimdate);
-    console.log(3);
     return;
   }
   var requestConfig = {
