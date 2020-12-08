@@ -4,8 +4,6 @@ const fs = require('fs-extra');
 const router = express.Router();
 const {lines} = require('../data');
 
-console.log(lines.parse);
-
 router.get('/nfl', async (req, res) => {
   try {
     const currentLines = await lines.get();

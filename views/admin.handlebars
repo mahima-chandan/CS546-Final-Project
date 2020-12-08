@@ -1,27 +1,3 @@
-<style type="text/css">
-
-h2 {
-  font-size: 1.3em;
-}
-
-h3 { 
-  margin-top: -16px;
-  font-size: small;
-  font-style: italic;
-}
-
-article {
-  background-color: tan;
-  color: navy;
-  padding: 5px;
-}
-
-div.vspacer {
-  height: 40px;
-}
-
-</style>
-
 <h1>Admin</h1>
 
 <article>
@@ -44,7 +20,7 @@ which in turn is needed for debugging and testing, along with conducting demos o
 
 <form id="deleteAllBets" name="deleteAllBets" action="/admin/bets">
 <label for="idDeleteBets">Delete All Bets</label>
-<button name="btnDeleteBets">Delete All Bets</button>
+<button id="idDeleteBets" name="btnDeleteBets">Delete All Bets</button>
 </form>
 </article>
 
@@ -56,7 +32,7 @@ which in turn is needed for debugging and testing, along with conducting demos o
 
 <form name="resolveAllBets" action="/admin/resolveAllBets">
 <label for="idResolveBets">Resolve All Bets</label>
-<button name="btnResolveBets">Resolve All Bets</button>
+<button id="idResolveBets" name="btnResolveBets">Resolve All Bets</button>
 </form>
 </article>
 
@@ -73,7 +49,7 @@ which in turn is needed for debugging and testing, along with conducting demos o
 </form>
 </article>
 
-<script type="text/javascript">
+<script>
 let orgSimdate = "{{simdate}}";
 
 $('#deleteAllBets').submit(deleteAllBets);
@@ -83,10 +59,9 @@ $('#simdate').focus(simDateFocused);
 $('#btnClearSimDate').click(clearSimDate);
 
 function clearSimDate(ev) {
-  console.log(1);
   ev.preventDefault();
   $("#simdate").val(null);
-  orgSimdate = null;
+  simDateChanged(ev);
 }
 
 function simDateChanged(ev) {
@@ -103,6 +78,7 @@ function simDateChanged(ev) {
     simdateControl.val(orgSimdate);
     return;
   }
+  alert(simdateControl.val());
   var requestConfig = {
     method: 'PUT',
     data: {simdate: simdateControl.val()},
@@ -117,21 +93,26 @@ function simDateChanged(ev) {
 }
 
 function simDateFocused(ev) {
-  console.log(3);
+  alert("simDateFocused");
   orgSimdate = $("#simdate").val();
 }
 
+function simDateReset(ev) {
+  alert("simDateReset");
+}
+
 function deleteAllBets(ev) {
-  alert(orgSimdate);
-  console.log(4);
   ev.preventDefault();
+  const b = confirm("Are you sure you want to delete all bets from the bets collection?");
+  if (!b)
+    return;
   var requestConfig = {
     method: 'DELETE',
     url: '/admin/bets',
   };
   $.ajax(requestConfig).then(function (responseMessage) {
-    console.log(responseMessage);
-  }).catch(console.log);
+    alert("You're the boss -- all bets have been deleted!");
+  }).catch(e => alert("there was an error " + JSON.stringify(e) + "deleting all bets."));
 }
 
 </script>

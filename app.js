@@ -21,6 +21,16 @@ app.use(
     resave: false}));
 
 configRoutes(app);
+
+// ----------------------------------------------------------------------------
+// Define an error handler and install it.
+// ----------------------------------------------------------------------------
+
+async function error(err, req, res, next) {
+  console.log(err.stack);
+  res.status(500).send("Internal Server Error");
+}
+app.use(error);
  
 async function main() {
   app.listen(3000, () => {

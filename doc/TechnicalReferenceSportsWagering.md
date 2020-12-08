@@ -637,13 +637,17 @@ a non-zero amount, and is disabled otherwise.
 1. BET and WIN text boxes work together. They start out empty. User chooses, by typing
 in _one_ of these two boxes, how much they either want to BET, or WIN.
 
-    a. If the user enters a BET amount, the WIN box will update with the BET amount, minus 10%. The BET box will
-remain enabled and the WIN box will be disabled in this case.
+    a. If the user enters a BET amount, a javascript onchanged event in the page will populate the WIN box
+with this BET amount, minus 10%, rounded to whole dollars that favors the house. Both BET and WIN
+boxes can remain enabled throughout. For example, user enters $25 in BET amount. 10% of $25 is $2.50 which
+is the house surcharge, but rounded up to favor the house this becomes $3 surcharge not $2.50. $25 - $3 =
+a WIN amount of $22.
 
-    b. If the user enters a WIN amount, the BET box will update with the WIN amount, plus 10%. The WIN box will
-remain enabled and the BET box will be disabled in this case.
+    b. If the user enters a WIN amount, the BET box will update with the WIN amount, plus 10%. Both the WIN box
+and the BET box will remain enabled. For example, the user enters a WIN amount of $20. 10% of $20 is $2, so
+the BET amount will update via javascript to $22.
 
-1. The COLLECT box always shows BET amount plus WIN amount.
+1. The COLLECT box always shows BET amount plus WIN amount, and updates off javascript events.
 
 1. All text to left of Bet/Win columns is either static to the template page
 or static as rendered from the database. User cannot change this static text.
@@ -774,16 +778,19 @@ as (probably easiest) a standalone button.
 These rules not in chronological order.
 
 1. Page should display user's current balance in text box same as or similar
-to what is done on betting page.
+to what is done on betting page. This balance is pulled from ```Users.balance```
+field in database. Can use AJAX or Handlebars or both your choices.
 
 1. Only available to users who are already authenticated with the system.
 
 1. Users chooses between several offered credit card types e.g.,  Mastercard,
 VISA, AmEx, Discover, ??
 
-1. User enters amount to add to their current balance. Whole dollars only.
+1. User enters amount to add to their current balance. Whole dollars only. Amount
+is entered into a textbox labelled ```Funding amount```.
 
-1. User enters credit card number, expiry month/year, CVV, name, address.
+1. User enters credit card number, expiry month/year, CVV, first name, last name.
+All in their own text boxes properly labelled for accessibility.
 
 1. Some validation provided for card number e.g. VISA and Mastercard are each
 16 digits long.
@@ -793,7 +800,7 @@ VISA, AmEx, Discover, ??
 1. System delays for a bit then returns a simple confirmation and simultaneously
 update the current balance text box with the amount just funded.
 
-1. This page backend is updating `Users.balance` for the current user.
+1. This page backend is updating collection `Users.balance` for the current user.
 
 1. In real life this page is making an actual credit card transaction. We are
 simulating that experience only.
@@ -808,9 +815,6 @@ one could show that somehow on the page e.g., "Put in your $5, $10, or $20 below
 with an image of a cash collector or something. First cut not worried about this but
 I think it would be a nice touch since sports wagering "on premises" would frequently
 be a cash business just like buying lottery tickets is a cash business.
-
-1. Once account is funded with some minimum amount there should be a live link they
-an click to head to the betting page.
 
 <div class="page">
 

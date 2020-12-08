@@ -228,6 +228,7 @@ async function readOnlineLines() {
 async function get() {
   const settings = await db.settings();
   let {simdate} = await settings.find().next();
+  console.log(simdate);
   if (simdate)
     return await readDatabaseLines(simdate);
   else

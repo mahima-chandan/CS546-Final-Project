@@ -1,0 +1,19 @@
+h2 {
+  font-size: 1.3em;
+}
+
+h3 { 
+  margin-top: -16px;
+  font-size: small;
+  font-style: italic;
+}
+
+article {
+  background-color: tan;
+  color: navy;
+  padding: 5px;
+}
+
+div.vspacer {
+  height: 40px;
+}

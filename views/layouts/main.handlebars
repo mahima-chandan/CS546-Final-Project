@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="../jquery-3.5.1.min.js"></script>
-<style type="text/css">
+<style>
 a:link {
   text-decoration: none;
   color: navy;
@@ -25,6 +25,11 @@ body {
 }
 
 </style>
+
+{{#if cssOverrides}}
+<link rel="stylesheet" href="css/{{cssOverrides}}"/>
+{{/if}}
+
 <title>{{title}}</title>
 </head>
 <body>
@@ -37,9 +42,11 @@ body {
       <a href="/logout">Logout</a>
     </nav>
   </header>
-  <main>
-    {{{body}}}
-  </main>
+
+<main>
+{{{body}}}
+</main>
+
 <script src="../tota11y.min.js"></script>
 </body>
 </html>
