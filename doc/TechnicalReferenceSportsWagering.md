@@ -662,8 +662,7 @@ and back end both.
 1. User will receive confirmation once Submit has sucessfully processed on the
 backend by insert bet into Bets collection. User's balance will deduct by
 amount of wager. Confirmation can be
-as simple as "Your wager totalling $212 is in!" Perhaps it is some type of
-popup with buttons *Continue* and *Logout* on it.
+as simple as Alert box saying: "Your wager totalling $212 is in!".
 
     a. Pressing *Continue* dismisses confirmation box and returns user to
 the betting screen.
@@ -674,10 +673,19 @@ the login screen ready for the next customer.
     c. Perhaps we change Submit button to *Start Again* so that user does
 not get confused and try to Submit bets a second time.
 
+1. Once bet has confirmed by the system, the Submit button should change
+to a disable button called *Confirmed* and leave it at that. There was a time
+when this spec considered applying additional bets on top of the one just
+confirmed, on the same panel, but we no longer have time for that.
+
 1. Submit must occur by AJAX callback so as to a) meet requirement of
 the project per professor and 2) so that screen does not have to flash as
 it reloads all other live panels (one panel per game). The AJAX call should only
 result in the current panel refreshing.
+
+1. Leaving the page to say Fund Account and then returning to the page to resume
+betting will result in all entered data, confirmed and unconfirmed, vanishing
+from the page. We do not have time to sessionize this page data at this point.
 
 1. Panel is shown in its already smallest dimension with only one panel
 stationed horizontally per row. On larger screens the panels should to

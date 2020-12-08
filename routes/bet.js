@@ -6,7 +6,6 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     res.render('bet', {});
-//    res.sendFile(path.resolve('public/bet.html'));
   }
   catch (e) {
     res.status(400).send(`route: / ${e}`);
