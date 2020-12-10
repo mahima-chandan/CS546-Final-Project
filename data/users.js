@@ -17,9 +17,32 @@ async function seed() {
   await users.deleteMany({});
   await users.insertMany(team);
   await users.insertMany(others);
-}
+},
+  async getUserByName(name) {
+        const userCollection = await db.users();
+        const user = await userCollection.findOne({ username:name });
+        return user;
+    },
+    async updateBalance(name, newlyAddedBalance) {
+        const user = await this.getUserByName(name);
+        let value = Number(user.balance) + Number(newlyAddedBalance)
+        let updation = {
+            balance: value
+        };
+        const userCollection = await db.users();
+        let updatedBalance = await userCollection.updateOne(
+            {username:name},
+            { $set: updation}
+        );
+      
+        return value;
+      
+    }
+};
 
 module.exports = {
-  seed
+  seed,
+  getUserByName,
+  updateBalance
 };
 
