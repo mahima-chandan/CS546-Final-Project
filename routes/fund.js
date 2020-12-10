@@ -17,7 +17,7 @@ router.post('/fund', async (req, res) => {
         try {
            let Balance = await valiData.updateBalance(req.body.cardname,req.body.funamot);
             
-            res.render('success/success', { Balance: Balance })
+            res.render('success', { Balance: Balance })
           
             
         } catch (e) {
