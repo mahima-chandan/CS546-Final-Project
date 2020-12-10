@@ -5,7 +5,7 @@ const {ObjectID} = require('mongodb');
 
 // ----------------------------------------------------------------------------
 // Logic in this file is very specific to and dependent upon access to the
-// following scoresURL.
+// following scoresURL. Coverage is for the 2020 season only (c.year) below.
 // ----------------------------------------------------------------------------
 
 const scoresURL = `https://www.pro-football-reference.com/years/${c.year}`;
@@ -34,6 +34,7 @@ async function seed() {
 // ----------------------------------------------------------------------------
 
 async function seedWeek(nWeek) {
+  console.log("seeding scores week " + nWeek);
   const obj = await getScoresByWeek(nWeek);
   if (!obj.length)
     return;
