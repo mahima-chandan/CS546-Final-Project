@@ -1,29 +1,28 @@
-const c = require('../config');
-const express = require('express');
-const path = require('path');
+const c = require("../config");
+const express = require("express");
+const path = require("path");
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    res.render('funds', {});
-  }
-  catch (e) {
+    res.render("fund", {});
+  } catch (e) {
     res.status(400).send(`route: / ${e}`);
   }
 });
-router.post('/fund', async (req, res) => {
 
+router.post("/fund", async (req, res) => {
+  try {
+    let Balance = await valiData.updateBalance(
+      req.body.cardname,
+      req.body.funamot
+    );
 
-        try {
-           let Balance = await valiData.updateBalance(req.body.cardname,req.body.funamot);
-            
-            res.render('success/success', { Balance: Balance })
-          
-            
-        } catch (e) {
-            res.sendStatus(500);
-        }
-    });
+    res.render("success/success", { Balance: Balance });
+  } catch (e) {
+    res.sendStatus(500);
+  }
+});
 
 /* Mahima to develop this
 router.post('/', async (req, res) => {
@@ -38,4 +37,3 @@ router.post('/', async (req, res) => {
 */
 
 module.exports = router;
-
