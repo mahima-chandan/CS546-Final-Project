@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <script src="../jquery-3.5.1.min.js"></script>
+<script>
+        $("form").submit(function (event) {
+            if ($("input").val() == "") {
+                event.preventDefault();
+            }
+
+        });
+    </script>
 <style>
 a:link {
   text-decoration: none;
@@ -42,6 +50,8 @@ body {
       <a href="/logout">Logout</a>
     </nav>
   </header>
+   <div class="cont2">BALANCE AMOUNT(USD)<br/>
+    <span id="amountbal"></span></div>
 
 <main>
 {{{body}}}
