@@ -13,7 +13,6 @@ router.delete('/bets', async (req, res, next) => {
     await console.log(4);
     await console.log(e);
     next(e);
-//    throw e;
   }
 });
 

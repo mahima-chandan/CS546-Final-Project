@@ -78,7 +78,6 @@ function simDateChanged(ev) {
     simdateControl.val(orgSimdate);
     return;
   }
-  alert(simdateControl.val());
   var requestConfig = {
     method: 'PUT',
     data: {simdate: simdateControl.val()},
@@ -93,7 +92,6 @@ function simDateChanged(ev) {
 }
 
 function simDateFocused(ev) {
-  alert("simDateFocused");
   orgSimdate = $("#simdate").val();
 }
 

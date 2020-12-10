@@ -1,27 +1,16 @@
 
 
-<link rel="stylesheet" href="/public/css/main.css">
+<link rel="stylesheet" href="css/fund.css">
 <div class="row">
     <div class="col-75">
         <div class="container">
             <form name="form1" method="post" onsubmit="finalcardnumber(document.form1.cardnumber,document.form1.ctype)">
 
-
-
                 <div class="col-50">
-                    <h3>Payment</h3>
+                  <div class="cont2">BALANCE (USD)<br/>
+                  <span id="amountbal"></span></div>
                     <div class="row">
                         <br>
-                        <div class="col-50">
-                            <label for="fname">Accepted Cards</label>
-                            <div class="icon-container">
-                                <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                <i class="fa fa-cc-discover" style="color:orange;"></i>
-                            </div>
-                        </div>
-
                     </div>
                     <div class="row">
                         <div class="col-50">
@@ -37,7 +26,7 @@
                         </div>
                         <div class="col-50">
                             <b>
-                                <label for="balamt">Funding Amount (in USD)</label>
+                                <label for="balamt">Funding Amount (in whole USD)</label>
                             </b>
                             <input type="number" id="funamt" name="funamot" value="10">
                             <br>
@@ -73,4 +62,4 @@
     </div>
 
 </div>
-<script src="validation.js"></script>
+<script src="js/validation.js"></script>
