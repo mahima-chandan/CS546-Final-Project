@@ -11,8 +11,7 @@ async function main() {
 
 main().then(() => {
   return db.dbConnection().then((db) => {
-    return db.serverConfig.close();
-    console.log(1);
+    db.serverConfig.close();
   });
 }).catch((e) => {
   console.log(e);

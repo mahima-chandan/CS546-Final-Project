@@ -12,11 +12,13 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/fund", async (req, res) => {
+/* commented out doesn't compile, Dale
   try {
     let Balance = await valiData.updateBalance(
       req.body.cardname,
       req.body.funamot
     );
+*/
 
 
         try {

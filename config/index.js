@@ -14,7 +14,7 @@ const mongoConfig = {
 let _connection = undefined;
 let _db = undefined;
 
-let dbConnection = async () => {
+async function dbConnection() {
   if (!_connection) {
     _connection = await MongoClient.connect(mongoConfig.serverUrl,
                                              {useNewUrlParser: true,

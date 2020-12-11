@@ -104,11 +104,26 @@ async function resolve() {
   console.log("resolve has finished")
 }
 
-timer.setInterval(resolve, 3600 * 1000);
+let _resolveTimer = null;
+
+function startResolveProcessor() {
+  if (!_resolveTimer)
+    _resolveTimer = timer.setInterval(resolve, 3600 * 1000);
+}
+
+function stopResolveProcessor() {
+  if (_resolveTimer) {
+    clearInterval(_resolveTimer);
+    _resolveTimer = null;
+  }
+}
+    
 
 module.exports = {
   deleteAll,
   resolve,
-  seed
+  seed,
+  startResolveProcessor,
+  stopResolveProcessor
 };
 
