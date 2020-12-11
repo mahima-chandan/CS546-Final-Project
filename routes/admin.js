@@ -39,5 +39,15 @@ router.put('/simdate', async (req, res) => {
   }
 });
 
+router.put('/resolveBets', async (req, res) => {
+  try {
+    await bets.resolve();
+    res.status(204).send();
+  }
+  catch (e) {
+    res.status(400).send(`route: / ${e}`);
+  }
+});
+
 module.exports = router;
 

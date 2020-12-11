@@ -18,7 +18,7 @@ which in turn is needed for debugging and testing, along with conducting demos o
 <h2>Delete all bets</h2>
 <h3>Deletes all bets from bets collection, leaving it empty</h3>
 
-<form id="deleteAllBets" name="deleteAllBets" action="/admin/bets">
+<form id="deleteAllBets" name="deleteAllBets">
 <label for="idDeleteBets">Delete All Bets</label>
 <button id="idDeleteBets" name="btnDeleteBets">Delete All Bets</button>
 </form>
@@ -27,12 +27,12 @@ which in turn is needed for debugging and testing, along with conducting demos o
 <div class="vspacer"></div>
 
 <article>
-<h2>Resolve all bets</h2>
-<h3>Decides all bets (win/lose/push) based on either current date (today), or SimDate if it's non-null</h3>
+<h2>Resolve bets</h2>
+<h3>Decides any bets (win/lose/push) based on either current date (today), or SimDate if it's non-null</h3>
 
-<form name="resolveAllBets" action="/admin/resolveAllBets">
-<label for="idResolveBets">Resolve All Bets</label>
-<button id="idResolveBets" name="btnResolveBets">Resolve All Bets</button>
+<form id="resolveBets">
+<label for="idResolveBets">Resolve Bets</label>
+<button id="idResolveBets" name="btnResolveBets">Resolve Bets</button>
 </form>
 </article>
 
@@ -57,6 +57,7 @@ $('#simdate').change(simDateChanged);
 $('#simdate').focus(simDateFocused);
 $('#simdate').focus(simDateFocused);
 $('#btnClearSimDate').click(clearSimDate);
+$('#resolveBets').submit(resolveBets);
 
 function clearSimDate(ev) {
   ev.preventDefault();
@@ -89,6 +90,22 @@ function simDateChanged(ev) {
     console.log(responseMessage);
   }).catch(console.log);
   console.log("org sim date is " + orgSimdate);
+}
+
+function resolveBets(ev) {
+  ev.preventDefault();
+  var requestConfig = {
+    method: 'PUT',
+    url: '/admin/resolveBets',
+  };
+  $('body').css("cursor", "progress");
+  $.ajax(requestConfig).then((msg) => {
+    $('body').css("cursor", "default");
+    alert('All bets that could be resolved have now been resolved.');
+  }).catch((msg) => {
+    $('body').css("cursor", "default");
+    alert(msg);
+  });
 }
 
 function simDateFocused(ev) {
