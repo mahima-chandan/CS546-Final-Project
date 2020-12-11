@@ -4,6 +4,10 @@ const {ObjectID} = require('mongodb');
 const timer = require('timers');
 const scores = require('./scores.js');
 
+async function seed() {
+  await deleteAll();
+}
+
 async function deleteAll() {
   const dbBets = await db.bets();
   await dbBets.deleteMany({});
@@ -104,6 +108,7 @@ timer.setInterval(resolve, 3600 * 1000);
 
 module.exports = {
   deleteAll,
-  resolve
+  resolve,
+  seed
 };
 

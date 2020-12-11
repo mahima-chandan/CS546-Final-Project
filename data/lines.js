@@ -35,8 +35,10 @@ async function importFiles() {
     const ctx = { currentLines };
     await parse(ctx, fileContents);
     ctx.currentLines = ctx.currentLines.map(spliceInLineDates);
-    if (ctx.currentLines.length)
+    if (ctx.currentLines.length) {
       dbLines.insertMany(ctx.currentLines);
+      console.log("imported line file " + d.name);
+    }
     else
       console.error("Warning: " + d.name + " has no lines and will be ignored");
   }
