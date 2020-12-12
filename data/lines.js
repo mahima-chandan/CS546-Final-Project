@@ -163,21 +163,24 @@ async function doGameBatch(ctx, batch) {
     let lineDate = new Date().toISOString();
     lineDate = lineDate.replace(/\..*$/, '')
                        .replace(/[-T:Z]/g, '');
+    let friendlyGameDate = new Date(ctx.gameDate + `, ${c.year}`).toISOString();
+    let jsGameDate = friendlyGameDate.substring(0, 10);
     let gameDateJulian = new Date(ctx.gameDate + `, ${c.year} ` + ctx.gameTime).valueOf();
-    return {gameTime: ctx.gameTime,
-       gameDate: ctx.gameDate,
-       gameDateJulian,
-       lineDate,
-       awayShort,
-       awayML,
-       awayPts,
-       awayOE,
-       awayLong,
-       homeShort,
-       homeML,
-       homePts,
-       homeOE,
-       homeLong};
+    return ({gameid: awayShort + "-" + homeShort + "-" + jsGameDate,
+        gameTime: ctx.gameTime,
+        gameDate: ctx.gameDate,
+        gameDateJulian,
+        lineDate,
+        awayShort,
+        awayML,
+        awayPts,
+        awayOE,
+        awayLong,
+        homeShort,
+        homeML,
+        homePts,
+        homeOE,
+        homeLong});
   }
   catch (e) {
     console.log(e);

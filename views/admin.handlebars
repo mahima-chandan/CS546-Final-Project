@@ -38,6 +38,18 @@ which in turn is needed for debugging and testing, along with conducting demos o
 
 <div class="vspacer"></div>
 
+<article style="display: none">
+<h2>Generate random bets</h2>
+<h3>Generates a few random bets, which comes in handy for testing and running demos</h3>
+
+<form id="frmGenerateBets">
+<label for="btnGenerateBets">Generate Random Bets</label>
+<button id="btnGenerateBets" name="btnGenerateBets">Generate Random Bets</button>
+</form>
+</article>
+
+<div class="vspacer"></div>
+
 <article>
 <h2>Time out user</h2>
 <h3>Invalidates AuthCookie, so next time the user tries to do something, they should kick out</h3>
@@ -58,6 +70,18 @@ $('#simdate').focus(simDateFocused);
 $('#simdate').focus(simDateFocused);
 $('#btnClearSimDate').click(clearSimDate);
 $('#resolveBets').submit(resolveBets);
+$('#frmGenerateBets').submit(generateBets);
+
+function generateBets(ev) {
+  ev.preventDefault();
+  var requestConfig = {
+    method: 'POST',
+    url: '/admin/generateBets',
+  };
+  $.ajax(requestConfig).then(function (responseMessage) {
+    console.log(responseMessage);
+  }).catch(console.log);
+}
 
 function clearSimDate(ev) {
   ev.preventDefault();

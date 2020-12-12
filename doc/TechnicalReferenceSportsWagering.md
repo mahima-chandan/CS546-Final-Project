@@ -207,7 +207,7 @@ now store the actual value of the line.
     <tr>
       <td><code>gameid</code></td>
       <td>String</td>
-      <td><code>_id</code> of the game as returned from <a href="#lines">Lines</a> API</td>
+      <td><code>gameid</code> of the game as returned from <a href="#lines">Lines</a> API</td>
     </tr>
     <tr>
       <td><code>bettype</code></td>
@@ -553,6 +553,7 @@ when there may only be one (for Monday night game).
 ```
   [
   {
+    "gameid": "ari-sea-2020-11-19",
     "gameTime": "8:20 PM",
     "gameDate": "Thursday, November 19",
     "gameDateJulian": 1605835200000,
@@ -569,6 +570,7 @@ when there may only be one (for Monday night game).
     "homeLong": "Seattle Seahawks"
   },
   {
+    "gameid": "phi-cle-2020-11-22",
     "gameTime": "1:00 PM",
     "gameDate": "Sunday, November 22",
     "gameDateJulian": 1606068000000,

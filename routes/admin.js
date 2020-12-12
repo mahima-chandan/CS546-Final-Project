@@ -2,7 +2,7 @@ const c = require('../config');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const {bets, settings} = require('../data');
+const {bets, lines, settings} = require('../data');
 
 router.delete('/bets', async (req, res, next) => {
   try {
@@ -46,6 +46,18 @@ router.put('/resolveBets', async (req, res) => {
   }
   catch (e) {
     res.status(400).send(`route: / ${e}`);
+  }
+});
+
+router.post('/generateBets', async (req, res) => {
+  try {
+//    const simdate = "2020-11-27";
+    const simdate = null; 
+    let currentLines = await lines.get();
+    console.log(currentLines);
+  }
+  catch (e) {
+    res.status(400).send(`generateBets: / ${e}`);
   }
 });
 
