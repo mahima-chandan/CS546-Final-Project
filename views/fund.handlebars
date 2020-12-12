@@ -4,11 +4,11 @@
 <div class="row">
     <div class="col-75">
         <div class="container">
-            <form name="form1" method="post" onsubmit="finalcardnumber(document.form1.cardnumber,document.form1.ctype)">
+            <form name="form1" method="post" onsubmit=" return finalcardnumber(document.form1.cardnumber,document.form1.ctype)">
 
                 <div class="col-50">
-                  <div class="cont2">BALANCE (USD)<br/>
-                  <span id="amountbal"></span></div>
+                  <div class="cont2">{{Name}}'s BALANCE (USD)<br/>
+                  <span id="amountbal">{{Balance}}</span></div>
                     <div class="row">
                         <br>
                     </div>
@@ -36,7 +36,7 @@
 
                     <label for="cname">Name on Card</label>
                     <input type="text" autocomplete="on" required="required" id="cname" name="cardname" placeholder="Enter the name on the card here">
-                    <label for="ccnum">Credit card number</label>
+                    <label for="ccnum">Credit card number</label><p>{test using 510000000000000 using mastercard}</p>
                     <input type="text" autocomplete="on" required="required" id="ccnum" name="cardnumber" placeholder="Enter your card number here" maxlength=19>
 
 
