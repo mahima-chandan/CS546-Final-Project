@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
   try {
     //console.log(req.body);
     const x = await bets.submitPanel(req.body);
-    res.status(200).send(x);
+    res.status(x.status).send(x);
   }
   catch (e) {
     res.status(500).send(`route: / ${e}`);
