@@ -1,6 +1,6 @@
 <ul class="all-bets">
     {{! for every line, make a table with its data containing a form w/ bet amount and winnnings}}
-    {{#each lines}}
+    {{#each getAllLines()}}
     <li>
         {{! is this possible?}}
         <form id={{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}} class="form">
@@ -37,7 +37,7 @@
                 {{! away ML row}}
                 <tr>
                     <th>ML</th>
-                    <th>{{awayML}}</th>
+                    <th id="aml-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>{{awayML}}</th>
                     <th>
                         <input class="amlBet" type="number" id="amlbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
@@ -72,7 +72,7 @@
                 {{! home ML row}}
                 <tr>
                     <th>ML</th>
-                    <th>{{homeML}}</th>
+                    <th id="hml-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>{{homeML}}</th>
                     <th>
                         <input class="hmlBet" type="number" id="hmlbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
