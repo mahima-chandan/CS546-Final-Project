@@ -2,7 +2,7 @@ const c = require('../config');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const {bets, lines, settings} = require('../data');
+const {bets, lines, settings, simulator} = require('../data');
 
 router.delete('/bets', async (req, res, next) => {
   try {
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
                          title: "Admin page"});
   }
   catch (e) {
-    res.status(400).send(`route: / ${e}`);
+    res.status(500).send(`route: / ${e}`);
   }
 });
 
@@ -35,7 +35,7 @@ router.put('/simdate', async (req, res) => {
     res.status(204).send();
   }
   catch (e) {
-    res.status(400).send(`route: / ${e}`);
+    res.status(500).send(`route: / ${e}`);
   }
 });
 
@@ -45,19 +45,17 @@ router.put('/resolveBets', async (req, res) => {
     res.status(204).send();
   }
   catch (e) {
-    res.status(400).send(`route: / ${e}`);
+    res.status(500).send(`route: / ${e}`);
   }
 });
 
 router.post('/generateBets', async (req, res) => {
   try {
-//    const simdate = "2020-11-27";
-    const simdate = null; 
-    let currentLines = await lines.get();
-    console.log(currentLines);
+    await simulator.generateBets();
+    res.status(200).send();
   }
   catch (e) {
-    res.status(400).send(`generateBets: / ${e}`);
+    res.status(500).send(`generateBets: / ${e}`);
   }
 });
 
