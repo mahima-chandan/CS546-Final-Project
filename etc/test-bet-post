@@ -1,0 +1,39 @@
+#!/bin/sh
+
+cat << EOF > panel.tmp
+{"gameid": "ari-sea-2020-11-19",
+ "gameTime": "8:20 PM",
+ "gameDate": "Thursday, November 19",
+ "gameDateJulian": 1605835200000,
+ "lineDate": "20201117221505",
+ "aspNum": 7.5,
+ "aspBet": 55,
+ "aspWin": 50,
+ "aspCollect": 105,
+ "amlNum": 150,
+ "amlBet": null,
+ "amlWin": null,
+ "amlCollect": null,
+ "hspNum": -7,
+ "hspBet": 55,
+ "hspWin": 50,
+ "hspCollect": 105,
+ "hmlNum": -160,
+ "hmlBet": 80,
+ "hmlWin": 50,
+ "hmlCollect": 130,
+ "overNum": 48,
+ "overBet": null,
+ "overWin": null,
+ "overCollect": null,
+ "underNum": 48,
+ "underBet": 88,
+ "underWin": 80,
+ "underCollect": null}
+EOF
+
+curl \
+  -v \
+  --data-ascii @panel.tmp \
+  -H 'Content-type: application/json' \
+  http://localhost:3000/bet
