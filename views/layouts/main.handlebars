@@ -10,30 +10,14 @@
             }
 
         });
-    </script>
-<style>
-a:link {
-  text-decoration: none;
-  color: navy;
-  font-weight: bold;
+function grantme(ev) {
+  $('img.jerry').css("display", "inline");
+  console.log(ev);
 }
 
-nav {
-  background-color: tan;
-}
-
-nav span {
-  padding-left: 40px;
-}
-
-body {
-  font-family: Arial;
-  background-color: navy;
-  color: white;
-}
-
-</style>
-
+console.log($('img.jerry'));
+</script>
+<link rel="stylesheet" href="css/main.css"/>
 {{#if cssOverrides}}
 <link rel="stylesheet" href="css/{{cssOverrides}}"/>
 {{/if}}
@@ -46,9 +30,11 @@ body {
       <a href="/bet">Make bets</a><span></span>
       <a href="/fund">Fund account</a><span></span>
       <a href="/history">History</a><span></span>
-      <a href="/admin">Admin</a><span></span>
-      <a href="/logout">Logout</a>
+      <a href="/logout">Logout</a><span></span>
+      <a id="admin_access" class="admin" href="/admin">Admin</a>
+      <span class="appname">Jerry Sports Wagering <em>v0.0</em></span>
     </nav>
+  <img onclick="grantme" class="jerry" src="../img/jerry.png" alt="Jerry Sports Wagering"/>
   </header>
 <main>
 {{{body}}}

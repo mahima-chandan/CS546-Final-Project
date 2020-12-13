@@ -1,0 +1,38 @@
+a:link {
+  text-decoration: none;
+  color: navy;
+  font-weight: bold;
+}
+
+img.jerry {
+  position: absolute;
+  right: 10px;
+  height: 60px;
+  z-index: 1;
+}
+
+nav {
+  background-color: tan;
+}
+
+nav a.admin {
+  display: none;
+}
+
+nav span {
+  padding-left: 40px;
+}
+
+nav span.appname {
+  color:white;
+  font-weight:bold;
+  position:absolute;
+  right:20px
+}
+
+body {
+  font-family: Arial;
+  background-color: navy;
+  color: white;
+}
+
