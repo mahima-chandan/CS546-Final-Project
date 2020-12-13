@@ -561,12 +561,12 @@ when there may only be one (for Monday night game).
     "awayShort": "ari",
     "awayML": 150,
     "awayPts": 3,
-    "awayOE": 57.5,
+    "over": 57.5,
     "awayLong": "Arizona Cardinals",
     "homeShort": "sea",
     "homeML": -170,
     "homePts": -3,
-    "homeOE": 57.5,
+    "under": 57.5,
     "homeLong": "Seattle Seahawks"
   },
   {
@@ -578,12 +578,12 @@ when there may only be one (for Monday night game).
     "awayShort": "phi",
     "awayML": 160,
     "awayPts": 3.5,
-    "awayOE": 45.5,
+    "over": 45.5,
     "awayLong": "Philadelphia Eagles",
     "homeShort": "cle",
     "homeML": -180,
     "homePts": -3.5,
-    "homeOE": 45.5,
+    "under": 45.5,
     "homeLong": "Cleveland Browns"
   },
   ]
