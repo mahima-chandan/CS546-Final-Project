@@ -2,23 +2,25 @@ const c = require('../config');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
+const {bets} = require('../data');
 
 router.get('/', async (req, res) => {
   try {
     res.render('bet', {});
   }
   catch (e) {
-    res.status(400).send(`route: / ${e}`);
+    res.status(500).send(`route: / ${e}`);
   }
 });
 
 router.post('/', async (req, res) => {
   try {
-    console.log("it's betting time!");
-    res.sendFile(path.resolve('public/bet.html'));
+    //console.log(req.body);
+    const x = await bets.submitPanel(req.body);
+    res.status(200).send(x);
   }
   catch (e) {
-    res.status(400).send(`route: / ${e}`);
+    res.status(500).send(`route: / ${e}`);
   }
 });
 

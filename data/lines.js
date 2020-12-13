@@ -233,11 +233,14 @@ async function readOnlineLines() {
 async function get() {
   const settings = await db.settings();
   let {simdate} = await settings.find().next();
-  console.log(simdate);
-  if (simdate)
+  if (simdate) {
+    console.log("getting lines for simdate " + simdate);
     return await readDatabaseLines(simdate);
-  else
+  }
+  else {
+    console.log("getting lines for current date/time");
     return await readOnlineLines();
+  }
 }
 
 module.exports = {
