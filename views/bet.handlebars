@@ -3,13 +3,13 @@
     {{#each lines}}
     <li>
         {{! is this possible?}}
-        <form id={{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
+        <form id={{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}} class="form">
             <table>
                 {{! title row, contains name date and submit button}}
                 <tr>
                     <th>{{awayLong}} at {{homeLong}}</th>
                     <th>{{gameDate}}</th>
-                    <th><button type="submit" id="submit-"+{{awayLong}}>Submit bet</button></th>
+                    <th><button type="submit" id="submit-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>Submit bet</button></th>
                 </tr>
 
                 {{! away title row}}
@@ -26,12 +26,12 @@
                     <th>Pts.</th>
                     <th>{{awayPts}}</th>
                     <th>
-                        <input class="aspBet" type="number">
+                        <input class="aspBet" type="number" id="aspbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
                     <th>
-                        <input class="aspWin" type="number">
+                        <input class="aspWin" type="number" id="aspwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
-                    <th class="aspCollect">Collect</th>
+                    <th class="aspCollect" id="aspcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
                 </tr>
 
                 {{! away ML row}}
@@ -39,12 +39,12 @@
                     <th>ML</th>
                     <th>{{awayML}}</th>
                     <th>
-                        <input class="amlBet" type="number">
+                        <input class="amlBet" type="number" id="amlbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
                     <th>
-                        <input class="amlWin" type="number">
+                        <input class="amlWin" type="number" id="aspwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
-                    <th class="amlCollect">TODO: figure out how to implement collect</th>
+                    <th class="amlCollect" id="amlcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
                 </tr>
 
                 {{! home title row}}
@@ -61,12 +61,12 @@
                     <th>Pts.</th>
                     <th>{{homePts}}</th>
                     <th>
-                        <input class="hspBet" type="number">
+                        <input class="hspBet" type="number" id="hspbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
                     <th>
-                        <input class="hspWin" type="number">
+                        <input class="hspWin" type="number" id="hspwet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
-                    <th class="hspCollect">TODO: figure out how to implement collect</th>
+                    <th class="hspCollect" id="hspcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
                 </tr>
 
                 {{! home ML row}}
@@ -74,12 +74,12 @@
                     <th>ML</th>
                     <th>{{homeML}}</th>
                     <th>
-                        <input class="hmlBet" type="number">
+                        <input class="hmlBet" type="number" id="hmlbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
                     <th>
-                        <input class="hmlWin" type="number">
+                        <input class="hmlWin" type="number" id="hmlwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
-                    <th class="hmlCollect">TODO: figure out how to implement collect</th>
+                    <th class="hmlCollect" id="hmlcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
                 </tr>
 
                 {{! over row}}
@@ -87,12 +87,12 @@
                     <th>Over</th>
                     <th>{{over}}</th>
                     <th>
-                        <input class="overBet" type="number">
+                        <input class="overBet" type="number" id="overbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
                     <th>
-                        <input class="overWin" type="number">
+                        <input class="overWin" type="number" id="overwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
-                    <th class="overCollect">TODO: figure out how to implement collect</th>
+                    <th class="overCollect" id="overcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
                 </tr>
 
                 {{! under row}}
@@ -100,12 +100,12 @@
                     <th>Under</th>
                     <th>{{under}}</th>
                     <th>
-                        <input class="underBet" type="number">
+                        <input class="underBet" type="number" id="underbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
                     <th>
-                        <input class="underWin" type="number">
+                        <input class="underWin" type="number" id="underwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
                     </th>
-                    <th class="underCollect">TODO: figure out how to implement collect</th>
+                    <th class="underCollect" id="undercollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
                 </tr>
             </table>
         </form>
