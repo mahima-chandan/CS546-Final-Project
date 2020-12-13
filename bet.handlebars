@@ -1,0 +1,115 @@
+<ul class="all-bets">
+    {{! for every line, make a table with its data containing a form w/ bet amount and winnnings}}
+    {{#each lines}}
+    <li>
+        {{! is this possible?}}
+        <form id={{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
+            <table>
+                {{! title row, contains name date and submit button}}
+                <tr>
+                    <th>{{awayLong}} at {{homeLong}}</th>
+                    <th>{{gameDate}}</th>
+                    <th><button type="submit" id="submit-"+{{awayLong}}>Submit bet</button></th>
+                </tr>
+
+                {{! away title row}}
+                <tr>
+                    <th>Away</th>
+                    <th>{{awayLong}}</th>
+                    <th>Bet</th>
+                    <th>Win</th>
+                    <th>Collect</th>
+                </tr>
+
+                {{! away points row}}
+                <tr>
+                    <th>Pts.</th>
+                    <th>{{awayPts}}</th>
+                    <th>
+                        <input class="aspBet" type="number">
+                    </th>
+                    <th>
+                        <input class="aspWin" type="number">
+                    </th>
+                    <th class="aspCollect">Collect</th>
+                </tr>
+
+                {{! away ML row}}
+                <tr>
+                    <th>ML</th>
+                    <th>{{awayML}}</th>
+                    <th>
+                        <input class="amlBet" type="number">
+                    </th>
+                    <th>
+                        <input class="amlWin" type="number">
+                    </th>
+                    <th class="amlCollect">TODO: figure out how to implement collect</th>
+                </tr>
+
+                {{! home title row}}
+                <tr>
+                    <th>Home</th>
+                    <th>{{homeLong}}</th>
+                    <th>Bet</th>
+                    <th>Win</th>
+                    <th>Collect</th>
+                </tr>
+
+                {{! home points row}}
+                <tr>
+                    <th>Pts.</th>
+                    <th>{{homePts}}</th>
+                    <th>
+                        <input class="hspBet" type="number">
+                    </th>
+                    <th>
+                        <input class="hspWin" type="number">
+                    </th>
+                    <th class="hspCollect">TODO: figure out how to implement collect</th>
+                </tr>
+
+                {{! home ML row}}
+                <tr>
+                    <th>ML</th>
+                    <th>{{homeML}}</th>
+                    <th>
+                        <input class="hmlBet" type="number">
+                    </th>
+                    <th>
+                        <input class="hmlWin" type="number">
+                    </th>
+                    <th class="hmlCollect">TODO: figure out how to implement collect</th>
+                </tr>
+
+                {{! over row}}
+                <tr>
+                    <th>Over</th>
+                    <th>{{over}}</th>
+                    <th>
+                        <input class="overBet" type="number">
+                    </th>
+                    <th>
+                        <input class="overWin" type="number">
+                    </th>
+                    <th class="overCollect">TODO: figure out how to implement collect</th>
+                </tr>
+
+                {{! under row}}
+                <tr>
+                    <th>Under</th>
+                    <th>{{under}}</th>
+                    <th>
+                        <input class="underBet" type="number">
+                    </th>
+                    <th>
+                        <input class="underWin" type="number">
+                    </th>
+                    <th class="underCollect">TODO: figure out how to implement collect</th>
+                </tr>
+            </table>
+        </form>
+    </li>
+    {{/each}}
+    <script src="../public/bet.js"></script>
+</ul>
