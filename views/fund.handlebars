@@ -37,7 +37,7 @@
                     <label for="cname">Name on Card</label>
                     <input type="text" autocomplete="on" required="required" id="cname" name="cardname" placeholder="Enter the name on the card here">
                     <label for="ccnum">Credit card number</label><p>{test using 510000000000000 using mastercard}</p>
-                    <input type="text" autocomplete="on" required="required" id="ccnum" name="cardnumber" placeholder="Enter your card number here" maxlength=19>
+                    <input type="text" autocomplete="on" class="noSpace" required="required" id="ccnum" name="cardnumber" placeholder="Enter your card number here" maxlength=19>
 
 
                     <div class="row">
@@ -63,3 +63,7 @@
 
 </div>
 <script src="js/validation.js"></script>
+<script>$('.noSpace').keyup(function () {
+        this.value = this.value.replace(/\s/g, '');
+    });</script>
+
