@@ -16,17 +16,17 @@ router.post('/', async (req, res) => {
       return;
     }
     const {username, pwd} = req.body;
-    const user = users.getUserByName(username);
-    if (user && users.verifyPassword(user, pwd)) {
+    const user = await users.getUserByName(username);
+    if (user && await users.verifyPassword(user, pwd)) {
       req.session.AuthCookie = req.sessionID;
       req.session.user = user;
-      res.redirect(user.balance ? 'bet' : 'fund');
+      res.redirect(user.balance > c.appConfig.minBet ? 'bet' : 'fund');
     }
-  }
-  else {
-    displayMessage = "login"
-    loginMessage = "Username/Password not correct"
-    res.status(401).render("login", {displayMessage, loginMessage});
+    else {
+      displayMessage = "login"
+      loginMessage = "Username/Password not correct"
+      res.status(401).render("login", {displayMessage, loginMessage});
+    }
   }
   catch (e) {
     res.status(401).render('login', {error: true});
@@ -34,13 +34,15 @@ router.post('/', async (req, res) => {
   }
 });
 
+/*
 router.get('/', async (req, res) => {
   res.redirect('/');
 });
+*/
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   if (!req.session.AuthCookie) {
-    res.render('login', {});
+    res.render('login', {cssOverrides: "login.css"});
     return;
   }
   const user = req.session.user;
@@ -54,7 +56,7 @@ router.get("/", async (req, res) => {
       res.redirect('fund');
   else
     res.status(401).send("No user but active session error");
-}
+});
 
 /*
   const user = req.session.user;

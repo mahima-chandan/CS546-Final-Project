@@ -74,5 +74,6 @@ module.exports = {
   getUserById,
   getUserByName,
   updateBalance,
-  debitBalanceById
+  debitBalanceById,
+  verifyPassword
 };
