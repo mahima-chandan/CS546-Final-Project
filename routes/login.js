@@ -2,35 +2,67 @@ const c = require('../config');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
+const users = require('../data/users');
+const bcrypt = require('bcryptjs');
+/*
 var User = require('../data/signup');
 var Users = require('../routes/signup');
+*/
 
-router.post('/', (req, res, next) => {
-	//console.log(req.body);
-	User.findOne({ email: req.body.email }, (err, data) => {
-		if (data) {
+router.post('/', async (req, res) => {
+  try {
+    if (req.session.AuthCookie) {
+      res.redirect('/');
+      return;
+    }
+    const {username, pwd} = req.body;
+    const user = users.getUserByName(username);
+    if (user && users.verifyPassword(user, pwd)) {
+      req.session.AuthCookie = req.sessionID;
+      req.session.user = user;
+      res.redirect(user.balance ? 'bet' : 'fund');
+    }
+  }
+  else {
+    displayMessage = "login"
+    loginMessage = "Username/Password not correct"
+    res.status(401).render("login", {displayMessage, loginMessage});
+  }
+  catch (e) {
+    res.status(401).render('login', {error: true});
+    console.log(e.message);
+  }
+});
 
-			if (data.password == req.body.password) {
-				//console.log("Done Login");
-				req.session.userId = data.unique_id;
-				//console.log(req.session.userId);
-				res.send({ "Success": "Success!" });
-        res.redirect('/bet');
-			} else {
-				res.send({ "Success": "Wrong username or password!" });
-			}
-		} else {
-			res.send({ "Success": "This Email Is not regestered!" });
-		}
-	});
+router.get('/', async (req, res) => {
+  res.redirect('/');
 });
 
 router.get("/", async (req, res) => {
-  if (req.session.userID) {
+  if (!req.session.AuthCookie) {
+    res.render('login', {});
+    return;
+  }
+  const user = req.session.user;
+  if (user)
+    if (user.balance) {
+      console.log(2);
+      res.redirect('bet');
+      console.log(3);
+    }
+    else
+      res.redirect('fund');
+  else
+    res.status(401).send("No user but active session error");
+}
+
+/*
+  const user = req.session.user;
+  if (user && await users.getUserById(user._id))
+    res.redirect("/bet");
+  if (user) {
     try {
-      userId = req.session.userID;
-      let user = await user.get(userId)
-      res.redirect("/bet");
+      if (await users.getUserById(user._id))
     }
     catch (e) {
       displayMessage = "login"
@@ -44,6 +76,6 @@ router.get("/", async (req, res) => {
     res.redirect('/signup');
   }
 });
-
+*/
 
 module.exports = router;
