@@ -45,6 +45,7 @@ module.exports = {
     lines: getCollectionFn('lines'),
     scores: getCollectionFn('scores'),
     settings: getCollectionFn('settings'),
+    signup: getCollectionFn('signup'),
     users: getCollectionFn('users'),
   }
 };
