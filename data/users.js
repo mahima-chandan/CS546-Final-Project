@@ -34,6 +34,14 @@ async function getUserByName(username) {
   return await dbUsers.findOne({username});
 }
 
+async function createUser(username, pwd) {
+  const salt = await bcrypt.genSalt();
+  pwd = await bcrypt.hash(pwd, salt);
+  const dbUsers = await db.users();
+  return await dbUsers.insertOne(
+    {username, pwd, role: 0, balance: c.appConfig.startBalance});
+}
+
 // ----------------------------------------------------------------------------
 // Allows some privileged seeded group members to authenticate without a
 // password.
@@ -70,6 +78,7 @@ async function updateBalance(name, newlyAddedBalance) {
 }
 
 module.exports = {
+  createUser,
   seed,
   getUserById,
   getUserByName,

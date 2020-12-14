@@ -1,42 +1,29 @@
-<style type="text/css">
-input {
-  margin-top: 20px;
-}
-</style>
 <h1>Signup</h1>
+{{#if error}}
+<p class="error">
+  Sign up failed for reason: <span id="errmsg">{{error}}</span>
+</p>
+{{/if}}
 <form method="post" id="registration" action="">
                 <div class="form-group">
-                    <label for="fname">First Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name" value="{{fname}}">
-                </div>
-                <div class="form-group">
-                    <label for="lname">Last Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Your Last Name" value="{{lname}}">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Id <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter your email id" value="{{email}}">
-                </div>
-                <div class="form-group">
-                    <label for="mobile">Mobile Number <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter your Mobile Number" value="{{mobile}}">
+                    <label for="username">Username <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="New Username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter Your Password"value="{{password}}">
+                    <input type="password" class="form-control" name="pwd" id="password" placeholder="New Password">
                 </div>
                 <div class="form-group">
                     <label for="cpassword">Confirm Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" name="cpassword" id="cpassword" placeholder="Enter Same as Password" value="{{cpassword}}">
+                    <input type="password" class="form-control" name="cpwd" id="cpassword" placeholder="Re-enter Your Password">
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Register" class="btn btn-info btn-block">
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-8">
-                            Already user? Login <a href="/">here</a>
-                        </div>
+                        <h2>Already a user?</h2>
+                        <a alt="Login" class="login" href='/'>Login</a>
                     </div>
                 </div>
             </form>

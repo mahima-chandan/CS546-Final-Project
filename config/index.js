@@ -10,7 +10,8 @@ const appConfig = {
   database: 'jerry',
   minBet: 10,
   dbUrl: 'mongodb://localhost:27017/',
-  year: "2020"
+  year: "2020",
+  startBalance: 10
 };
 
 let _connection = undefined;

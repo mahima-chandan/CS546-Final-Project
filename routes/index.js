@@ -15,7 +15,7 @@ const constructorMethod = (app) => {
   app.use('/fund', fundRoutes);
   app.use('/history', historyRoutes);
   app.use('/logout', logoutRoutes);
-  app.use('/signup',signupRoutes)
+  app.use('/signup', signupRoutes)
   app.use('*', (req, res) => {
     res.status(404).json({ error: 'Not found' });
   });

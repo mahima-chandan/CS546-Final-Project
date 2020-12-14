@@ -3,7 +3,11 @@ input {
   margin-bottom: 10px;
 }
 
-a.signup {
+a.login {
   color: tan;
+}
+
+#errmsg {
+  background-color: red;
 }
 
