@@ -1,6 +1,6 @@
 <ul class="all-bets">
     {{! for every line, make a table with its data containing a form w/ bet amount and winnnings}}
-    {{#each getAllLines()}}
+    {{#each lines}}
     <li>
         <form id={{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}} class="form">
             <table>
