@@ -6,9 +6,12 @@ const MongoClient = require('mongodb').MongoClient;
 // Only one year is supported at a time, currently set to 2020.
 // ----------------------------------------------------------------------------
 
-const mongoConfig = {
-  serverUrl: 'mongodb://localhost:27017/',
-  database: 'jerry'
+const appConfig = {
+  database: 'jerry',
+  minBet: 10,
+  dbUrl: 'mongodb://localhost:27017/',
+  year: "2020",
+  startBalance: 10
 };
 
 let _connection = undefined;
@@ -16,10 +19,10 @@ let _db = undefined;
 
 async function dbConnection() {
   if (!_connection) {
-    _connection = await MongoClient.connect(mongoConfig.serverUrl,
+    _connection = await MongoClient.connect(appConfig.dbUrl,
                                              {useNewUrlParser: true,
                                               useUnifiedTopology: true});
-    _db = await _connection.db(mongoConfig.database);
+    _db = await _connection.db(appConfig.database);
   }
   return _db;
 };
@@ -38,13 +41,14 @@ const getCollectionFn = (collection) => {
 };
 
 module.exports = {
-  year: "2020",
+  appConfig,
   db: {
     dbConnection,
     bets: getCollectionFn('bets'),
     lines: getCollectionFn('lines'),
     scores: getCollectionFn('scores'),
     settings: getCollectionFn('settings'),
+    signup: getCollectionFn('signup'),
     users: getCollectionFn('users'),
   }
 };

@@ -1,0 +1,31 @@
+<h1>Signup</h1>
+{{#if error}}
+<p class="error">
+  Sign up failed for reason: <span id="errmsg">{{error}}</span>
+</p>
+{{/if}}
+<form method="post" id="registration" action="">
+                <div class="form-group">
+                    <label for="username">Username <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="New Username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" name="pwd" id="password" placeholder="New Password">
+                </div>
+                <div class="form-group">
+                    <label for="cpassword">Confirm Password <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" name="cpwd" id="cpassword" placeholder="Re-enter Your Password">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-info btn-block">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <h2>Already a user?</h2>
+                        <a alt="Login" class="login" href='/'>Login</a>
+                    </div>
+                </div>
+            </form>
+
+       

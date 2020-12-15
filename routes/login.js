@@ -2,25 +2,54 @@ const c = require('../config');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-
-router.get('/', async (req, res) => {
-  try {
-    res.render('login', {});
-  }
-  catch (e) {
-    res.status(400).send(`route: / ${e}`);
-  }
-});
+const users = require('../data/users');
+const bcrypt = require('bcryptjs');
+/*
+var User = require('../data/signup');
+var Users = require('../routes/signup');
+*/
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body);
-    res.sendFile(path.resolve('public/bet.html'));
+    if (req.session.AuthCookie) {
+      res.redirect('/');
+      return;
+    }
+    const {username, pwd} = req.body;
+    const user = await users.getUserByName(username);
+    if (user && await users.verifyPassword(user, pwd)) {
+      req.session.AuthCookie = req.sessionID;
+      req.session.user = user;
+      res.redirect(user.balance >= c.appConfig.minBet ? 'bet' : 'fund');
+    }
+    else {
+      displayMessage = "login"
+      loginMessage = "Username/Password not correct"
+      res.status(401).render("login", {displayMessage, loginMessage});
+    }
   }
   catch (e) {
-    res.status(400).send(`route: / ${e}`);
+    res.status(401).render('login', {error: true});
+    console.log(e.message);
   }
 });
 
-module.exports = router;
+router.get('/', async (req, res) => {
+  if (!req.session.AuthCookie) {
+    res.render('login', {cssOverrides: "login.css"});
+    return;
+  }
+  const user = req.session.user;
+  if (user)
+    if (user.balance) {
+      console.log(2);
+      res.redirect('bet');
+      console.log(3);
+    }
+    else
+      res.redirect('fund');
+  else
+    res.status(401).send("No user but active session error");
+});
 
+module.exports = router;

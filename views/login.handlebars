@@ -1,24 +1,21 @@
-<style>
-input {
-  margin-top: 20px;
-}
-</style>
 <h1>Login</h1>
 {{#if error}}
 <p class="error">
   Login failed. Please enter a valid username and password.
 </p>
 {{/if}}
-<form id="login-form" name="login" action="/login" method="POST">
+<form id="login-form" name="login" action="/" method="POST">
 <div>
 <label for="username">Username</label>
-<input type="text" id="username" name="username" required/>
+<input type="text" id="username" name="username" placeholder="Enter your username" required value="{{username}}"/>
 </div>
 <div>
 <label for="password">Password</label>
-<input id="password" name="password" type="password" required/>
+<input id="password" name="pwd" type="password" required/>
 </div>
 <label>
 <button id="submit" name="submit">Login</button>
 </label>
+<h2>Not a user?</h2>
+<a alt="Sign up" class="signup" href="/signup">Sign Up</a>
 </form>

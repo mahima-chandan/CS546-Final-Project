@@ -738,19 +738,21 @@ you can sign up here.
 1. Information to be entered for new users (sign up flow) must be enough to
 populate a new document entry in the `Users` collection.
 
+1. Usernames must be no less than 8 and no more than 16 characters.
+
 1. New users will need to enter a password (twice to make sure no typos). The PPP spoke
 of having state-of-the-art security, so this password should have some restrictions on
 it as per next rule.
 
 1. Password must have at least 1 upper, 1 lower, 1 non-letter (number or special character),
-and be at least 8 characters long.
+and be at least 8 characters long, and not more than 16 characters long.
 
 1. CAPTCHA (i.e., "I'm not a robot") would be a nice touch but we did not
 commit to this. Look into it if you would like to do so or time permitting.
 
-1. Successful sign up takes user to the fund account page. 
+1. Successful sign up takes user to the fund account page i. 
 
-1. Successful sign in takes user to the betting page unless their balance is $0
+1. Successful login (not sign up) takes user to the betting page unless their balance is $0
 in which case it should go to the Fund account page.
 
 1. No support for exceptional cases, such as:

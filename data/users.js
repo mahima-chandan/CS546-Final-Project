@@ -1,6 +1,7 @@
 const c = require("../config");
 const { db } = require("../config");
 const { ObjectID } = require("mongodb");
+const bcrypt = require('bcryptjs');
 
 const group = [
   { _id: "6ee7718c75ee6029745ca8ac", username: "madeline", pwd: null, role: 1, balance: 1000 },
@@ -19,18 +20,35 @@ async function seed() {
   await users.deleteMany({});
   await users.insertMany(group);
   await users.insertMany(others);
+  users.createIndex( { "username": 1 }, { unique: true } )
 }
 
 async function getUserById(id) {
-  const userCollection = await db.users();
-  const user = userCollection.findOne({ _id: id });
+  const dbUsers = await db.users();
+  const user = dbUsers.findOne({_id: id});
   return user;
 }
 
-async function getUserByName(name) {
-  const userCollection = await db.users();
-  const user = await userCollection.findOne({ username: name });
-  return user;
+async function getUserByName(username) {
+  const dbUsers = await db.users();
+  return await dbUsers.findOne({username});
+}
+
+async function createUser(username, pwd) {
+  const salt = await bcrypt.genSalt();
+  pwd = await bcrypt.hash(pwd, salt);
+  const dbUsers = await db.users();
+  return await dbUsers.insertOne(
+    {username, pwd, role: 0, balance: c.appConfig.startBalance});
+}
+
+// ----------------------------------------------------------------------------
+// Allows some privileged seeded group members to authenticate without a
+// password.
+// ----------------------------------------------------------------------------
+
+async function verifyPassword(user, pwd) {
+  return !user.pwd || bcrypt.compareSync(pwd, user.pwd);
 }
 
 // ----------------------------------------------------------------------------
@@ -40,8 +58,8 @@ async function getUserByName(name) {
 // ----------------------------------------------------------------------------
 
 async function debitBalanceById(id, amt) {
-  const userCollection = await db.users();
-  return await userCollection.updateOne(
+  const dbUsers = await db.users();
+  return await dbUsers.updateOne(
     {_id: id, balance: { $gte: amt } }, { $inc: { balance: -amt } });
 }
 
@@ -51,8 +69,8 @@ async function updateBalance(name, newlyAddedBalance) {
   let updation = {
     balance: value,
   };
-  const userCollection = await db.users();
-  let updatedBalance = await userCollection.updateOne(
+  const dbUsers = await db.users();
+  let updatedBalance = await dbUsers.updateOne(
     { username: name },
     { $set: updation }
   );
@@ -60,9 +78,11 @@ async function updateBalance(name, newlyAddedBalance) {
 }
 
 module.exports = {
+  createUser,
   seed,
   getUserById,
   getUserByName,
   updateBalance,
-  debitBalanceById
+  debitBalanceById,
+  verifyPassword
 };
