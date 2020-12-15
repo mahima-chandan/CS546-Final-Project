@@ -4,10 +4,6 @@ const path = require('path');
 const router = express.Router();
 const users = require('../data/users');
 const bcrypt = require('bcryptjs');
-/*
-var User = require('../data/signup');
-var Users = require('../routes/signup');
-*/
 
 router.post('/', async (req, res) => {
   try {
@@ -34,7 +30,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   if (!req.session.AuthCookie) {
     res.render('login', {cssOverrides: "login.css"});
     return;
@@ -42,9 +38,7 @@ router.get('/', async (req, res) => {
   const user = req.session.user;
   if (user)
     if (user.balance) {
-      console.log(2);
       res.redirect('bet');
-      console.log(3);
     }
     else
       res.redirect('fund');

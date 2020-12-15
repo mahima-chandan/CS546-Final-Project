@@ -36,10 +36,12 @@
 
                     <label for="cname">Name on Card</label>
                     <input type="text" autocomplete="on" required="required" id="cname" name="cardname" placeholder="Enter the name on the card here">
+                    
                     <label for="ccnum">Credit card number</label><p>{For testing purpose 5100000000000000 for MASTERCARD, 4111111111111111 for VISA, 340000000000009 for AMEX,	6011000000000004 FOR DISCOVER}</p>
                     <input type="text" autocomplete="on" required="required" id="ccnum" name="cardnumber" placeholder="Enter your card number here" maxlength=19>
 
 
+<br><br>
                     <div class="row">
                         <div class="col-50">
                             <label for="expyear">Expiry Month and Expiry year</label>
@@ -49,7 +51,7 @@
 
                         <div class="col-50">
                             <label for="cvv">CVV</label>
-                            <input type="text" id="cvv" name="cvv" required="required" autocomplete="off" placeholder="Enter your CVV here." maxlength=4>
+                            <input type="number" id="cvv" name="cvv" required="required" autocomplete="off" placeholder="Enter your CVV here." maxlength=4>
                         </div>
                     </div>
 
