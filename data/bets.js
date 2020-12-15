@@ -236,8 +236,14 @@ function stopResolveProcessor() {
   }
 }
 
+async function getByUserId(bettorid) {
+  const dbBets = await db.bets();
+  return await dbBets.find({bettorid});
+}
+
 module.exports = {
   deleteAll,
+  getByUserId,
   resolve,
   seed,
   startResolveProcessor,

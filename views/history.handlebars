@@ -1,9 +1,32 @@
-<h2>Your betting history</h2>
-<p>
-<code><em>Query bets collection for current authenticated user, and bring back a formatted page
-of results in a table, one row for each bet made.</em></code></p>
+<h1>Your betting history</h1>
 
-<p>
-<code><em>Can default to chronological ordering of bets. Nice to have ability to sort by column
-but I don't believe we signed up for that so only do time-permitting.</em></code>
+<b style="font-size:larger;font-variant:small-caps">Dale is working on this</b>
+<br/>
+<br/>
+<br/>
+
+<table>
+<tr>
+  <th>Game</th>
+  <th>Bet type</th>
+  <th>Your number</th>
+  <th>Bet amount</th>
+  <th>Win amount</th>
+  <th>Collect amount</th>
+  <th>Resolved date</th>
+  <th>Paid amount</th>
+</tr>
+{{#each bets}}
+<tr>
+  <td>{{this.gameid}}</td>
+  <td>{{this.bettype}}</td>
+  <td>{{this.num}}</td>
+  <td>{{this.amount}}</td>
+  <td>{{this.pays}}</td>
+  <td>{{this.collects}}</td>
+  <td>{{#if this.resolve}}{{this.resolved}}{{else}}{{/if}}</td>
+  <td>{{this.paid}}</td>
+</tr>
+{{/each}}
+</table>
 </p>
