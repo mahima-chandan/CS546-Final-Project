@@ -69,6 +69,11 @@ label {
     font-size: 24px;
 }
 
+input#ccnum, input#cvv {
+    height: 35px;
+    width: -webkit-fill-available;
+}
+
 .btn {
     background-color: #4CAF50;
     color: white;
