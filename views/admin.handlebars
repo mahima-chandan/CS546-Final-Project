@@ -78,9 +78,9 @@ function generateBets(ev) {
     method: 'POST',
     url: '/admin/generateBets',
   };
-  $.ajax(requestConfig).then(function (responseMessage) {
-    console.log(responseMessage);
-  }).catch(console.log);
+  $.ajax(requestConfig)
+    .then(x => console.log(JSON.stringify(x)))
+    .catch(e => alert(JSON.stringify(e.responseJSON)));
 }
 
 function clearSimDate(ev) {
