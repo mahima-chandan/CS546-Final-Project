@@ -244,18 +244,32 @@ async function getByUserId(bettorid) {
 async function getTotalsByUserID(bettorid) {
   const bets = await getByUserId(bettorid);
   const betArr = await bets.toArray();
-  console.log(bets);
   let totals = {
     amount: 0,
     pays: 0,
     collects: 0,
     paid: 0,
+    standing: 0,
+    pending: 0
   };
+
+  // aggregates totals of amount, pays, collects and paid for each bet
   for(bet of betArr){
     totals.amount += bet.amount;
     totals.pays += bet.pays;
     totals.collects += bet.collects;
     totals.paid += bet.paid;
+  }
+
+  // calculates standing total (how much you have won or lost based on resolved bets)
+  // calculates pending, an amount which you could possibly win based on unreolved bets
+  for(bet of betArr){
+    if(bet.resolved !== null){
+      totals.standing += (bet.paid - bet.amount)
+    }
+    else if(bet.resolved == null){
+      totals.pending += bet.pays
+    }
   }
   return totals;
 }
