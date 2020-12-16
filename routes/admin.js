@@ -4,6 +4,14 @@ const path = require('path');
 const router = express.Router();
 const {bets, lines, settings, simulator} = require('../data');
 
+router.use((req, res, next) => {
+  console.log("admin.js req.session.AuthCookie: " + req.session.AuthCookie);
+  if (!req.session.AuthCookie)
+    res.redirect('/');
+  else
+    next();
+});
+
 router.delete('/bets', async (req, res, next) => {
   try {
     await bets.deleteAll();

@@ -31,10 +31,13 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async (req, res, next) => {
+  console.log("login.js / GET routes finds AuthCookie " + req.session.AuthCookie);
   if (!req.session.AuthCookie) {
     res.render('login', {cssOverrides: "login.css"});
+    next();
     return;
   }
+  console.log("req.session.user is " + JSON.stringify(req.session.user));
   const user = req.session.user;
   if (user)
     if (user.balance) {
@@ -42,8 +45,10 @@ router.get('/', async (req, res, next) => {
     }
     else
       res.redirect('fund');
-  else
+  else {
+    console.error("login.js finds no user but active session");
     res.status(401).send("No user but active session error");
+  }
 });
 
 module.exports = router;
