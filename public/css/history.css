@@ -9,16 +9,25 @@ th {
   border:1px solid black;
   color: blue;
   font-weight: bold;
+  font-size: smaller;
   background-color: tan;
-  padding-left: 5px;
-  padding-right: 30px;
 }
 
 td {
   text-align: left;
   color: black;
-  padding-left: 5px;
-  padding-right: 30px;
   border:1px solid black;
   font-family: "Comic Sans";
 }
+
+.dollars, .num, .date {
+  text-align: right;
+  padding-left: 25px;
+  padding-right: 5px;
+}
+
+.bettype, .game {
+  padding-left: 5px;
+  padding-right: 25px;
+}
+
