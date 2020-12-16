@@ -1,10 +1,8 @@
 <h1>Your betting history</h1>
 
-<b style="font-size:larger;font-variant:small-caps">Dale is working on this</b>
-<br/>
-<br/>
-<br/>
+<div id="standing">
 
+</div>
 <table>
 <tr>
   <th>Game</th>
@@ -28,5 +26,15 @@
   <td>{{this.paid}}</td>
 </tr>
 {{/each}}
+<tr>
+  <td>Totals</td>
+  <td>N/A</td>
+  <td>N/A</td>
+  <td>{{totals.amount}}</td>
+  <td>{{totals.pays}}</td>
+  <td>{{totals.collects}}</td>
+  <td>N/A</td>
+  <td>{{totals.paid}}</td>
+</tr>
 </table>
 </p>

@@ -8,7 +8,9 @@ router.get('/', async (req, res) => {
   try {
     const cur = await bets.getByUserId("aeeb758c75ee6029745ca8a0");
     const x = await cur.toArray();
-    res.render('history', {bets: x, cssOverrides: "history.css"}); 
+    console.log(x);
+    const totals = await bets.getTotalsByUserID("aeeb758c75ee6029745ca8a0")
+    res.render('history', {bets: x, totals: totals, cssOverrides: "history.css"}); 
   }
   catch (e) {
     res.status(500).send(`route: / ${e}`);
