@@ -150,7 +150,7 @@ function deleteAllBets(ev) {
     url: '/admin/bets',
   };
   $.ajax(requestConfig).then(function (responseMessage) {
-    alert("You're the boss -- all bets have been deleted!");
+    alert("All bets have been deleted!\n\nYou're the boss.");
   }).catch(e => alert("there was an error " + JSON.stringify(e) + "deleting all bets."));
 }
 

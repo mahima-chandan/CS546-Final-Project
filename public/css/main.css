@@ -5,13 +5,14 @@ a:link {
 }
 
 img.jerry {
-  position: absolute;
+  position: fixed;
   right: 10px;
   height: 60px;
   z-index: 1;
 }
 
 nav {
+  position: fixed;
   background-color: tan;
 }
 
@@ -26,7 +27,7 @@ nav span {
 nav span.appname {
   color:white;
   font-weight:bold;
-  position:absolute;
+  //position:absolute;
   right:20px
 }
 
@@ -38,5 +39,10 @@ body {
 
 div.vspacer {
   height: 40px;
+}
+
+main {
+  position: relative;
+  top: 30px;
 }
 
