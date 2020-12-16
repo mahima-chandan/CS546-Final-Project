@@ -59,5 +59,14 @@ router.post('/generateBets', async (req, res) => {
   }
 });
 
+router.get('/housetake', async (req,res) =>{
+  try {
+    res.render('househistory', {})
+  }
+  catch (e) {
+    res.status(500).send(`route: / ${e}`)
+  }
+})
+
 module.exports = router;
 
