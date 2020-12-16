@@ -4,6 +4,14 @@ const path = require('path');
 const router = express.Router();
 const {bets} = require('../data');
 
+router.use((req, res, next) => {
+  console.log("history.js req.session.AuthCookie: " + req.session.AuthCookie);
+  if (!req.session.AuthCookie)
+    res.redirect('/');
+  else
+    next();
+});
+
 router.get('/', async (req, res) => {
   try {
     const cur = await bets.getByUserId("aeeb758c75ee6029745ca8a0");

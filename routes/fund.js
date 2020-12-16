@@ -5,6 +5,14 @@ const router = express.Router();
 const { bets } = require("../data");
 const { users } = require("../data");
 
+router.use((req, res, next) => {
+  console.log("fund.js req.session.AuthCookie: " + req.session.AuthCookie);
+  if (!req.session.AuthCookie)
+    res.redirect('/');
+  else
+    next();
+});
+
 router.get("/", async (req, res) => {
   try {
     let user = req.session.user

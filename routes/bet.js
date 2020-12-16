@@ -4,6 +4,14 @@ const path = require('path');
 const router = express.Router();
 const {bets} = require('../data');
 
+router.use((req, res, next) => {
+  console.log("bet.js req.session.AuthCookie: " + req.session.AuthCookie);
+  if (!req.session.AuthCookie)
+    res.redirect('/');
+  else
+    next();
+});
+
 router.get('/', async (req, res) => {
   try {
     res.render('bet', {});
