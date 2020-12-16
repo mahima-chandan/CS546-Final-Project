@@ -4,10 +4,24 @@ const path = require('path');
 const router = express.Router();
 const users = require('../data/users');
 const bcrypt = require('bcryptjs');
-/*
-var User = require('../data/signup');
-var Users = require('../routes/signup');
-*/
+
+function manage(txt) {
+  var bt = document.getElementById('submit');
+  var ele = document.getElementsByTagName('input'); 
+
+  // Loop through each element.
+  for (i = 0; i < ele.length; i++) {
+
+      // Check the element type
+      if (ele[i].type == 'text' && ele[i].value == '') {
+          bt.disabled = true;    // Disable the button.
+          return false;
+      }
+      else {
+          bt.disabled = false;   // Enable the button.
+      }
+  }
+}    
 
 router.post('/', async (req, res) => {
   try {
@@ -52,4 +66,4 @@ router.get('/', async (req, res) => {
     res.status(401).send("No user but active session error");
 });
 
-module.exports = router;
+module.exports = {router,manage};
