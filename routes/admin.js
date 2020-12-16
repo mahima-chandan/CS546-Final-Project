@@ -4,6 +4,14 @@ const path = require('path');
 const router = express.Router();
 const {bets, lines, settings, simulator} = require('../data');
 
+router.use((req, res, next) => {
+  console.log("admin.js req.session.AuthCookie: " + req.session.AuthCookie);
+  if (!req.session.AuthCookie)
+    res.redirect('/');
+  else
+    next();
+});
+
 router.delete('/bets', async (req, res, next) => {
   try {
     await bets.deleteAll();
@@ -51,8 +59,8 @@ router.put('/resolveBets', async (req, res) => {
 
 router.post('/generateBets', async (req, res) => {
   try {
-    await simulator.generateBets();
-    res.status(200).send();
+    const r = await simulator.generateBets();
+    res.status(r.status).json(r);
   }
   catch (e) {
     res.status(500).send(`generateBets: / ${e}`);

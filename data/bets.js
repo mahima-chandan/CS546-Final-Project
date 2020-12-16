@@ -65,7 +65,7 @@ async function submitPanel(panel) {
      entered: new Date()};
   async function submitBet(bet) {
     const theBet = merge(base, bet);
-    return await dbBets.insertOne(theBet);
+    await dbBets.insertOne(theBet);
   }
   const panelBets = new Array();
   if (panel.aspBet) {
@@ -123,7 +123,7 @@ async function submitPanel(panel) {
     panelBets.forEach(async (bet) => { await submitBet(bet) });
     return {status: 200}
   }
-  return {status: 409, msg: "insufficient funds"};
+  return {status: 402, msg: "insufficient funds"};
 }
 
 async function deleteAll() {
@@ -173,6 +173,7 @@ async function resolve() {
          as: "score"
       }
     },
+    { $match: { $expr: { $ne: [ { $size: "$score" }, 0 ] } } },
     { $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$score", 0 ] }, "$$ROOT" ] } }
     },
     { $lookup: {
@@ -236,12 +237,52 @@ function stopResolveProcessor() {
   }
 }
 
+async function getByUserId(bettorid) {
+  const dbBets = await db.bets();
+  return await dbBets.find({bettorid});
+}
+
+async function getTotalsByUserID(bettorid) {
+  const bets = await getByUserId(bettorid);
+  const betArr = await bets.toArray();
+  let totals = {
+    amount: 0,
+    pays: 0,
+    collects: 0,
+    paid: 0,
+    standing: 0,
+    pending: 0
+  };
+
+  // aggregates totals of amount, pays, collects and paid for each bet
+  for(bet of betArr){
+    totals.amount += bet.amount;
+    totals.pays += bet.pays;
+    totals.collects += bet.collects;
+    totals.paid += bet.paid;
+  }
+
+  // calculates standing total (how much you have won or lost based on resolved bets)
+  // calculates pending, an amount which you could possibly win based on unreolved bets
+  for(bet of betArr){
+    if(bet.resolved !== null){
+      totals.standing += (bet.paid - bet.amount)
+    }
+    else if(bet.resolved == null){
+      totals.pending += bet.pays
+    }
+  }
+  return totals;
+}
+
 module.exports = {
   deleteAll,
+  getByUserId,
   resolve,
   seed,
   startResolveProcessor,
   stopResolveProcessor,
-  submitPanel
+  submitPanel,
+  getTotalsByUserID
 };
 

@@ -1,9 +1,46 @@
-<h2>Your betting history</h2>
-<p>
-<code><em>Query bets collection for current authenticated user, and bring back a formatted page
-of results in a table, one row for each bet made.</em></code></p>
-
-<p>
-<code><em>Can default to chronological ordering of bets. Nice to have ability to sort by column
-but I don't believe we signed up for that so only do time-permitting.</em></code>
+<h1>Your betting history</h1>
+<div class="summary-container">
+  <div class="summary-child" id="standing">
+    <h2>Current Standing</h1>
+    <p>{{totals.standing}}</p>
+  </div>
+  <div class="summary-child" id="pending">
+    <h2>Potential Earnings</h1>
+    <p>{{totals.pending}}</p>
+  </div>
+</div>
+<table>
+<tr>
+  <th class="game">Game</th>
+  <th class="bettype">Bet type</th>
+  <th class="num">Your number</th>
+  <th class="dollars">Bet amount</th>
+  <th class="dollars">Win amount</th>
+  <th class="dollars">Collect amount</th>
+  <th class="date">Resolved date</th>
+  <th class="dollars">Paid amount</th>
+</tr>
+{{#each bets}}
+<tr>
+  <td class="game">{{this.gameid}}</td>
+  <td class="bettype">{{this.bettype}}</td>
+  <td class="num">{{this.num}}</td>
+  <td class="dollars">{{this.amount}}</td>
+  <td class="dollars">{{this.pays}}</td>
+  <td class="dollars">{{this.collects}}</td>
+  <td class="date">{{this.resolved}}</td>
+  <td class="dollars">{{this.paid}}</td>
+</tr>
+{{/each}}
+<tr>
+  <td>Totals</td>
+  <td>N/A</td>
+  <td>N/A</td>
+  <td>{{totals.amount}}</td>
+  <td>{{totals.pays}}</td>
+  <td>{{totals.collects}}</td>
+  <td>N/A</td>
+  <td>{{totals.paid}}</td>
+</tr>
+</table>
 </p>
