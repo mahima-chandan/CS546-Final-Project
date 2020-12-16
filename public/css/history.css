@@ -29,4 +29,15 @@ td {
   flex: 1;
 }  
 
+.dollars, .num, .date {
+  text-align: right;
+  padding-left: 25px;
+  padding-right: 5px;
+}
+
+.bettype, .game {
+  padding-left: 5px;
+  padding-right: 25px;
+}
+
 
