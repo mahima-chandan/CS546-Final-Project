@@ -1,16 +1,17 @@
 <h1>Your betting history</h1>
-
-<div id="standing">
-  <h2>Current Standing</h1>
-  <p>{{totals.standing}}</p>
-</div>
-<div id="pending">
-  <h2>Current Standing</h1>
-  <p>{{totals.pending}}</p>
+<div class="summary-container">
+  <div class="summary-child" id="standing">
+    <h2>Current Standing</h1>
+    <p>{{totals.standing}}</p>
+  </div>
+  <div class="summary-child" id="pending">
+    <h2>Potential Earnings</h1>
+    <p>{{totals.pending}}</p>
+  </div>
 </div>
 <table>
 <tr>
-  <th>Game</th>
+  <th>Game (Away-Home-GameDate)</th>
   <th>Bet type</th>
   <th>Your number</th>
   <th>Bet amount</th>

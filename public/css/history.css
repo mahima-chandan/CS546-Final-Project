@@ -22,3 +22,13 @@ td {
   border:1px solid black;
   font-family: "Comic Sans";
 }
+
+.summary-container {
+  display: flex;
+  width: 50%;
+}
+
+.summary-child {
+  flex: 1;
+}  
+
