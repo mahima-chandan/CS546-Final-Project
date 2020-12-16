@@ -102,8 +102,13 @@ async function generateBets() {
   let nGames = randomInt(1, currentLines.length + 1);
   for (let i = 0; i < nGames; ++i)
     chosenLines.add(randomInt(0, currentLines.length));
-  for (i of chosenLines.keys())
-    await makeAndSubmitPanel(currentLines[i]);
+  for (i of chosenLines.keys()) {
+    let r = await makeAndSubmitPanel(currentLines[i]);
+    if (r.status == 402) {
+      console.log("generation of bets cannot finish due to insufficient funds");
+      return r;
+    }
+  }
 }
 
 function randomBetType() {

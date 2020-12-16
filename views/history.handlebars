@@ -11,25 +11,25 @@
 </div>
 <table>
 <tr>
-  <th>Game (Away-Home-GameDate)</th>
-  <th>Bet type</th>
-  <th>Your number</th>
-  <th>Bet amount</th>
-  <th>Win amount</th>
-  <th>Collect amount</th>
-  <th>Resolved date</th>
-  <th>Paid amount</th>
+  <th class="game">Game</th>
+  <th class="bettype">Bet type</th>
+  <th class="num">Your number</th>
+  <th class="dollars">Bet amount</th>
+  <th class="dollars">Win amount</th>
+  <th class="dollars">Collect amount</th>
+  <th class="date">Resolved date</th>
+  <th class="dollars">Paid amount</th>
 </tr>
 {{#each bets}}
 <tr>
-  <td>{{this.gameid}}</td>
-  <td>{{this.bettype}}</td>
-  <td>{{this.num}}</td>
-  <td>{{this.amount}}</td>
-  <td>{{this.pays}}</td>
-  <td>{{this.collects}}</td>
-  <td>{{#if this.resolve}}{{this.resolved}}{{else}}{{/if}}</td>
-  <td>{{this.paid}}</td>
+  <td class="game">{{this.gameid}}</td>
+  <td class="bettype">{{this.bettype}}</td>
+  <td class="num">{{this.num}}</td>
+  <td class="dollars">{{this.amount}}</td>
+  <td class="dollars">{{this.pays}}</td>
+  <td class="dollars">{{this.collects}}</td>
+  <td class="date">{{this.resolved}}</td>
+  <td class="dollars">{{this.paid}}</td>
 </tr>
 {{/each}}
 <tr>

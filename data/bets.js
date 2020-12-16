@@ -65,7 +65,7 @@ async function submitPanel(panel) {
      entered: new Date()};
   async function submitBet(bet) {
     const theBet = merge(base, bet);
-    return await dbBets.insertOne(theBet);
+    await dbBets.insertOne(theBet);
   }
   const panelBets = new Array();
   if (panel.aspBet) {
@@ -123,7 +123,7 @@ async function submitPanel(panel) {
     panelBets.forEach(async (bet) => { await submitBet(bet) });
     return {status: 200}
   }
-  return {status: 409, msg: "insufficient funds"};
+  return {status: 402, msg: "insufficient funds"};
 }
 
 async function deleteAll() {
@@ -173,6 +173,7 @@ async function resolve() {
          as: "score"
       }
     },
+    { $match: { $expr: { $ne: [ { $size: "$score" }, 0 ] } } },
     { $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$score", 0 ] }, "$$ROOT" ] } }
     },
     { $lookup: {

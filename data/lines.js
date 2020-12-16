@@ -98,7 +98,7 @@ async function doGameBatch(ctx, batch) {
       a2.push(s);
     }
 
-    var awayPts, homePts, awayOE, homeOE, awayLong, homeLong;
+    var awayPts, homePts, under, over, awayLong, homeLong;
 
     let aw = a2[0];
     aw = aw.replace(/%<.*$/, "");
@@ -111,7 +111,7 @@ async function doGameBatch(ctx, batch) {
     let hrec = ho.split(/  */);
     let alen = arec.length;
     let hlen = hrec.length;
-    var awayPts, homePts, awayOE, homeOE, awayLong, homeLong;
+    var awayPts, homePts, under, over, awayLong, homeLong;
     let awayML = Number(arec[alen - 2]);
     let homeML = Number(hrec[hlen - 2]);
     let awayShort = arec[0];
@@ -150,22 +150,22 @@ async function doGameBatch(ctx, batch) {
     if (arec[alen - 4] <= 0.0) {
       awayPts = Number(arec[alen - 4]);
       homePts = -awayPts;
-      awayOE = Number(hrec[hlen - 4]);
-      homeOE = awayOE;
+      under = Number(hrec[hlen - 4]);
+      over = under;
     }
     else {
       awayPts = Number(-hrec[hlen - 4]);
       homePts = -awayPts;
-      awayOE = Number(arec[alen - 4]);
-      homeOE = awayOE;
+      under = Number(arec[alen - 4]);
+      over = under;
     }
 
     let lineDate = new Date().toISOString();
     lineDate = lineDate.replace(/\..*$/, '')
                        .replace(/[-T:Z]/g, '');
-    let friendlyGameDate = new Date(ctx.gameDate + `, ${c.year}`).toISOString();
+    let friendlyGameDate = new Date(ctx.gameDate + `, ${c.appConfig.year}`).toISOString();
     let jsGameDate = friendlyGameDate.substring(0, 10);
-    let gameDateJulian = new Date(ctx.gameDate + `, ${c.year} ` + ctx.gameTime).valueOf();
+    let gameDateJulian = new Date(ctx.gameDate + `, ${c.appConfig.year} ` + ctx.gameTime).valueOf();
     return ({gameid: awayShort + "-" + homeShort + "-" + jsGameDate,
         gameTime: ctx.gameTime,
         gameDate: ctx.gameDate,
@@ -174,12 +174,12 @@ async function doGameBatch(ctx, batch) {
         awayShort,
         awayML,
         awayPts,
-        awayOE,
+        under,
         awayLong,
         homeShort,
         homeML,
         homePts,
-        homeOE,
+        over,
         homeLong});
   }
   catch (e) {
@@ -219,7 +219,7 @@ async function readDatabaseLines(simdate) {
   let currentLines = new Array(); 
   const dbLines = await db.lines();
   let lines = dbLines.find({lineDateStr: simdate});
-  return lines.count() ? lines.toArray() : [];
+  return await lines.count() ? await lines.toArray() : await [];
 }
 
 async function readOnlineLines() {

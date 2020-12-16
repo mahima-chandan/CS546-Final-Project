@@ -5,10 +5,11 @@ const {ObjectID} = require('mongodb');
 
 // ----------------------------------------------------------------------------
 // Logic in this file is very specific to and dependent upon access to the
-// following scoresURL. Coverage is for the 2020 season only (c.year) below.
+// following scoresURL. Coverage is for the 2020 season only
+// (c.appConfig.year) below.
 // ----------------------------------------------------------------------------
 
-const scoresURL = `https://www.pro-football-reference.com/years/${c.year}`;
+const scoresURL = `https://www.pro-football-reference.com/years/${c.appConfig.year}`;
 
 // ----------------------------------------------------------------------------
 // Game scores need to be seeded to the database before anything will work

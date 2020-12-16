@@ -1,8 +1,6 @@
 const mongoCollections = require('../config/index');
-const allLine = mongoCollections.lines;
 const bets = mongoCollections.bets;
 const data = require('../data/bets.js');
-const lines = await this.getAllLines();
 
 async function subBet (gameId, aspBet, aspWin, aspCollect, amlBet, amlWin, amlCollect, hspBet, hspWin, hspCollect, hmlBet, hmlWin, hmlCollect, overBet, overWin, overCollect, underBet, underWin, underCollect) {
     let newBet = {
@@ -26,20 +24,25 @@ async function subBet (gameId, aspBet, aspWin, aspCollect, amlBet, amlWin, amlCo
         underWin: underWin,
         underCollect: underCollect
     }
-    data.submitPanel(newBet);
-    let submitId = "submit-" + gameId;
-    let button = document.getElementById(submitId);
-    if (button) {
-        button.outerHTML = "<p>Bet successfully submitted</p>";
-    }
-}
 
-async function getAllLines() {
-    const allLines = await allLine();
-    const line = await allLines.find({}).toArray();
-    if (line.length == 0)
-        throw 'No lines to return';
-    return line;
+    //make ajax call using jquery (endpoint bet)
+    $.ajax({
+        type: "POST",
+        url: "/",
+        data: newBet,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            let button = document.getElementById(submitId);
+            if (button) {
+                button.outerHTML = "<p>Bet successfully submitted</p>";
+            }
+            alert(data);
+        },
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+  });
 }
 
 //add submit functionality to submit buttons
@@ -67,14 +70,14 @@ if (buttons) {
             let underWinId = "underwin-" + gameId;
             let underCollectId = "undercollect-" + gameId;
 
-            let aspBet = document.getElementById(aspBetId);
-            let aspWin = document.getElementById(aspWinId);
-            let aspCollect = document.getElementById(aspCollectId);
-            let amlBet = document.getElementById(amlBetId);
-            let amlWin = document.getElementById(amlWinId);
-            let amlCollect = document.getElementById(amlCollectId);
-            let hspBet = document.getElementById(hspBetId);
-            let hspWin = document.getElementById(hspWinId);
+            let aspBet = document.getElementById(aspBetId).innerHTML;
+            let aspWin = document.getElementById(aspWinId).innerHTML;
+            let aspCollect = document.getElementById(aspCollectId).innerHTML;
+            let amlBet = document.getElementById(amlBetId).innerHTML;
+            let amlWin = document.getElementById(amlWinId).innerHTML;
+            let amlCollect = document.getElementById(amlCollectId).innerHTML;
+            let hspBet = document.getElementById(hspBetId).innerHTML;
+            let hspWin = document.getElementById(hspWinId).innerHTML;
             let hspCollect = document.getElementById(hspCollectId);
             let hmlBet = document.getElementById(hmlBetId);
             let hmlWin = document.getElementById(hmlWinId);
