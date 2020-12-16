@@ -241,6 +241,25 @@ async function getByUserId(bettorid) {
   return await dbBets.find({bettorid});
 }
 
+async function getTotalsByUserID(bettorid) {
+  const bets = await getByUserId(bettorid);
+  const betArr = await bets.toArray();
+  console.log(bets);
+  let totals = {
+    amount: 0,
+    pays: 0,
+    collects: 0,
+    paid: 0,
+  };
+  for(bet of betArr){
+    totals.amount += bet.amount;
+    totals.pays += bet.pays;
+    totals.collects += bet.collects;
+    totals.paid += bet.paid;
+  }
+  return totals;
+}
+
 module.exports = {
   deleteAll,
   getByUserId,
@@ -248,6 +267,7 @@ module.exports = {
   seed,
   startResolveProcessor,
   stopResolveProcessor,
-  submitPanel
+  submitPanel,
+  getTotalsByUserID
 };
 
