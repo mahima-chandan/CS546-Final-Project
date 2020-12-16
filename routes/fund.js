@@ -7,7 +7,7 @@ const { users } = require("../data");
 
 router.get("/", async (req, res) => {
   try {
-    let user = await users.getUserByName("mahima")
+    let user = req.session.user
         let amountBal = user.balance;
         let name = user.username;
         res.render("fund", {Balance:amountBal,Name:name});
