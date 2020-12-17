@@ -55,10 +55,10 @@ function merge(obj1, obj2) {
 //   "underCollect": null}
 // ----------------------------------------------------------------------------
 
-async function submitPanel(panel) {
+async function submitPanel(bettorid, panel) {
   const dbBets = await db.bets();
   const base =
-    {bettorid: "aeeb758c75ee6029745ca8a0",
+    {bettorid,
      gameid: panel.gameid,
      paid: null,
      resolved: null,
@@ -70,10 +70,10 @@ async function submitPanel(panel) {
   const panelBets = new Array();
   if (panel.aspBet) {
     const bet = {bettype: 'ASP',
-                 num: panel.aspNum,
-                 amount: panel.aspBet,
-                 pays: panel.aspWin,
-                 collects: panel.aspCollect};
+                 num: Number(panel.awayPts),
+                 amount: Number(panel.aspBet),
+                 pays: Number(panel.aspWin),
+                 collects: Number(panel.aspCollect)};
     panelBets.push(bet);
   }
   if (panel.amlBet) {
