@@ -70,10 +70,10 @@ async function submitPanel(bettorid, panel) {
   const panelBets = new Array();
   if (panel.aspBet) {
     const bet = {bettype: 'ASP',
-                 num: Number(panel.awayPts),
-                 amount: Number(panel.aspBet),
-                 pays: Number(panel.aspWin),
-                 collects: Number(panel.aspCollect)};
+                 num: panel.aspNum,
+                 amount: panel.aspBet,
+                 pays: panel.aspWin,
+                 collects: panel.aspCollect};
     panelBets.push(bet);
   }
   if (panel.amlBet) {
