@@ -69,7 +69,10 @@ router.post('/generateBets', async (req, res) => {
 
 router.get('/housetake', async (req,res) =>{
   try {
-    res.render('househistory', {})
+    const cur = await bets.getBets();
+    const x = await cur.toArray();
+    const totals = await bets.houseTotals()
+    res.render('househistory', {title: "House Take", bets: x, totals: totals, cssOverrides: "history.css"})
   }
   catch (e) {
     res.status(500).send(`route: / ${e}`)
