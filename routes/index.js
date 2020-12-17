@@ -5,6 +5,7 @@ const historyRoutes = require('./history');
 const linesRoutes = require('./lines');
 const logoutRoutes = require('./logout');
 const signupRoutes = require('./signup');
+const path = require('path');
 
 const constructorMethod = (app) => {
   app.use('/admin', adminRoutes);
@@ -13,7 +14,10 @@ const constructorMethod = (app) => {
   app.use('/fund', fundRoutes);
   app.use('/history', historyRoutes);
   app.use('/logout', logoutRoutes);
-  app.use('/signup', signupRoutes)
+  app.use('/signup', signupRoutes);
+  app.get('/about', (req, res) => {
+        res.sendFile(path.resolve('static/about.html'));
+    });
   app.use('*', (req, res) => {
     console.error("unknown route: " + req.method + " " + req.path);
     res.status(404).json({ error: 'Not found' });
