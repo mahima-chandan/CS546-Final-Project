@@ -114,4 +114,11 @@ async function submitBet(ev) {
     .catch(e => alert(JSON.stringify(e.responseJSON)));
 }
 $('form').submit(submitBet);
+$(document).ready(function () {
+$('input').change(inputChanged);
+});
+
+function inputChanged(ev) {
+  alert('input changed ' + JSON.stringify(ev));
+}
 </script>

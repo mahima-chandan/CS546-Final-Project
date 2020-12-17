@@ -222,7 +222,7 @@ async function resolve() {
     const resolvedDate = new Date().toISOString().substring(0, 10);
     await bets.updateOne({_id: x._id}, { $set: { "paid": x.paid,
                                                  "resolved" : resolvedDate } });
-    await users.updateOne({_id: x.bettorid}, { $inc: { balance: x.paid }});
+    await users.updateOne({_id: new ObjectID(x.bettorid)}, { $inc: { balance: x.paid }});
   };
   cur.forEach(f);
   console.log("resolve has finished")
