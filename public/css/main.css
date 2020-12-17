@@ -3,6 +3,9 @@ a:link {
   color: navy;
   font-weight: bold;
 }
+#admin_access{
+    display:none;
+}
 
 img.jerry {
   position: fixed;

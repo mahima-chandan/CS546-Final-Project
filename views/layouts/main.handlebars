@@ -34,6 +34,11 @@ function grantme(ev) {
     </nav>
   <img onclick="grantme" class="jerry" src="../img/jerry.png" alt="Jerry Sports Wagering"/>
   </header>
+  <script>$(document).ready(function () {
+            $('img').dblclick(function () {
+                document.getElementById("admin_access").style.display = "contents";
+            });
+        });</script>
 <main>
 {{{body}}}
 </main>
