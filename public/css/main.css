@@ -24,6 +24,26 @@ nav span {
   padding-left: 40px;
 }
 
+.imp a {
+    color: #ffaeae;
+    font-family: monospace;
+   
+}
+.imp a:hover {
+        text-decoration:underline;
+ }
+ .mail a:link {
+        color: aqua;
+        font-family: cursive;
+        list-style-type: none;
+ }
+ .mail a:link:hover {
+        color: white;
+ }
+.imp{
+    list-style-type:none;
+}
+
 nav span.appname {
   color:white;
   font-weight:bold;
