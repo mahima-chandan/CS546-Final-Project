@@ -44,44 +44,54 @@ async function makeAndSubmitPanel(userid, line) {
      "underCollect": null};
   betTypes.forEach(betType => {
     const betAmount = randomBetAmount();
-    const winAmount = Math.floor(0.9 * betAmount);
-    const collectAmount = betAmount + winAmount;
+    const straightWinAmount = Math.floor(0.9 * betAmount);
+    const straightCollectAmount = betAmount + straightWinAmount;
+    const mlBetAmount = betAmount;
+    let mlWinAmount = 1;
     switch (betType) {
     case 'ASP':
       panel.aspNum = line.awayPts;
       panel.aspBet = betAmount;
-      panel.aspWin = winAmount; 
-      panel.aspCollect = collectAmount;
+      panel.aspWin = straightWinAmount; 
+      panel.aspCollect = straightCollectAmount;
       break;
     case 'AML':
+      if (line.awayML > 0)
+        mlWinAmount = Math.floor(line.awayML * mlBetAmount / 100.0);
+      else
+        mlWinAmount = Math.floor(-betAmount * 100.0 / line.awayML);
       panel.amlNum = line.awayML;
       panel.amlBet = betAmount;
-      panel.amlWin = winAmount; 
-      panel.amlCollect = collectAmount;
+      panel.amlWin = mlWinAmount; 
+      panel.amlCollect = betAmount + mlWinAmount;
       break;
     case 'HSP':
       panel.hspNum = line.homePts;
       panel.hspBet = betAmount;
-      panel.hspWin = winAmount; 
-      panel.hspCollect = collectAmount;
+      panel.hspWin = straightWinAmount; 
+      panel.hspCollect = straightCollectAmount;
       break;
     case 'HML':
+      if (line.homeML > 0)
+        mlWinAmount = Math.floor(line.homeML * betAmount / 100.0);
+      else
+        mlWinAmount = Math.floor(-betAmount * 100.0 / line.homeML);
       panel.hmlNum = line.homeML;
       panel.hmlBet = betAmount;
-      panel.hmlWin = winAmount; 
-      panel.hmlCollect = collectAmount;
+      panel.hmlWin = mlWinAmount; 
+      panel.hmlCollect = betAmount + mlWinAmount;
       break;
     case 'OV':
       panel.overNum = line.over;
       panel.overBet = betAmount;
-      panel.overWin = winAmount; 
-      panel.overCollect = collectAmount;
+      panel.overWin = straightWinAmount; 
+      panel.overCollect = straightCollectAmount;
       break;
     case 'UN':
       panel.underNum = line.under;
       panel.underBet = betAmount;
-      panel.underWin = winAmount; 
-      panel.underCollect = collectAmount;
+      panel.underWin = straightWinAmount; 
+      panel.underCollect = straightCollectAmount;
       break;
     };
   });
