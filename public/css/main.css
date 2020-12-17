@@ -27,7 +27,7 @@ nav span {
 nav span.appname {
   color:white;
   font-weight:bold;
-  //position:absolute;
+  position:fixed;
   right:20px
 }
 
