@@ -59,6 +59,10 @@ async function verifyPassword(user, pwd) {
 
 async function debitBalanceById(id, amt) {
   const dbUsers = await db.users();
+  console.log(5);
+  console.log(amt);
+  console.log(id);
+  console.log(typeof amt);
   return await dbUsers.updateOne(
     {_id: id, balance: { $gte: amt } }, { $inc: { balance: -amt } });
 }

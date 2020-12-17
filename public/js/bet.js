@@ -1,7 +1,3 @@
-const mongoCollections = require('../config/index');
-const bets = mongoCollections.bets;
-const data = require('../data/bets.js');
-
 async function subBet (gameId, aspBet, aspWin, aspCollect, amlBet, amlWin, amlCollect, hspBet, hspWin, hspCollect, hmlBet, hmlWin, hmlCollect, overBet, overWin, overCollect, underBet, underWin, underCollect) {
     let newBet = {
         gameId: gameId,
@@ -89,7 +85,7 @@ if (buttons) {
             let underWin = document.getElementById(underWinId);
             let underCollect = document.getElementById(underCollectId);
 
-            await subBet(gameId, aspBet, aspWin, aspCollect, amlBet, amlWin, amlCollect, hspBet, hspWin, hspCollect, hmlBet, hmlWin, hmlCollect, overBet, overWin, overCollect, underBet, underWin, underCollect);
+            //await subBet(gameId, aspBet, aspWin, aspCollect, amlBet, amlWin, amlCollect, hspBet, hspWin, hspCollect, hmlBet, hmlWin, hmlCollect, overBet, overWin, overCollect, underBet, underWin, underCollect);
 
 
         });
