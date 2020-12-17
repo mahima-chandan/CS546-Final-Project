@@ -4,6 +4,7 @@ const path = require("path");
 const router = express.Router();
 const { bets } = require("../data");
 const { users } = require("../data");
+const { lines } = require("../data");
 
 router.use((req, res, next) => {
   console.log("fund.js req.session.AuthCookie: " + req.session.AuthCookie);
@@ -31,7 +32,11 @@ router.post("/", async (req, res) => {
            let user = req.session.user
         let username = user.username;
            let Balance = await users.updateBalance(username,req.body.funamot);
-            res.render("bet", {});
+           let allLines = await lines.get();
+        res.render('bet', {
+            allLines: allLines,
+            cssOverrides: "bet.css"
+        });
         } catch (e) {
             console.log(e);
             res.sendStatus(500);
