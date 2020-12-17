@@ -108,6 +108,8 @@ async function makeAndSubmitPanel(userid, line) {
 
 async function generateBets(userid) {
   const currentLines = await lines.get();
+  if (!currentLines.length)
+    return {status: 404, msg: "Sorry, no lines available for this date."};
   const chosenLines = new Set();
   let nGames = randomInt(1, currentLines.length + 1);
   for (let i = 0; i < nGames; ++i)

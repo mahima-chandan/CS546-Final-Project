@@ -86,8 +86,13 @@ function generateBets(ev) {
     url: '/admin/generateBets',
   };
   $.ajax(requestConfig)
-    .then(x => alert("A random number of bets have been generated on behalf of the current user.\n\n" +
-                     "Date of bets: " + $('#simdate').val()))
+    .then(x => {
+      if (x.msg)
+        alert(x.msg);
+      else
+        alert("A random number of bets have been generated on behalf of the current user.\n\n" +
+              "Date of bets: " + $('#simdate').val());
+    })
     .catch(e => alert(JSON.stringify(e.responseJSON)));
 }
 

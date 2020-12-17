@@ -63,6 +63,7 @@ router.put('/resolveBets', async (req, res) => {
 router.post('/generateBets', async (req, res) => {
   try {
     const r = await simulator.generateBets(req.session.user._id);
+    console.log("generateBets status is " + JSON.stringify(r));
     res.status(r.status).json(r);
   }
   catch (e) {
