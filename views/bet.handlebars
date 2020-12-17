@@ -30,7 +30,16 @@
                     <td><input name="amlWin" type="number"></td>
                     <td><input name="amlCollect" enabled type="number"></td>
                 </tr>
-                <tr><td class="rowsep" colspan="5"><input type="hidden" name="awayPts" value="{{awayPts}}"/></td></tr>
+                <tr>
+                    <td class="rowsep" colspan="5">
+                      <input type="hidden" name="awayPts" value="{{awayPts}}"/>
+                      <input type="hidden" name="homePts" value="{{homePts}}"/>
+                      <input type="hidden" name="awayML" value="{{awayML}}"/>
+                      <input type="hidden" name="homeML" value="{{homeML}}"/>
+                      <input type="hidden" name="over" value="{{over}}"/>
+                      <input type="hidden" name="under" value="{{under}}"/>
+                    </td>
+                </tr>
                 <tr>
                     <td>HOME</td>
                     <td>{{homeLong}}</td>

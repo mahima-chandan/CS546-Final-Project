@@ -62,13 +62,13 @@ async function debitBalanceById(id, amt) {
   console.log(5);
   console.log(amt);
   console.log(id);
-  console.log(typeof amt);
   return await dbUsers.updateOne(
-    {_id: id, balance: { $gte: amt } }, { $inc: { balance: -amt } });
+    {_id: new ObjectID(id), balance: { $gte: amt } }, { $inc: { balance: -amt } });
 }
 
 async function updateBalance(name, newlyAddedBalance) {
   const user = await this.getUserByName(name);
+  console.log("updateBalance name is " + name);
   let value = Number(user.balance) + Number(newlyAddedBalance);
   let updation = {
     balance: value,

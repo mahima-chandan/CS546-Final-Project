@@ -31,6 +31,7 @@ router.get('/', async (req, res) => {
                          title: "Admin page"});
   }
   catch (e) {
+    console.error(e);
     res.status(500).send(`route: / ${e}`);
   }
 });
@@ -43,6 +44,7 @@ router.put('/simdate', async (req, res) => {
     res.status(204).send();
   }
   catch (e) {
+    console.error(e);
     res.status(500).send(`route: / ${e}`);
   }
 });
@@ -53,16 +55,18 @@ router.put('/resolveBets', async (req, res) => {
     res.status(204).send();
   }
   catch (e) {
+    console.error(e);
     res.status(500).send(`route: / ${e}`);
   }
 });
 
 router.post('/generateBets', async (req, res) => {
   try {
-    const r = await simulator.generateBets();
+    const r = await simulator.generateBets(req.session.user._id);
     res.status(r.status).json(r);
   }
   catch (e) {
+    console.error(e);
     res.status(500).send(`generateBets: / ${e}`);
   }
 });
@@ -75,6 +79,7 @@ router.get('/housetake', async (req,res) =>{
     res.render('househistory', {title: "House Take", bets: x, totals: totals, cssOverrides: "history.css"})
   }
   catch (e) {
+    console.error(e);
     res.status(500).send(`route: / ${e}`)
   }
 })

@@ -11,7 +11,7 @@ const users = require('./users');
 // of bets against that game, and submits it to mongo via the bets module.
 // ----------------------------------------------------------------------------
 
-async function makeAndSubmitPanel(line) {
+async function makeAndSubmitPanel(userid, line) {
   let nBets = randomInt(1, 7);
   let betTypes = new Set();
   for (var i = 0; i < nBets; ++i)
@@ -85,7 +85,7 @@ async function makeAndSubmitPanel(line) {
       break;
     };
   });
-  return await bets.submitPanel(panel);
+  return await bets.submitPanel(userid, panel);
 }
 
 // ----------------------------------------------------------------------------
@@ -96,19 +96,20 @@ async function makeAndSubmitPanel(line) {
 // and insert each in the mongo bets collection.
 // ----------------------------------------------------------------------------
 
-async function generateBets() {
+async function generateBets(userid) {
   const currentLines = await lines.get();
   const chosenLines = new Set();
   let nGames = randomInt(1, currentLines.length + 1);
   for (let i = 0; i < nGames; ++i)
     chosenLines.add(randomInt(0, currentLines.length));
   for (i of chosenLines.keys()) {
-    let r = await makeAndSubmitPanel(currentLines[i]);
+    let r = await makeAndSubmitPanel(userid, currentLines[i]);
     if (r.status == 402) {
       console.log("generation of bets cannot finish due to insufficient funds");
       return r;
     }
   }
+  return {status: 200};
 }
 
 function randomBetType() {
