@@ -13,3 +13,7 @@ article {
   color: navy;
   padding: 5px;
 }
+
+.time-out-user {
+  display: none;
+}

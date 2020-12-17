@@ -7,11 +7,11 @@
 <form id="login-form" name="login" action="/" method="POST">
 <div>
 <label for="username">Username</label>
-<input type="text" id="username" name="username" placeholder="Enter your username" required value="{{username}}"/>
+<input type="text" id="username" maxlength="16" minlength="8" name="username" placeholder="Enter your username" required value="{{username}}"/>
 </div>
 <div>
 <label for="password">Password</label>
-<input id="password" name="pwd" type="password" required/>
+<input id="password" name="pwd"minlength="8" maxlength="16" type="password"  required/>
 </div>
 <label>
 <button id="submit" name="submit">Login</button>
