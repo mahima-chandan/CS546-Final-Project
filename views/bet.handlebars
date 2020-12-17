@@ -80,6 +80,13 @@
             </table>
         </form>
         <div class="vspacer"></div>
+    {{else}}
+      <div class="no-lines">
+      <p>No lines available. Is it Tuesday?</p>
+      <p>Or if <a href="/admin" alt="admin page"><code>simdate</code></a> is set to a date
+      in the past, perhaps try another <code>simdate</code>, as only some past dates have cached lines available.</p>
+      <p>(You will need to be administrator to change <code>simdate</code>).</p>
+      </div>
     {{/each}}
     <script src="js/bet.js"></script>
 <script>
@@ -97,7 +104,13 @@ async function submitBet(ev) {
     url: '/bet',
   };
   $.ajax(requestConfig)
-    .then(x => console.log(JSON.stringify(x)))
+    .then(x => {
+      if (x.status == 200) {
+        const button = ev.target.getElementsByTagName("button");
+        button[0].outerHTML = "<div class='confirmed'>CONFIRMED</div>";
+      }
+      console.log(JSON.stringify(x));
+    })
     .catch(e => alert(JSON.stringify(e.responseJSON)));
 }
 $('form').submit(submitBet);
