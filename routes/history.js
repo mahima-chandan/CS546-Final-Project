@@ -14,9 +14,9 @@ router.use((req, res, next) => {
 
 router.get('/', async (req, res) => {
   try {
-    const cur = await bets.getByUserId("aeeb758c75ee6029745ca8a0");
+    const cur = await bets.getByUserId(req.session.user._id);
     const x = await cur.toArray();
-    const totals = await bets.getTotalsByUserID("aeeb758c75ee6029745ca8a0")
+    const totals = await bets.getTotalsByUserID(req.session.user._id)
     res.render('history', {title: "Betting History", bets: x, totals: totals, cssOverrides: "history.css"}); 
   } catch (e) {
     res.status(500).send(`route: / ${e}`);

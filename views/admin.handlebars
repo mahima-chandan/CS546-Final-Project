@@ -61,6 +61,13 @@ which in turn is needed for debugging and testing, along with conducting demos o
 </form>
 </article>
 
+<div class="vspacer"></div>
+<article>
+<h2>See the house's take</h2>
+<h3><a class="houselink" href="/admin/housetake">Summary of how the house is doing on betting payout</a></h3>
+</article>
+
+
 <script>
 let orgSimdate = "{{simdate}}";
 
@@ -79,7 +86,13 @@ function generateBets(ev) {
     url: '/admin/generateBets',
   };
   $.ajax(requestConfig)
-    .then(x => console.log(JSON.stringify(x)))
+    .then(x => {
+      if (x.msg)
+        alert(x.msg);
+      else
+        alert("A random number of bets have been generated on behalf of the current user.\n\n" +
+              "Date of bets: " + $('#simdate').val());
+    })
     .catch(e => alert(JSON.stringify(e.responseJSON)));
 }
 

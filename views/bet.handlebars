@@ -1,114 +1,117 @@
-<ul class="all-bets">
-    {{! for every line, make a table with its data containing a form w/ bet amount and winnnings}}
-    {{#each lines}}
-    <li>
-        <form id={{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}} class="form">
+    {{#each allLines}}
+        <form id='{{gameid}}'>
             <table>
-                {{! title row, contains name date and submit button}}
+              <thead>
                 <tr>
-                    <th>{{awayLong}} at {{homeLong}}</th>
-                    <th>{{gameDate}}</th>
-                    <th><button type="submit" class="subButton" id="submit-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>Submit bet</button></th>
+                    <th class="away-at-home" colspan="2">{{awayLong}} at {{homeLong}}</th>
+                    <th class="game-date" colspan="2">{{gameDate}} {{gameTime}}</th>
+                    <th><button type="submit">SUBMIT</button></th>
                 </tr>
-
-                {{! away title row}}
+              </thead>
+              <tbody>
                 <tr>
-                    <th>Away</th>
-                    <th>{{awayLong}}</th>
-                    <th>Bet</th>
-                    <th>Win</th>
-                    <th>Collect</th>
+                    <td>AWAY</td>
+                    <td>{{awayLong}}</td>
+                    <td>BET</td>
+                    <td>WIN</td>
+                    <td>COLLECT</td>
                 </tr>
-
-                {{! away points row}}
                 <tr>
-                    <th>Pts.</th>
-                    <th>{{awayPts}}</th>
-                    <th>
-                        <input class="aspBet" type="number" id="aspbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th>
-                        <input class="aspWin" type="number" id="aspwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th class="aspCollect" id="aspcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
+                    <td>PTS</td>
+                    <td>{{awayPts}}</td>
+                    <td><input name="aspBet" type="number"></td>
+                    <td><input name="aspWin" type="number"></td>
+                    <td><input name="aspCollect" enabled type="number"></td> <!-- DPTEST enabled for debug -->
                 </tr>
-
-                {{! away ML row}}
                 <tr>
-                    <th>ML</th>
-                    <th id="aml-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>{{awayML}}</th>
-                    <th>
-                        <input class="amlBet" type="number" id="amlbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th>
-                        <input class="amlWin" type="number" id="aspwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th class="amlCollect" id="amlcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
+                    <td>ML</td>
+                    <td>{{awayML}}</td>
+                    <td><input name="amlBet" type="number"></td>
+                    <td><input name="amlWin" type="number"></td>
+                    <td><input name="amlCollect" enabled type="number"></td>
                 </tr>
-
-                {{! home title row}}
                 <tr>
-                    <th>Home</th>
-                    <th>{{homeLong}}</th>
-                    <th>Bet</th>
-                    <th>Win</th>
-                    <th>Collect</th>
+                    <td class="rowsep" colspan="5">
+                      <input type="hidden" name="awayPts" value="{{awayPts}}"/>
+                      <input type="hidden" name="homePts" value="{{homePts}}"/>
+                      <input type="hidden" name="awayML" value="{{awayML}}"/>
+                      <input type="hidden" name="homeML" value="{{homeML}}"/>
+                      <input type="hidden" name="over" value="{{over}}"/>
+                      <input type="hidden" name="under" value="{{under}}"/>
+                    </td>
                 </tr>
-
-                {{! home points row}}
                 <tr>
-                    <th>Pts.</th>
-                    <th>{{homePts}}</th>
-                    <th>
-                        <input class="hspBet" type="number" id="hspbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th>
-                        <input class="hspWin" type="number" id="hspwet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th class="hspCollect" id="hspcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
+                    <td>HOME</td>
+                    <td>{{homeLong}}</td>
+                    <td>BET</td>
+                    <td>WIN</td>
+                    <td>COLLECT</td>
                 </tr>
-
-                {{! home ML row}}
                 <tr>
-                    <th>ML</th>
-                    <th id="hml-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>{{homeML}}</th>
-                    <th>
-                        <input class="hmlBet" type="number" id="hmlbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th>
-                        <input class="hmlWin" type="number" id="hmlwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th class="hmlCollect" id="hmlcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
+                    <td>PTS</td>
+                    <td>{{homePts}}</td>
+                    <td><input name="hspBet" type="number"></td>
+                    <td><input name="hspWin" type="number"></td>
+                    <td><input name="hspCollect" enabled type="number"></td>
                 </tr>
-
-                {{! over row}}
                 <tr>
-                    <th>Over</th>
-                    <th>{{over}}</th>
-                    <th>
-                        <input class="overBet" type="number" id="overbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th>
-                        <input class="overWin" type="number" id="overwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th class="overCollect" id="overcollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
+                    <td>ML</td>
+                    <td>{{homeML}}</td>
+                    <td>BET</td>
+                    <td>WIN</td>
+                    <td>COLLECT</td>
                 </tr>
-
-                {{! under row}}
+                <tr><td class="rowsep" colspan="5"></td></tr>
                 <tr>
-                    <th>Under</th>
-                    <th>{{under}}</th>
-                    <th>
-                        <input class="underBet" type="number" id="underbet-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th>
-                        <input class="underWin" type="number" id="underwin-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>
-                    </th>
-                    <th class="underCollect" id="undercollect-"+{{awayLong}} + "-" + {{homeLong}} + "-" + {{gameDate}}>0</th>
+                    <td>OVER</td>
+                    <td>{{over}}</td>
+                    <td><input name="overBet" type="number"></td>
+                    <td><input name="overWin" type="number"></td>
+                    <td><input name="overCollect" enabled type="number"></td>
                 </tr>
+                <tr>
+                    <td>UNDER</td>
+                    <td>{{under}}</td>
+                    <td><input name="underBet" type="number"></td>
+                    <td><input name="underWin" type="number"></td>
+                    <td><input name="underCollect" enabled type="number"></td>
+                </tr>
+             </tbody>
             </table>
         </form>
-    </li>
+        <div class="vspacer"></div>
+    {{else}}
+      <div class="no-lines">
+      <p>No lines available. Is it Tuesday?</p>
+      <p>Or if <a href="/admin" alt="admin page"><code>simdate</code></a> is set to a date
+      in the past, perhaps try another <code>simdate</code>, as only some past dates have cached lines available.</p>
+      <p>(You will need to be administrator to change <code>simdate</code>).</p>
+      </div>
     {{/each}}
-    <script src="../public/bet.js"></script>
-</ul>
+    <script src="js/bet.js"></script>
+<script>
+async function submitBet(ev) {
+  ev.preventDefault();
+  const inps = ev.target.getElementsByTagName("input");
+  const x = {};
+  for (nv of inps)
+    x[nv.name] = 0 + Number(nv.value);
+  x.gameid = ev.target.getAttribute("id");
+  var requestConfig = {
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(x),
+    url: '/bet',
+  };
+  $.ajax(requestConfig)
+    .then(x => {
+      if (x.status == 200) {
+        const button = ev.target.getElementsByTagName("button");
+        button[0].outerHTML = "<div class='confirmed'>CONFIRMED</div>";
+      }
+      console.log(JSON.stringify(x));
+    })
+    .catch(e => alert(JSON.stringify(e.responseJSON)));
+}
+$('form').submit(submitBet);
+</script>

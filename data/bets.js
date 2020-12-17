@@ -55,10 +55,10 @@ function merge(obj1, obj2) {
 //   "underCollect": null}
 // ----------------------------------------------------------------------------
 
-async function submitPanel(panel) {
+async function submitPanel(bettorid, panel) {
   const dbBets = await db.bets();
   const base =
-    {bettorid: "aeeb758c75ee6029745ca8a0",
+    {bettorid,
      gameid: panel.gameid,
      paid: null,
      resolved: null,
@@ -118,12 +118,17 @@ async function submitPanel(panel) {
   }
   let betAmount = 0;
   panelBets.forEach(bet => { betAmount += bet.amount });
+  console.log("before users.debitBalanceById for user id " + base.bettorid);
   let r = await users.debitBalanceById(base.bettorid, betAmount);
+  console.log("back from users.debitBalanceById for user id " + base.bettorid);
   if (r.modifiedCount) {
     panelBets.forEach(async (bet) => { await submitBet(bet) });
     return {status: 200}
   }
-  return {status: 402, msg: "insufficient funds"};
+  else {
+    console.log("FAIL: users.debitBalanceById " + r);
+    return {status: 402, msg: "possible insufficient funds"};
+  }
 }
 
 async function deleteAll() {
@@ -275,6 +280,49 @@ async function getTotalsByUserID(bettorid) {
   return totals;
 }
 
+async function getBets() {
+  const dbBets = await db.bets();
+  return await dbBets.find();
+}
+
+async function houseTotals(){
+  const bets = await getBets();
+  const betArr = await bets.toArray();
+  let totals = {
+    amount: 0,
+    pays: 0,
+    collects: 0,
+    paid: 0,
+    curPayout: 0,
+    curProfit: 0,
+    futPayout:0,
+    futProfit:0
+  };
+
+  // aggregates totals of amount, pays, collects and paid for each bet
+  for(bet of betArr){
+    totals.amount += bet.amount;
+    totals.pays += bet.pays;
+    totals.collects += bet.collects;
+    totals.paid += bet.paid;
+  }
+
+  // calculates standing total (how much you have won or lost based on resolved bets)
+  // calculates pending, an amount which you could possibly win based on unreolved bets
+  for(bet of betArr){
+    if(bet.resolved !== null){
+      totals.curPayout += (bet.paid);
+      totals.curProfit += (bet.amount - bet.paid)
+    }
+    else if(bet.resolved == null){
+      totals.futPayout += bet.pays;
+      totals.futProfit += bet.amount;
+    }
+  }
+  return totals;
+
+}
+
 module.exports = {
   deleteAll,
   getByUserId,
@@ -283,6 +331,8 @@ module.exports = {
   startResolveProcessor,
   stopResolveProcessor,
   submitPanel,
-  getTotalsByUserID
+  getTotalsByUserID,
+  getBets,
+  houseTotals
 };
 
