@@ -28,7 +28,9 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
         try {
-           let Balance = await users.updateBalance(req.body.cardname,req.body.funamot);
+           let user = req.session.user
+        let username = user.username;
+           let Balance = await users.updateBalance(username,req.body.funamot);
             res.render("bet", {});
         } catch (e) {
             console.log(e);
