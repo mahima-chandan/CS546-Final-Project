@@ -307,7 +307,7 @@ async function houseTotals(){
   for(bet of betArr){
     if(bet.resolved !== null){
       totals.curPayout += (bet.paid);
-      totals.curProfit += (bet.paid - bet.amount)
+      totals.curProfit += (bet.amount - bet.paid)
     }
     else if(bet.resolved == null){
       totals.futPayout += bet.pays;
