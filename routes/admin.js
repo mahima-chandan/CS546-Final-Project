@@ -76,7 +76,7 @@ router.get('/housetake', async (req,res) =>{
     const cur = await bets.getBets();
     const x = await cur.toArray();
     const totals = await bets.houseTotals()
-    res.render('househistory', {title: "House Take", bets: x, totals: totals, cssOverrides: "history.css"})
+    res.render('househistory', {title: "House Take", cssOverrides: "admin.css", bets: x, totals: totals})
   }
   catch (e) {
     console.error(e);
